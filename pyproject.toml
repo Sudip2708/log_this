@@ -1,0 +1,71 @@
+# pyproject.toml
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+addopts = "-v --doctest-modules --cov=log_this"
+
+[tool.coverage.run]
+source = ["log_this"]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "if self.debug:",
+    "if __name__ == .__main__.:",
+    "raise NotImplementedError",
+    "pass"
+]
+
+# This code snippet is written in a configuration file format called TOML and it defines settings for testing a Python project using the pytest testing framework. Let's break down the sections and options:
+#
+# [tool.pytest.ini_options]
+# This section defines options that will be passed to the pytest test runner. Here's what each option does:
+# * `testpaths = ["tests"]`: This tells pytest where to look for test files. In this case, it will look for files in the "tests" directory.
+# * `python_files = ["test_*.py"]`: This specifies a pattern for naming test files. pytest will only collect files that start with "test_" and have the ".py" extension.
+# * `addopts = "-v --doctest-modules --cov=log_this"`: This defines additional command-line options for pytest. Let's explore these options:
+#    * `-v`: This enables verbose output, providing more details about the test execution.
+#    * `--doctest-modules`: This instructs pytest to also run doctests, which are tests embedded within the docstrings of your code.
+#    * `--cov=log_this`: This enables code coverage measurement for the "log_this" module. Code coverage tells you which parts of your code are actually executed by the tests.
+#
+# [tool.coverage.run]
+# This section configures the coverage tool used by pytest. Here, it specifies the source code to be measured for coverage:
+# * `source = ["log_this"]`: This tells the coverage tool to track execution within the "log_this" module.
+#
+# [tool.coverage.report]
+# This section defines how the coverage report should be generated:
+# * `exclude_lines = [ ... ]`: This specifies lines of code that should be excluded from the coverage report. These lines are likely common patterns you don't want to test explicitly (e.g., comments, helper functions). Examples provided include:
+#    * `pragma: no cover`: This is a comment directive that tells the coverage tool to ignore the following line.
+#    * `def __repr__`, `if self.debug:`, etc.: These lines are common helper functions or conditional statements that might not be critical for testing the core functionality.
+#    * `raise NotImplementedError`, `pass`: These lines indicate unimplemented functionality or placeholders, which don't require coverage.
+#
+# In summary, this code configures pytest to run tests located in the "tests" directory, following the "test_*" naming convention. It enables verbose output, doctest execution, and code coverage measurement for the "log_this" module. The coverage report excludes common patterns like commented-out lines or helper functions.
+
+
+
+# Tento konfigurační soubor pyproject.toml se používá pro nastavení testování Python projektu pomocí frameworku pytest. Jeho úkolem je definovat, jakým způsobem budou testy prováděny.
+#
+# Sekce [tool.pytest.ini_options]:
+# testpaths = ["tests"]: Tato část určuje, ve kterém adresáři se mají hledat testovací soubory. V tomto případě se budou hledat v adresáři "tests".
+# python_files = ["test_*.py"]: Zde se specifikuje, jak mají testovací soubory vypadat. Pytest bude hledat soubory, jejichž jméno začíná na "test_" a končí příponou ".py".
+# addopts = "-v --doctest-modules --cov=log_this": Tyto další možnosti upřesňují, jak se budou testy spouštět:
+#    -v: Zobrazí se podrobnější výstup o probíhajících testech.
+#    --doctest-modules: Spustí se také testy, které jsou přímo zapsány v dokumentačních řádcích kódu (tzv. doctesty).
+#    --cov=log_this: Bude se měřit pokrytí kódu pro modul "log_this". To znamená, že se zjistí, které části kódu v modulu "log_this" jsou skutečně prováděny během testů.
+#
+# Sekce [tool.coverage.run]:
+# source = ["log_this"]: Určuje, pro který modul se bude měřit pokrytí kódu. V tomto případě je to modul "log_this".
+#
+# Sekce [tool.coverage.report]:
+# exclude_lines = [ ... ]: Zde jsou uvedeny řádky kódu, které se nebudou zahrnovat do výpočtu pokrytí. Jedná se například o:
+#    pragma: no cover: Tento komentář označuje řádek, který se nemá zahrnout do měření pokrytí.
+#    def __repr__, if self.debug:, atd.: To jsou často pomocné funkce nebo podmíněné části kódu, které nemusí být přímo testovány.
+#    raise NotImplementedError, pass: Tyto řádky označují neimplementované funkce nebo mezilehlé stavy, které se také nemusí testovat.
+#
+# Shrnutí:
+# Tento konfigurační soubor nastavuje pytest tak, aby prováděl testy v adresáři "tests", hledal soubory se jménem začínajícím na "test_", zobrazoval podrobné výsledky, spouštěl doctesty a měřil pokrytí kódu pro modul "log_this". Zároveň vylučuje z měření pokrytí některé typy řádků, které nejsou relevantní pro testování.
+#
+# Co to znamená v praxi?
+# Tento soubor zajistí, že při spuštění testů bude pytest automaticky hledat všechny relevantní testovací soubory, spustí je a vygeneruje přehledné zprávy o výsledcích. Díky měření pokrytí kódu bude možné zjistit, zda testy pokrývají všechny důležité části kódu a zda nejsou nějaké části chybějící.
+
