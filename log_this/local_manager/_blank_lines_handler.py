@@ -18,8 +18,10 @@ class BlankLinesHandler:
             config (dict): Konfigurace nastavení.
             thread_context (ThreadContext): Kontext vlákna.
         """
+
         self.config = config
         self.thread_context = thread_context
+
 
     def get_blank_lines(self) -> Tuple[str, str]:
         """
@@ -28,11 +30,16 @@ class BlankLinesHandler:
         Returns:
             Tuple[str, str]: Start a end prázdné řádky.
         """
+
+        # Pokud nejsou prázdné řádky požadované
         if not self.config.blank_lines:
             return "", ""
 
+        # Pokud se jedná o jednořádkový výpis
         if self.thread_context.thread.current_type == 1:
             start_blank, end_blank = self._handle_one_line_log()
+
+        # Pokud se jedná o víceřádkový výpis
         else:
             start_blank, end_blank = self._handle_multi_line_log()
 
@@ -45,6 +52,8 @@ class BlankLinesHandler:
         Returns:
             Tuple[str, str]: Start a end prázdné řádky.
         """
+
+        # Načtení hodnoty
         thread = self.thread_context.thread
 
         if thread.last_type == 1:

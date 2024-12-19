@@ -1,5 +1,4 @@
 import os
-from random import choice
 
 from ._loader_mixin import ConfigLoaderMixin
 
@@ -69,7 +68,7 @@ class LogThisConfig(ConfigLoaderMixin):
         """Vrátí hodnoty instance jako slovník"""
         return {
 
-            'skip_this': self.values.get('skip_this') # Textová reprezentce pro mod 0
+            'skip_this': self.values.get('skip_this'), # Textová reprezentce pro mod 0
             'one_line': self.values.get('one_line'),  # Textová reprezentce pro mod 1
             'simple': self.values.get('simple'),  # Textová reprezentce pro mod 2
             'detailed': self.values.get('detailed'),  # Textová reprezentce pro mod 3
@@ -83,23 +82,18 @@ class LogThisConfig(ConfigLoaderMixin):
             'indent': self.indent,  # Počet znaků pro odsazení od kraje při zanoření (0-4)
             'blank_lines': self.blank_lines,  # Zobrazení prázdného řádku mezi jednotlivými logy (True/False)
             'docstring_lines': self.docstring_lines,  # Počet řádků z docstringu pro report (int a nebo 'all' pro všechny)
-            'max_depth': self.max_depth  # Úroveň maximálního zanoření pro detekci cyklického vstupu
+            'max_depth': self.max_depth,  # Úroveň maximálního zanoření pro detekci cyklického vstupu
 
         }
 
     def set_value(self, key, value, choices=(0, 1, 2, 3, 4)):
         """Metoda na aktualizaci hodnot"""
-        error = ValueError(f"Hodnota {value}, "
-                           f"není platnou hodnotu pro {key}. "
-                           f"Platné hodnoty: {choices}")
 
         if key in ('skip_this', 'one_line', 'simple', 'detailed', 'report'):
             if value in choices:
                 self.values[key] = value
-            else:
-                raise error
 
-        if key in ('true', 'false', 'none', 'empty'):
+        elif key in ('true', 'false', 'none', 'empty'):
             if value in choices:
                 if key == 'true':
                     self.values[True] = value
@@ -109,33 +103,32 @@ class LogThisConfig(ConfigLoaderMixin):
                     self.values[None] = value
                 elif key == 'empty':
                     self.values[''] = value
-            else:
-                raise error
 
-        if key in ('indent', 'blank_lines', 'docstring_lines', 'max_depth')
+        elif key in ('indent', 'blank_lines', 'docstring_lines', 'max_depth'):
             if key == 'indent':
                 if value in choices:
                     self.indent = value
-                else:
-                    raise error
+
             elif key == 'blank_lines':
                 choices = (0, 1, True, False)
                 if value in choices:
                     self.blank_lines = value
-                else:
-                    raise error
+
             elif key == 'docstring_lines':
                 if isinstance(value, int) or value == 'all':
                     self.docstring_lines = value
                 else:
                     choices = (int, 'all')
-                    raise error
+
             elif key == 'max_depth':
                 if isinstance(value, int):
                     self.max_depth = value
                 else:
                     choices = (int,)
-                    raise error
+
+        raise ValueError(f"Hodnota {value}, "
+                         f"není platnou hodnotu pro {key}. "
+                         f"Platné hodnoty: {choices}")
 
 
 

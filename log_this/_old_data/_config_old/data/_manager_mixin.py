@@ -17,6 +17,8 @@ class ConfigManagerMixin:
     - Výpis aktuálního nastavení
     - Obnovení výchozích hodnot
     """
+    def check_key(self, key):
+        if
 
     def set_config_value(self, key: str, value: Any) -> bool:
         """
