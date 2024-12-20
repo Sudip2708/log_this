@@ -6,11 +6,11 @@ from datetime import datetime
 
 from .utils import (
     safe_serialize,
-    loger_settings
 )
 
 
 def log_detailed(
+    logger,
     func: Callable,
     args: tuple,
     kwargs: dict,
@@ -23,6 +23,7 @@ def log_detailed(
     vstupních parametrů a výstupu.
 
     Args:
+        logger: Logger pro logování zpráv.
         func (Callable): Funkce, jejíž volání je logováno.
         args (tuple): Argumenty předané logované funkci.
         kwargs (dict): Klíčové argumenty předané logované funkci.
@@ -42,10 +43,8 @@ def log_detailed(
     """
 
 
-    # Inicializace logeru a začátek měření jeho běhu
-    logger = loger_settings()
+    # Začátek měření běhu loggeru
     logger_time = time.perf_counter()
-    print("### repr(start_blank), repr(end_blank), repr(indent): ", repr(start_blank), repr(end_blank), repr(indent))
 
     # Úvodní zpráva
     logger.debug(f"{start_blank}{indent}"

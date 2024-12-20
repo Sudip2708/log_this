@@ -1,7 +1,7 @@
 import logging
 
 
-def loger_settings():
+def logger_settings():
     """
     Nastaví logger pro aplikaci.
 

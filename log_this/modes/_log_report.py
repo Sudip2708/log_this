@@ -6,12 +6,12 @@ from datetime import datetime
 
 from .utils import (
     safe_serialize,
-    loger_settings,
     get_limited_docstring
 )
 
 
 def log_report(
+    logger,
     func: Callable,
     args: tuple,
     kwargs: dict,
@@ -26,6 +26,7 @@ def log_report(
     o výkonu a paměťové náročnosti funkce.
 
     Args:
+        logger: Logger pro logování zpráv.
         func (Callable): Funkce, jejíž volání je logováno.
         args (tuple): Argumenty předané logované funkci.
         kwargs (dict): Klíčové argumenty předané logované funkci.
@@ -45,8 +46,7 @@ def log_report(
     """
 
 
-    # Inicializace logeru a začátek měření jeho běhu
-    logger = loger_settings()
+    # Začátek měření běhu loggeru
     logger_time = time.perf_counter()
 
     # Úvodní zpráva

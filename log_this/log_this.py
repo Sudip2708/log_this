@@ -1,7 +1,7 @@
 from typing import Callable, Union, Optional
 from functools import wraps
 
-from .local_manager import LocalManager
+from .local_manager import LocalManager, logger_settings
 from .config import get_config
 from .modes import (
     log_one_line,
@@ -14,10 +14,15 @@ from .modes import (
 # Vytvoření správce řádkování a odsazení
 manager = LocalManager()
 
+# Inicializace logeru
+logger = logger_settings()
+
+# Inicializace konfigurace
+config = get_config()
+
 # Definice dekorátoru
 def log_this(
     mode: Optional[Union[bool, str, int]] = '',
-    config = get_config()
 ) -> Callable:
     """
     Hlavní dekorátor pro logování funkcí s podporou různých režimů logování.
@@ -68,35 +73,35 @@ def log_this(
                 # Zachycení výpisu na jeden řádek (pouze název a vstupní parametry)
                 if mode in (1, 'one_line'):
                     return log_one_line(
-                        func, args, kwargs,
+                        logger, func, args, kwargs,
                         indent, start_blank, end_blank
                     )
 
                 # Zachycení výpisu na čtyři řádky (přidává výstupní hodnotu)
                 elif mode in (2, 'simple'):
                     return log_simple(
-                        func, args, kwargs,
+                        logger, func, args, kwargs,
                         indent, start_blank, end_blank
                     )
 
                 # Zachycení výpisu na šest řádek (přidává dobu běhu a využití paměti)
                 elif mode in (3, 'detailed'):
                     return log_detailed(
-                        func, args, kwargs,
+                        logger, func, args, kwargs,
                         indent, start_blank, end_blank
                     )
 
                 # Zachycení plného výpisu (přidává analýzu prostředků a docstring)
                 elif mode in (4, 'report'):
                     return log_report(
-                        func, args, kwargs,
+                        logger, func, args, kwargs,
                         indent, start_blank, end_blank, config.docstring_lines
                     )
 
                 # Vyvolání výjimky, pokud nedošlo k zachycení modu
                 else:
                     return mode_error(
-                        func, args, kwargs,
+                        logger, func, args, kwargs,
                         indent, start_blank, end_blank
                     )
 

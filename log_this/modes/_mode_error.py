@@ -3,11 +3,11 @@ import inspect
 
 from .utils import (
     safe_serialize,
-    loger_settings
 )
 
 
 def mode_error(
+    logger,
     func: Callable,
     args: tuple,
     kwargs: dict,
@@ -20,6 +20,7 @@ def mode_error(
     a následně spustí původní funkci.
 
     Args:
+        logger: Logger pro logování zpráv.
         func (Callable): Funkce, která byla dekorována a u které došlo k chybě.
         args (tuple): Argumenty předané dekorované funkci.
         kwargs (dict): Klíčové argumenty předané dekorované funkci.
@@ -33,8 +34,6 @@ def mode_error(
     Notes:
         Funkce loguje chybu s detaily o názvu funkce a její lokaci v souboru.
     """
-    # Inicializace loggeru
-    logger = loger_settings()
 
     # Logování chyby
     logger.error(

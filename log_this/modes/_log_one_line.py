@@ -3,11 +3,11 @@ from datetime import datetime
 
 from .utils import (
     safe_serialize,
-    loger_settings
 )
 
 
 def log_one_line(
+    logger,
     func: Callable,
     args: tuple,
     kwargs: dict,
@@ -19,6 +19,7 @@ def log_one_line(
     Loguje informace o volání funkce v jednorzádkovém formátu.
 
     Args:
+        logger: Logger pro logování zpráv.
         func (Callable): Funkce, jejíž volání je logováno.
         args (tuple): Argumenty předané logované funkci.
         kwargs (dict): Klíčové argumenty předané logované funkci.
@@ -33,8 +34,6 @@ def log_one_line(
         Funkce loguje volání funkce v jednorzádkovém formátu, včetně času, jména funkce
         a serializovaných hodnot argumentů.
     """
-    # Inicializace loggeru
-    logger = loger_settings()
 
     # Logování jednorzádkové zprávy
     logger.info(
