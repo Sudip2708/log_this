@@ -1,24 +1,21 @@
 from typing import Callable, Any
+import logging
 import time
 import inspect
 import tracemalloc
 from datetime import datetime
 
-from .utils import (
-    safe_serialize,
-    get_limited_docstring
-)
-
 
 def log_report(
-    logger,
-    func: Callable,
+    logger: logging.Logger,
+    func: Callable[..., Any],
     args: tuple,
     kwargs: dict,
+    serialize: Callable[..., Any],
+    get_limited_docstring: Callable[..., str],
     indent: str = "",
     start_blank: str = "",
     end_blank: str = "",
-    lines: int = 3
 ) -> Any:
     """
     Loguje podrobný report o průběhu volání funkce, včetně anotací, vstupních parametrů,
@@ -26,14 +23,15 @@ def log_report(
     o výkonu a paměťové náročnosti funkce.
 
     Args:
-        logger: Logger pro logování zpráv.
+        logger (logging.Logger): Logger pro logování zpráv.
         func (Callable): Funkce, jejíž volání je logováno.
         args (tuple): Argumenty předané logované funkci.
         kwargs (dict): Klíčové argumenty předané logované funkci.
+        serialize (Callable): Metoda pro serializaci hodnot.
+        get_limited_docstring (Callable): Metoda pro navrácení přizpůsobeného docstringu.
         indent (str, optional): Řetězec pro odsazení logovací zprávy. Default je "".
         start_blank (str, optional): Řetězec přidaný na začátek zprávy pro prázdný řádek. Default je "".
         end_blank (str, optional): Řetězec přidaný na konec zprávy pro prázdný řádek. Default je "".
-        lines (int, optional): Definice počtu zobrazených řádků z docstringu.
 
     Returns:
         Any: Výsledek volání původní funkce s předanými argumenty.
@@ -66,12 +64,12 @@ def log_report(
 
     # Vstupní parametry
     logger.debug(f"{indent}"
-                 f"# >>> Input parameters: {safe_serialize(args)} "
-                 f"| Input kwords: {safe_serialize(kwargs)}")
+                 f"# >>> Input parameters: {serialize(args)} "
+                 f"| Input kwords: {serialize(kwargs)}")
 
     # Prvních 3 řádků z docstringu
     logger.debug(f"{indent}"
-                 f"# >>> Docstring: {get_limited_docstring(func.__doc__, lines)}")
+                 f"# >>> Docstring: {get_limited_docstring(func.__doc__)}")
 
     # Spuštění tracemalloc pro měření paměti (pouze pokud ještě neběží)
     tracing_was_active = tracemalloc.is_tracing()

@@ -26,6 +26,7 @@ def capture_logs():
     Returns:
         io.StringIO: Objekt StringIO s zachycenými log zprávami
     """
+
     log_capture = io.StringIO()
     handler = logging.StreamHandler(log_capture)
     root_logger = logging.getLogger()

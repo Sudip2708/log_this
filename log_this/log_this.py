@@ -1,8 +1,7 @@
 from typing import Callable, Union, Optional
 from functools import wraps
 
-from .local_manager import LocalManager, logger_settings
-from .config import get_config
+from .manager import LogThisManager
 from .modes import (
     log_one_line,
     log_simple,
@@ -11,18 +10,18 @@ from .modes import (
     mode_error,
 )
 
+
 # Vytvoření správce řádkování a odsazení
-manager = LocalManager()
+manager = LogThisManager()
+logger = manager.logger
+thread = manager.thread
+config = manager.config
+serialize = manager.serialize
 
-# Inicializace logeru
-logger = logger_settings()
-
-# Inicializace konfigurace
-config = get_config()
 
 # Definice dekorátoru
 def log_this(
-    mode: Optional[Union[bool, str, int]] = '',
+    mode: Optional[Union[bool, str, int]] = 'empty',
 ) -> Callable:
     """
     Hlavní dekorátor pro logování funkcí s podporou různých režimů logování.
@@ -36,7 +35,6 @@ def log_this(
 
     Args:
         mode (Optional[Union[bool, str, int]], optional): Režim logování. Pokud není nastaven, použije se výchozí konfigurace.
-        config: Konfigurace pro logování (nastavení pro odsazení, prázdné řádky apod.).
 
     Returns:
         Callable: Funkce, která slouží jako dekorátor pro logování volání dekorované funkce.
@@ -49,7 +47,7 @@ def log_this(
 
     # Kontrola, zda je mode celočíslenou hodnotu
     if not isinstance(mode, int):
-        mode = config.values.get(mode, None)
+        mode = config[mode]
 
     # Kontrola, zda je mode nastaven na přeskočení logování
     if mode == 0:
@@ -61,7 +59,7 @@ def log_this(
         def wrapper(*args, **kwargs):
 
             # Aktualizace hodnot manažera pro řádkování a odsazení
-            manager.update_context(mode)
+            thread.increase_depth_and_update_type(mode)
 
             # Zpracování logu
             try:
@@ -73,41 +71,43 @@ def log_this(
                 # Zachycení výpisu na jeden řádek (pouze název a vstupní parametry)
                 if mode in (1, 'one_line'):
                     return log_one_line(
-                        logger, func, args, kwargs,
+                        logger, func, args, kwargs, serialize,
                         indent, start_blank, end_blank
                     )
 
                 # Zachycení výpisu na čtyři řádky (přidává výstupní hodnotu)
                 elif mode in (2, 'simple'):
                     return log_simple(
-                        logger, func, args, kwargs,
-                        indent, start_blank, end_blank
+                        logger, func, args, kwargs, serialize,
+                        indent, start_blank, end_blank,
                     )
 
                 # Zachycení výpisu na šest řádek (přidává dobu běhu a využití paměti)
                 elif mode in (3, 'detailed'):
                     return log_detailed(
-                        logger, func, args, kwargs,
-                        indent, start_blank, end_blank
+                        logger, func, args, kwargs, serialize,
+                        indent, start_blank, end_blank,
                     )
 
                 # Zachycení plného výpisu (přidává analýzu prostředků a docstring)
                 elif mode in (4, 'report'):
+
                     return log_report(
-                        logger, func, args, kwargs,
-                        indent, start_blank, end_blank, config.docstring_lines
+                        logger, func, args, kwargs, serialize,
+                        manager.get_limited_docstring,
+                        indent, start_blank, end_blank,
                     )
 
                 # Vyvolání výjimky, pokud nedošlo k zachycení modu
                 else:
                     return mode_error(
-                        logger, func, args, kwargs,
+                        logger, func, args, kwargs, serialize,
                         indent, start_blank, end_blank
                     )
 
             finally:
                 # Dodatečná úprava hodnot manažera pro řádkování a odsazení
-                manager.revert_context()
+                thread.decrease_depth()
 
         return wrapper
 

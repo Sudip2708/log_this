@@ -20,11 +20,11 @@ def try_out_advanced(
         bool: Výsledek porovnání sečtené hodnoty v sadě hodnot.
     """
 
-    @log_this(log_level_1)
+    @log_this(log_level_4)
     def log_this_test_function(
-            function1: int=log_level_2,
-            function2: int=log_level_3,
-            function3: int=log_level_4,
+            function1: int=log_level_1,
+            function2: int=log_level_2,
+            function3: int=log_level_3,
             first_number: int=5,
             second_number: int=8,
             comparison_set: List[Any]=(11, 13, 15)

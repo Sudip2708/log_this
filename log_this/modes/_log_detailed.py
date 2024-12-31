@@ -1,19 +1,17 @@
 from typing import Callable, Any
+import logging
 import time
 import inspect
 import tracemalloc
 from datetime import datetime
 
-from .utils import (
-    safe_serialize,
-)
-
 
 def log_detailed(
-    logger,
-    func: Callable,
+    logger: logging.Logger,
+    func: Callable[..., Any],
     args: tuple,
     kwargs: dict,
+    serialize: Callable[..., Any],
     indent: str = "",
     start_blank: str = "",
     end_blank: str = ""
@@ -23,10 +21,11 @@ def log_detailed(
     vstupních parametrů a výstupu.
 
     Args:
-        logger: Logger pro logování zpráv.
+        logger (logging.Logger): Logger pro logování zpráv.
         func (Callable): Funkce, jejíž volání je logováno.
         args (tuple): Argumenty předané logované funkci.
         kwargs (dict): Klíčové argumenty předané logované funkci.
+        serialize (Callable): Metoda pro serializaci hodnot.
         indent (str, optional): Řetězec pro odsazení logovací zprávy. Default je "".
         start_blank (str, optional): Řetězec přidaný na začátek zprávy pro prázdný řádek. Default je "".
         end_blank (str, optional): Řetězec přidaný na konec zprávy pro prázdný řádek. Default je "".
@@ -54,8 +53,8 @@ def log_detailed(
     logger.debug(f"{indent}"
                  f"# >>> File: {inspect.getfile(func)}")
     logger.debug(f"{indent}"
-                 f"# >>> Input parameters: {safe_serialize(args)} "
-                 f"| Input kwords: {safe_serialize(kwargs)}")
+                 f"# >>> Input parameters: {serialize(args)} "
+                 f"| Input kwords: {serialize(kwargs)}")
 
     # Spuštění tracemalloc pro měření paměti (pouze pokud ještě neběží)
     tracing_was_active = tracemalloc.is_tracing()
