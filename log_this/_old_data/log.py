@@ -15,7 +15,7 @@ logger = logger_settings()
 
 class LogLevel(Enum):
     """Výčet podporovaných úrovní logování."""
-    NOTE = (logging.INFO, "NOTE")
+    NOTE = (logging.DEBUG, "NOTE")
     DEBUG = (logging.DEBUG, "DEBUG")
     INFO = (logging.INFO, "INFO")
     WARNING = (logging.WARNING, "WARNING")

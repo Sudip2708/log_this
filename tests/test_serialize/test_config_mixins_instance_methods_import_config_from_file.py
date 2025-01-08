@@ -2,7 +2,7 @@ import pytest
 import json
 import logging
 from unittest.mock import Mock, patch
-from log_this.manager.config.mixins.instance_methods import ImportConfigFromFileMixin
+from log_this.manager.config.mixins.instance_methods2 import ImportConfigFromFileMixin
 
 
 # Fixture pro základní instanci mixinu

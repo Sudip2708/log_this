@@ -2,6 +2,7 @@ from pathlib import Path
 from typing import Dict, Union
 
 from .mixins import ConfigMixin
+from ._config_log_manager import ConfigLogManager
 
 class LogThisConfig(ConfigMixin):
     """
@@ -18,6 +19,11 @@ class LogThisConfig(ConfigMixin):
     # Atribut pro singleton instanci třídy:
     _instance = None
 
+    # Atribut pro cstu ke konfiguračnímu souboru
+    _config_path = Path(__file__).parent / "config.json"
+
+    # Inicializace loggeru na úrovni třídy
+    logger = ConfigLogManager().get_logger()
 
     # Defaultní hodnoty:
     DEFAULTS: Dict[str, Union[int, str, bool]] = {
@@ -50,9 +56,15 @@ class LogThisConfig(ConfigMixin):
             LogThisConfig: Singleton instance konfigurace
         """
 
+        # Pokud instance ještě není vytvořená
         if not cls._instance:
+
+            # Validace dat z defaultního slovníků hodnot
+            if not cls._validate_config_dict(cls.DEFAULTS):
+                raise ValueError("Chyba při validaci defaultních hodnot.")
+
+            # Vytvoření a navrácení singleton instance
             cls._instance = super().__new__(cls)
-            cls._config_dir = Path(__file__).parent
         return cls._instance
 
 
@@ -68,7 +80,8 @@ class LogThisConfig(ConfigMixin):
         Metoda následně nastaví atribut potvrzující proběhlou inicializaci.
         """
 
+        # Pokud instance nebvyla ještě inicializovaná
         if not hasattr(self, '_initialized'):
-            self.config = self._load_default_config()
+            self.config = self._load_config_dict()
             self._initialized = True
 

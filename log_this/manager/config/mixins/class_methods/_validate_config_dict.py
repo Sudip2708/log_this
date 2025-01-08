@@ -22,19 +22,40 @@ class ValidateConfigDictMixin:
             bool: Indikuje validitu celé konfigurace
         """
 
-        #Ověření, že se jedná o slovník a není prázdný:
-        if isinstance(config, dict) and config:
+        # Ověření, že se jedná o slovník:
+        if not isinstance(config, dict):
+            logging.error(
+                f"Error while validate config dict: "
+                f"The configuration dictionary is not 'dict' type. "
+                f"Detected type: {type(config)}"
+            )
+            return False
 
-            # Cyklus rozebírající slovník na klíč a hodnotu
-            for key, value in config.items():
+        # Ověření že slovník není prázdný
+        if not config:
+            logging.error(
+                f"Error while validate config dict: "
+                f"The configuration dictionary is empty."
+            )
+            return False
 
-                # Pokud klíč nebo hodnota neprojdou validací
-                if not cls._validate_key_and_value(key, value):
-                    return False
+        # Cyklus rozebírající slovník na klíč a hodnotu
+        for key, value in config.items():
 
-            # Pokud ověření proběhne bez chyb
-            return True
+            # Kontrola klíče a hodnoty
+            if not cls._validate_key_and_value(key, value):
+                logging.error(
+                    f"Error while validate config dict: "
+                    f"The configuration dictionary does not contain valid data."
+                )
+                return False
 
-        # Pokud není slovník a nebo je prázdný
-        return False
+        # Pokud ověření proběhne bez chyb
+        logging.debug(
+            f"Success with validate config dict: "
+            f"The configuration dictionary has been checked "
+            f"and contains valid data."
+        )
+        return True
+
 

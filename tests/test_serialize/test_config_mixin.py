@@ -10,7 +10,7 @@ from log_this.manager.config.mixins.class_methods import (
     ValidateValueMixin,
     ValidateConfigDictMixin
 )
-from log_this.manager.config.mixins.instance_methods import (
+from log_this.manager.config.mixins.instance_methods2 import (
     LoadDefaultConfigMixin,
     ResetConfigMixin,
     UpdateConfigMixin,

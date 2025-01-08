@@ -29,9 +29,10 @@ class ValidateKeyAndValueMixin:
         # Pokud klíč není mezi klíči defaultního slovníku
         if key not in cls.DEFAULTS:
             options = list(cls.DEFAULTS.keys())
-            logging.error(
+            cls.logger.error(
+                f"for validate key and value: \n"
                 f"Neplatný klíč: {key}. "
-                f"Klíč není součástí defaultní konfigurace. "
+                f"Klíč není součástí defaultní konfigurace. \n"
                 f"Možnosti: {options}"
             )
             return False

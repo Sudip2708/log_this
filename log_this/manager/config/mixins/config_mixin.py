@@ -1,14 +1,13 @@
-from .static_methods import (
-    ReadConfigFileMixin,
-    SaveConfigToFileMixin
-)
+# from .static_methods import (
+#     ReadConfigFileMixin,
+#     SaveConfigToFileMixin
+# )
 from .class_methods import (
     GetConfigFilePathMixin,
-    KeyAndValueCheckMixin,
-    ValidateValueMixin,
+    ValidateKeyAndValueMixin,
     ValidateConfigDictMixin
 )
-from .instance_methods import (
+from .instance_methods2 import (
     LoadDefaultConfigMixin,
     ResetConfigMixin,
     UpdateConfigMixin,
@@ -26,11 +25,10 @@ class ConfigMixin(
 
     # Inicializační metody:
     GetConfigFilePathMixin,
-    ReadConfigFileMixin,
-    ValidateValueMixin,
-    KeyAndValueCheckMixin,
+    # ReadConfigFileMixin,
+    ValidateKeyAndValueMixin,
     ValidateConfigDictMixin,
-    SaveConfigToFileMixin,
+    # SaveConfigToFileMixin,
     LoadDefaultConfigMixin,
 
     # Metody pro nastavení konfigurace:

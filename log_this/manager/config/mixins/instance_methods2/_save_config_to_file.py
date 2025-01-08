@@ -1,14 +1,14 @@
 import json
 import logging
+from pathlib import Path
 from typing import Dict
 
 
 class SaveConfigToFileMixin:
 
-    @staticmethod
-    def _save_config_to_file(
-            path: str,
-            config_dict: Dict[str, str]
+    def _save_config_to_file(self,
+            path: Path = self._config_path,
+            config_dict: Dict[str, str] = self.DEFAULTS
     ) -> bool:
         """
         Saves the configuration to a file in JSON format.
@@ -31,43 +31,57 @@ class SaveConfigToFileMixin:
                 json.dump(config_dict, file, indent=2)
 
             # Info log and confirmation of successful operation
-            logging.info(f"Configuration has been saved to: {path}")
+            logging.info(
+                f"Success with save config to file: "
+                f"Configuration has been saved to: {path}"
+            )
             return True
 
 
         except FileNotFoundError as e:
             logging.error(
-                f"Error: The file path does not exist: "
-                f"{type(e).__name__}({str(e)})"
+                f"Error while save config to file: "
+                f"The configuration dictionary was not saved! "
+                f"The file path does not exist: {type(e).__name__}({str(e)})"
             )
 
         except PermissionError as e:
             logging.error(
-                f"Error: Insufficient permissions to access the file: "
+                f"Error while save config to file: "
+                f"The configuration dictionary was not saved! "
+                f"Insufficient permissions to access the file: "
                 f"{type(e).__name__}({str(e)})"
             )
 
         except TypeError as e:
             logging.error(
-                f"Error: Configuration data is not JSON serializable: "
+                f"Error while save config to file: "
+                f"The configuration dictionary was not saved! "
+                f"Configuration data is not JSON serializable: "
                 f"{type(e).__name__}({str(e)})"
             )
 
         except json.JSONDecodeError as e:
             logging.error(
-                f"Error during JSON deserialization: "
+                f"Error while save config to file: "
+                f"The configuration dictionary was not saved! "
+                f"Something happened during JSON deserialization: "
                 f"{e.msg}: line {e.lineno} column {e.colno} (char {e.pos})"
             )
 
         except OSError as e:
             logging.error(
-                f"Error while working with the file: "
+                f"Error while save config to file: "
+                f"The configuration dictionary was not saved! "
+                f"Something happened while working with the file: "
                 f"{type(e).__name__}({str(e)})"
             )
 
         except Exception as e:
             logging.error(
-                f"Unknown error occurred while reading the file: "
+                f"Error while save config to file: "
+                f"The configuration dictionary was not saved! "
+                f"Something happened while reading the file: "
                 f"{type(e).__name__}({str(e)})"
             )
 

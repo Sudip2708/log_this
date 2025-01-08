@@ -23,4 +23,11 @@ setup(
         "Operating System :: OS Independent",
     ],
     python_requires='>=3.6',
+    # Nastavení pro zadávání příkazu z příkazové řádky.
+    entry_points={
+        'console_scripts': [
+            'log-this-config=log_this.manager.config.cli:main',
+            'log_this_config=log_this.manager.config.cli:main',
+        ],
+    },
 )
