@@ -10,7 +10,7 @@ class DeleteConfigFileMixin:
             config_file_path: Path = None,
     ) -> bool:
         """
-        Metoda pro smazání konfiguračního souboru
+        Metoda pro smazání konfiguračního souboru.
         """
 
         try:

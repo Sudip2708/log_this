@@ -1,7 +1,7 @@
-from .logger import get_logger
-from .config import get_config
-from .thread import get_thread
-from .serializer import get_serializer
+from .logger import log_this_logger
+from .config import config
+from .thread import thread
+from .serializer import serializer
 from .methods import (
     GetIndentMethodMixins,
     GetBlankLinesMethodsMixins,
@@ -25,7 +25,6 @@ class LogThisManager(
     Attributes:
         _instance: Singleton instance pro správu obsahu.
     """
-
 
     # Atribut pro instanci třídy:
     _instance = None
@@ -58,10 +57,10 @@ class LogThisManager(
             self.serialize: Třída pro serializaci objektů.
         """
         if not hasattr(self, '_initialized'):
-            self.logger = get_logger()
-            self.config = get_config()
-            self.thread = get_thread()
-            self.serialize = get_serializer()
+            self.logger = log_this_logger
+            self.config = config
+            self.thread = thread
+            self.serialize = serializer
             self.serialize.max_depth = self.config["max_depth"]
             self._initialized = True
 

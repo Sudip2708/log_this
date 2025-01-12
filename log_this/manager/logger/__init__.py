@@ -1,7 +1,7 @@
-from ._logger_settings import logger_settings
-from .get_logger import get_logger
+from .log_manager import LogManager, app_log, cli_log
 
 __all__ = [
-    "logger_settings",  # Funkce pro nastavení loggeru
-    "get_logger",  # Funkce vracející samotný logger
+    "LogManager",  # Třída pro vytvoření logerů
+    "app_log",  # Loger pro hlavní knihovnu LogThis
+    "cli_log",  # Logger pro konfiguraci knihovny
 ]

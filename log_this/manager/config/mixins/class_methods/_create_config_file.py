@@ -32,7 +32,7 @@ class CreateConfigFileMixin:
 
         # Pokud je zadán vlastní slovník, ale neprojde validací
         if config_dict and not cls._validate_config_dict(config_dict):
-            logging.error(
+            self.cli_log.error(
                 f"Error while create config file: "
                 f"File not created. "
                 f"The received configuration dictionary is not valid. "

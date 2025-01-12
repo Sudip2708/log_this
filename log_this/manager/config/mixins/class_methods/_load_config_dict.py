@@ -37,7 +37,7 @@ class LoadConfigDictMixin:
             )
 
             # Pokus o smazání souboru
-            if cls._config_path.exist():
+            if cls._config_path.exists():
 
                 # Info o detekci poškozeného souboru
                 logging.debug(

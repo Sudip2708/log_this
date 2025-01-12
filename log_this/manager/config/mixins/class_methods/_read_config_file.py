@@ -17,7 +17,7 @@ class ReadConfigFileMixin:
         If successful, it logs a confirmation message and returns the content.
 
         Args:
-            path (Path): Path to the file.
+            config_file_path (Path): Path to the file.
 
         Returns:
             dict: Dictionary with the configuration.
@@ -38,18 +38,19 @@ class ReadConfigFileMixin:
             # Oznam o úspěšném načtení konfiguračního slovníku a navrácení dat
             logging.debug(
                 f"Success with read config file: "
-                f"The configuration dictionary was loaded from the file: {path}"
+                f"The configuration dictionary was loaded from the file: {config_file_path}"
             )
 
             # Pokud je zadán vlastní slovník, ale neprojde validací
-            if (config_file_path != cls._config_path
-                    and not cls._validate_config_dict(config_dict)):
-                logging.error(
-                    f"Error while read config file: "
-                    f"The configuration dictionary was not loaded! "
-                    f"The received configuration dictionary is not valid. "
-                )
-                return False
+
+            if config_file_path != cls._config_path:
+                if not cls._validate_config_dict(config_dict):
+                    logging.error(
+                        f"Error while read config file: "
+                        f"The configuration dictionary was not loaded! "
+                        f"The received configuration dictionary is not valid. "
+                    )
+                    return False
 
             return config_dict
 

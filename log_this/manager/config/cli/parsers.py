@@ -1,4 +1,7 @@
 # log_this/manager/config/cli/parsers.py
+"""
+Definuje příkazy pro terminál a jejich nápovědu.
+"""
 import argparse
 
 

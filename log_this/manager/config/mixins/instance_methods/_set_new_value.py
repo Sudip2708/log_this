@@ -28,8 +28,9 @@ class SetNewValueMixin:
 
         # Kontrola, zda již hodnota nebyla aktualizovaná
         if self.config[key] == value:
-            self.logger.info(f"The configuration key {key} is already set to {value}")
-            self.logger.info("No change was made.")
+            self.cli_log.info(
+                f"The configuration key {key} is already set to {value}"
+            )
             return
 
         # Kontrola klíče a hodnoty
@@ -37,22 +38,19 @@ class SetNewValueMixin:
 
             # Uložení změny do instance třídy
             self.config[key] = value
-            logging.debug(
-                f"Success with update config: "
-                f"The configuration for the key {key} has been changed to {value} "
+            self.cli_log.success(
+                f"The configuration for the key {key} has been set to {value} "
             )
 
             # Uložení změny do konfiguračního souboru
-            if self._create_config_file(self.config):
-                logging.debug(
-                    f"Success with update config file: "
-                    f"The current configuration has been saved to a file: "
-                    f"{self._config_path} "
+            if not self._create_config_file(self.config):
+                self.cli_log.success(
+                    f"The new configuration has been saved to a file: "
                 )
 
             # Pokud uložení změny neproběhlo v pořádku
             else:
-                logging.error(
+                self.file_log.error(
                     f"Error while update config: "
                     f"The configuration file could not be updated. \n"
                     f"Running info for this Error: "
@@ -67,7 +65,7 @@ class SetNewValueMixin:
                 from log_this.manager.serializer import get_serializer
                 serializer = get_serializer()
                 serializer.max_depth = value
-                logging.debug(
+                self.file_log.info(
                     f"Success with update config file: "
                     f"The SafeSerializer class attribute 'max_depth' "
                     f"was changed to {value} "
@@ -75,7 +73,7 @@ class SetNewValueMixin:
 
         # Pokud validace neproběhne úspěšně
         else:
-            logging.error(
+            self.file_log.error(
                 f"Error while update config: "
                 f"Could not update key {key} to value {value}. "
                 f"The values provided are not valid."
