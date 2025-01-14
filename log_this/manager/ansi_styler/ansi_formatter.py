@@ -1,6 +1,7 @@
 print("ansi_formatter.py")
 from typing import Union, Optional, Dict
 import re
+import json
 from ._style_text import StyledText
 from ._ansi_codes import (
     TEXT_STYLES, TEXT_COLORS, BACKGROUND_COLORS, LEVELS_COLORS, MESSAGE_COLORS
@@ -15,6 +16,14 @@ class ANSIFormatter:
     ESCAPE = "\033["
     RESET = "\033[0m"
     PATTERN = re.compile(r"\033\[[0-9;]*m|[^\033]+")
+    LEVELS_SYMBOLS = {
+        'ERROR': "✘",
+        'CRITICAL': "✘",
+        'WARNING': "⚠",
+        'INFO': "ℹ",
+        'DEBUG': "🔍",
+        'SUCCESS': "✔"
+    }
 
     def __new__(cls) -> 'ANSIFormatter':
         if cls._instance is None:
@@ -63,10 +72,59 @@ class ANSIFormatter:
         message_color = self.message_color_dict.get(level, "37")
         return self.style(message).set(message_color)
 
-    def cli_format(self, level: str, message: str) -> str:
-        """Format a message with appropriate colors for level and message."""
-        return (f"{self.colored_level(level)}: "
-                f"{self.colored_message(level, message)}")
+    # def cli_format(self, level: str, message: str) -> str:
+    #     """Format a message with appropriate colors for level and message."""
+    #     return (f"{self.colored_level(level)}: "
+    #             f"{self.colored_message(level, message)}")
+
+
+    def cli_format(self, level: str, message: str, extra: str = "{}") -> str:
+        """
+        Format a message for CLI output with consistent styling.
+
+        Args:
+            level: Message level (ERROR, SUCCESS, INFO, etc.)
+            message: The message to format
+            extra: Slovník s dodatečnými informacení pro vykreslení logu
+
+        Returns:
+            Formatted string ready for CLI output
+        """
+
+        # Kontrola povinných parametrů
+        if not level:
+            raise ValueError("Log level is required.")
+        if not message:
+            raise ValueError("Log message is required.")
+
+        # Načtení slovníku extra
+        try:
+            extra_dict = json.loads(extra)
+        except json.JSONDecodeError as e:
+            raise ValueError(f"Invalid JSON in 'extra': {e}")
+
+        # Přepis levelu na velká písmena
+        level = level.upper()
+
+        # Načtení symbolu a hlavičky
+        symbol = self.LEVELS_SYMBOLS.get(level, "•")
+
+        # Vytvoření intra
+        level_color = self.level_color_dict.get(level, "37")
+        text = f"{symbol} {message}"
+        intro = self.style(text).set_checked(level_color)
+
+
+        # Format message lines with proper indentation and color
+        message_color = self.message_color_dict.get(level, "0")
+        formatted_lines = [
+            self.style(f"  {line}").set(color(message_color))
+            for line in message_lines
+        ]
+
+        # Combine all lines
+        return "\n".join([str(intro), *formatted_lines, ""])
+
 
 # Create singleton instance
 inst = ANSIFormatter()

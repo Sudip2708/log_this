@@ -26,16 +26,62 @@ class SetNewValueMixin:
             ValueError: Při pokusu o nastavení neplatné hodnoty
         """
 
+
+        # Kontrola klíče a hodnoty
+        try:
+            self._validate_key_and_value(key, value)
+        # Zachycení špatného klíče a hodnoty
+        except (KeyError, ValueError) as e:
+            self.cli_log.error(e, extra=e.extra if e.extra else None)
+
+
+
         # Kontrola, zda již hodnota nebyla aktualizovaná
         if self.config[key] == value:
             self.cli_log.info("No Change Needed",
                 extra = {
-                    "detail": f"The configuration key {key} is already set to {value}",
+                    "detail": f"The configuration key '{key}' is already set to '{value}'",
                     "help": "Pokud cheš vidět aktuální konfiguraci: $ log-this-config --show \n"
                             "Pro podrobnější nápovědu: $ log-this-config --help "
                 }
             )
             return
+
+
+
+        # Uložení změny do instance třídy
+        self.config[key] = value
+        self.cli_log.success("The configuration was changed",
+            extra = {
+                "detail": f"The key '{key}' has been set to '{value}'",
+            }
+        )
+
+        # Uložení změny do konfiguračního souboru
+        try:
+            self._create_config_file(self.config):
+        except (KeyError, ValueError) as e:
+            self.cli_log.info(e, extra=e.extra if e.extra else {})
+
+
+        # Dodatečná úprava pro nastavení maximální rekurze pro serializer
+        if key == "max_depth":
+            try:
+                self.update_max_depth_in_serealizer(value)
+            except (KeyError, ValueError) as e:
+                self.cli_log.info(e, extra=e.extra if e.extra else {})
+
+
+    def update_max_depth_in_serealizer(self, value):
+        try:
+            from log_this.manager.serializer import get_serializer
+            serializer = get_serializer()
+            serializer.max_depth = value
+        except (KeyError, ValueError) as e:
+            self.cli_log.info(e, extra=e.extra if e.extra else {})
+
+
+
 
         # Kontrola klíče a hodnoty
         if self._validate_key_and_value(key, value):

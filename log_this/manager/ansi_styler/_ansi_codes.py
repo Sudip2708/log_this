@@ -40,14 +40,14 @@ BACKGROUND_COLORS = {
 }
 
 LEVELS_COLORS = {
-    'ERROR': "31;1",  # bold red
-    'CRITICAL': "37;41",  # white text on red background
-    'WARNING': "33;1",  # bold yellow
-    'INFO': "32",  # green (normal)
-    'DEBUG': "36",  # cyan (normal)
-    'SUCCESS': "32;1",  # bold green
-    'CONFIG': "34;1"  # bold blue
+    'ERROR': "31;1",    # bold red
+    'CRITICAL': "37;41", # white text on red background
+    'WARNING': "33;1",   # bold yellow
+    'INFO': "34;1",     # bold blue (změněno z green)
+    'DEBUG': "36",      # cyan
+    'SUCCESS': "32;1"   # bold green
 }
+
 
 MESSAGE_COLORS = {
     'ERROR': "0",  # default color (reset)
@@ -55,6 +55,5 @@ MESSAGE_COLORS = {
     'WARNING': "0",  # default color (reset)
     'INFO': "0",  # default color (reset)
     'DEBUG': "90",  # gray
-    'SUCCESS': "0",  # default color (reset)
     'CONFIG': "0"  # default color (reset)
 }

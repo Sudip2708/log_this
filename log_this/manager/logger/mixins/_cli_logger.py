@@ -10,10 +10,12 @@ class CliLoggerMixin:
         'propagate': True,
         'log_to_file': False,
         'formatter': logging.Formatter(
-            cli_format('%(levelname)s', '%(message)s'))
+            cli_format('%(levelname)s', '%(message)s', '%(extra)s')
+        )
     }
 
     @classmethod
     def cli_logger(cls) -> logging.Logger:
         """Logger pro CLI komunikaci."""
         return cls.get_logger(**cls.CLI_LOGGER_CONFIG)
+

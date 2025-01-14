@@ -5,11 +5,11 @@ from ..utils import get_available_styles
 class SetMixin:
     """Mixin s hlavní metodou pro nastavení stylu."""
 
-    def s(self, *styles: Union[str, int]) -> 'StyledText':
-        """Alias for set method."""
-        return self.set(*styles)
-
-    def set(self, *styles: Union[str, int]) -> 'StyledText':
+    def set(
+            self,
+            *styles: Union[str, int],
+            values_checked: bool = False
+    ) -> 'StyledText':
         """Add multiple styles to be applied.
 
         Args:
@@ -17,6 +17,8 @@ class SetMixin:
                     Can be style names (e.g., 'bold', 'red'),
                     ANSI codes as strings (e.g., '31', '1'),
                     or ANSI codes as integers (e.g., 31, 1)
+            values_checked: If True, styles are assumed to be valid and do not need verification.
+
 
         Returns:
             Self for method chaining
@@ -30,30 +32,33 @@ class SetMixin:
         for style in styles:
 
             # Kontrola, zda jsou kody dodané jako str nebo int
-            if isinstance(style, (str, int)):
-                # Převod na str
-                style_str = str(style)
-
-            # Pokud se jedná o jiný formát
-            else:
-                # Vyvolání výjimky
+            if not isinstance(style, (str, int)):
                 raise TypeError(
                     f"Style must be string or integer, not {type(style).__name__}")
 
-            # Kontrola zda se styl nachází v seznamu podporovaných stylů
-            if style_str in self._builder.allowed_codes:
-                # pokud ano, přidání stylu do atributu pro seznam stylů
-                self._styles.append(style_str)
+            # Převod na str, pokud by hodnota byla dodaná jako int
+            style_str = str(style)
 
-            # Pokud se nejedná o podporovaný styl
-            else:
-                # Vyvolání výjimky s výpisem podporovaných stylů
+            # Kontrola zda se styl nachází v seznamu podporovaných stylů
+            if style_str not in self._builder.allowed_codes:
                 raise ValueError(
                     f"Invalid style: '{style}'. Available styles are: "
                     f"{get_available_styles()}"
                 )
 
+            # Pokud je hodnota 0 (reset), vymaž všechny styly
+            if style_str == "0":  # Reset styles
+                self._styles = []
+
+            # Pokud jde o jinou hodnotu, přidej ji do seznam stylů
+            else:
+                self._styles.append(style_str)
+
         # Navrácení textové reprezentace instance
         # Jedná se o plně spracovaný řetězec obsahující staré i nové styli
         return self
 
+
+    def s(self, *styles: Union[str, int]) -> 'StyledText':
+        """Alias for set method."""
+        return self.set(*styles)
