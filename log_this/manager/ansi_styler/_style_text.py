@@ -10,6 +10,9 @@ if TYPE_CHECKING:
 class StyledText(SetMixin, ProcesAnsiCodesMixin):
     """Helper class for applying styles to specific text."""
 
+    # Natsavení vzoru pro vyhledávání ansi sekvencí a textu
+    pattern = re.compile(r"\033\[[0-9;]*m|[^\033]+")
+
     def __init__(self, builder: 'ANSIFormatter', text: str):
         """Initialize StyledText with builder and text.
 
@@ -42,7 +45,7 @@ class StyledText(SetMixin, ProcesAnsiCodesMixin):
         )
 
         # Volání funkce pro spracování textu a navrácení výsledného řetězce
-        if re.compile(r"\033\[[0-9;]*m").search(self._text):
+        if self.pattern.search(self._text):
             return process_text(self._text, ansi_code_list)
         else:
             return wrap_text_whit_ansi_codes(self._text, self._styles)

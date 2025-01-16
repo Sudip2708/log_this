@@ -1,4 +1,5 @@
 from typing import Union
+from log_this.manager.config.mixins.class_methods._validate_key_and_value2 import CLIKeyError, CLIValueError
 
 
 class SetNewValueMixin:
@@ -31,29 +32,33 @@ class SetNewValueMixin:
         try:
             self._validate_key_and_value(key, value)
         # Zachycení špatného klíče a hodnoty
-        except (KeyError, ValueError) as e:
-            self.cli_log.error(e, extra=e.extra if e.extra else None)
+        except (CLIKeyError, CLIValueError) as e:
+            extra = getattr(e, "extra", {})
+            self.cli_log.error(e, extra=extra)
 
 
 
         # Kontrola, zda již hodnota nebyla aktualizovaná
         if self.config[key] == value:
-            self.cli_log.info("No Change Needed",
+            self.cli_log.info(
+                "No Change Needed",
                 extra = {
                     "detail": f"The configuration key '{key}' is already set to '{value}'",
-                    "help": "Pokud cheš vidět aktuální konfiguraci: $ log-this-config --show \n"
+                    "hint": "Pokud cheš vidět aktuální konfiguraci: $ log-this-config --show \n"
                             "Pro podrobnější nápovědu: $ log-this-config --help "
                 }
             )
             return
 
 
-
         # Uložení změny do instance třídy
+        previous_value = self.config[key]
         self.config[key] = value
-        self.cli_log.success("The configuration was changed",
+        self.cli_log.success(
+            "The configuration was changed",
             extra = {
                 "detail": f"The key '{key}' has been set to '{value}'",
+                "hint": "Pro vrácení na předchozí hodnotu použij: $ log-this-config --set {key} --to {previous_value} "
             }
         )
 

@@ -94,8 +94,6 @@ class ANSIFormatter:
         # Kontrola povinných parametrů
         if not level:
             raise ValueError("Log level is required.")
-        if not message:
-            raise ValueError("Log message is required.")
 
         # Načtení slovníku extra
         try:
@@ -111,7 +109,7 @@ class ANSIFormatter:
 
         # Vytvoření intra
         level_color = self.level_color_dict.get(level, "37")
-        text = f"{symbol} {message}"
+        text = f"{symbol} {message if message else level}"
         intro = self.style(text).set_checked(level_color)
 
 

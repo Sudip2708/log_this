@@ -3,21 +3,6 @@ from typing import Dict, Union
 
 from .config_mixin import ConfigMixin
 from log_this.manager.logger import cli_log
-from .config_keys import (
-    SkipThisKey,
-    OneLineKey,
-    SimpleKey,
-    DetailedKey,
-    ReportKey,
-    TrueKey,
-    FalseKey,
-    NoneKey,
-    EmptyKey,
-    IndentKey,
-    BlankLinesKey,
-    DocstringLinesKey,
-    MaxDepthKey,
-)
 
 class LogThisConfig(ConfigMixin):
     """
@@ -34,6 +19,27 @@ class LogThisConfig(ConfigMixin):
     # Atribut pro singleton instanci třídy:
     _instance = None
 
+    # Atribut pro cstu ke konfiguračnímu souboru
+    _config_path = Path(__file__).parent / "config.json"
+
+    # Defaultní hodnoty:
+    DEFAULTS: Dict[str, Union[int, str, bool]] = {
+        'skip_this': 0,
+        'one_line': 1,
+        'simple': 2,
+        'detailed': 3,
+        'report': 4,
+        'true': 1,
+        'false': 0,
+        'none': 0,
+        'empty': 0,
+        'indent': 2,
+        'blank_lines': True,
+        'docstring_lines': 3,
+        'max_depth': 100,
+    }
+
+
     # Vytvoření instance:
     def __new__(cls) -> 'LogThisConfig':
         """
@@ -46,7 +52,15 @@ class LogThisConfig(ConfigMixin):
         Returns:
             LogThisConfig: Singleton instance konfigurace
         """
+
+        # Pokud instance ještě není vytvořená
         if not cls._instance:
+
+            # Validace dat z defaultního slovníků hodnot
+            if not cls._validate_config_dict(cls.DEFAULTS):
+                raise ValueError("Chyba při validaci defaultních hodnot.")
+
+            # Vytvoření a navrácení singleton instance
             cls._instance = super().__new__(cls)
         return cls._instance
 
@@ -65,36 +79,8 @@ class LogThisConfig(ConfigMixin):
 
         # Pokud instance nebvyla ještě inicializovaná
         if not hasattr(self, '_initialized'):
-
-            """Inicializace správce konfigurace"""
-            self._config_keys = {
-                'skip_this': SkipThisKey(),
-                'one_line': OneLineKey(),
-                'simple': SimpleKey(),
-                'detailed': DetailedKey(),
-                'report': ReportKey(),
-                'true': TrueKey(),
-                'false': FalseKey(),
-                'none': NoneKey(),
-                'empty': EmptyKey(),
-                'indent': IndentKey(),
-                'blank_lines': BlankLinesKey(),
-                'docstring_lines': DocstringLinesKey(),
-                'max_depth': MaxDepthKey()
-            }
-
-            self.cli_log = cli_log
-            self.config_path = Path(__file__).parent / "config.json"
             self.config = self._load_config_dict()
+            self.cli_log = cli_log
             self._initialized = True
-
-
-    @property
-    def defaults(self) -> Dict[str, Union[int, str, bool]]:
-        """Vrátí slovník s výchozími hodnotami konfigurace."""
-        return {
-            key: config_key.default_value
-            for key, config_key in self._config_keys.items()
-        }
 
 config = LogThisConfig()
