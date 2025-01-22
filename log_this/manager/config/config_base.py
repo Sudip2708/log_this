@@ -1,9 +1,10 @@
 from pathlib import Path
-from typing import Dict, Union
+from typing import Dict, Union, Set
 
-from .config_mixin import ConfigMixin
+from .init_mixins import CreateConfigFileMixin, LoadConfigMixin
+from .singleton_meta import SingletonMeta
 from log_this.manager.logger import cli_log
-from .config_keys import (
+from .keys_data import (
     SkipThisKey,
     OneLineKey,
     SimpleKey,
@@ -19,7 +20,11 @@ from .config_keys import (
     MaxDepthKey,
 )
 
-class LogThisConfig(ConfigMixin):
+class LogThisConfig(
+    LoadConfigMixin,
+    CreateConfigFileMixin,
+    metaclass=SingletonMeta
+):
     """
     Singleton konfigurace pro knihovnu logování s rozšířenými funkcemi.
 
@@ -29,26 +34,6 @@ class LogThisConfig(ConfigMixin):
     - Dynamická správa konfiguračních parametrů
     - Podpora exportu, importu a resetu konfigurace
     """
-
-
-    # Atribut pro singleton instanci třídy:
-    _instance = None
-
-    # Vytvoření instance:
-    def __new__(cls) -> 'LogThisConfig':
-        """
-        Vytvoření singleton instance.
-
-        Metoda nejprve ověří existenci instance.
-        Pokud existuje vrátí existující.
-        Pokud neexistuje, vytvoří novou.
-
-        Returns:
-            LogThisConfig: Singleton instance konfigurace
-        """
-        if not cls._instance:
-            cls._instance = super().__new__(cls)
-        return cls._instance
 
 
     # Základní inicializace instance
@@ -67,7 +52,7 @@ class LogThisConfig(ConfigMixin):
         if not hasattr(self, '_initialized'):
 
             """Inicializace správce konfigurace"""
-            self._config_keys = {
+            self.keys_data = {
                 'skip_this': SkipThisKey(),
                 'one_line': OneLineKey(),
                 'simple': SimpleKey(),
@@ -85,7 +70,9 @@ class LogThisConfig(ConfigMixin):
 
             self.cli_log = cli_log
             self.config_path = Path(__file__).parent / "config.json"
-            self.config = self._load_config_dict()
+            self._create_config_file = False
+            self.config = self.load_config()
+            self.create_config_file()
             self._initialized = True
 
 
@@ -94,7 +81,13 @@ class LogThisConfig(ConfigMixin):
         """Vrátí slovník s výchozími hodnotami konfigurace."""
         return {
             key: config_key.default_value
-            for key, config_key in self._config_keys.items()
+            for key, config_key in self.keys_data.items()
         }
+
+    @property
+    def valid_keys(self) -> Set[str]:
+        """Vrátí množinu s platnými klíči."""
+        return set(self.keys_data.keys())
+
 
 config = LogThisConfig()

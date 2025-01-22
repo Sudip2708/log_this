@@ -1,6 +1,6 @@
 import pytest
 from unittest.mock import Mock, patch
-from log_this.manager.config.mixins.instance_methods2 import ResetConfigMixin
+from log_this.manager.config.init_mixins.instance_methods2 import ResetConfigMixin
 
 
 # Fixture pro základní instanci mixinu

@@ -1,0 +1,107 @@
+Výběr možností:
+(Pohyb šipkami nahoru a dolu, a pro výběr enter, pro ukončení Ctrl+c)
+[x] indent: Nastavení počtu mezer odsazení při zanořeném logování. [Defaultně 2]
+[ ] blank_lines: Nastavení zobrazení prázdného řádku mezi logy. [Defaultně True]
+[ ] docstring_lines: Nastavení počtu řádků pro zobrazení docstringu. [Defaultně 3]
+[ ] max_depth: Nastavení úrovně rekurze pro serializaci dat. [Defaultně 100]
+[ ] skip_this:  - Nastavení pro @log_this(skip_this) [Defaultně 0 (nelogovat)]
+[ ] one_line - Nastavení pro @log_this(one_line) [Defaultně 1 (jednořádkový log)]
+[ ] simple - Nastavení pro @log_this(simple) [Defaultně 2 (log s 4 řádky)]
+[ ] detailed - Nastavení pro @log_this(detailed) [Defaultně 3 (log s 6. řádky)]
+[ ] report - Nastavení pro @log_this(report) [Defaultně 4 (log s 10+ řádky)]
+[ ] true - Nastavení pro @log_this(True) [Defaultně 0 (nelogovat)]
+[ ] false - Nastavení pro @log_this(False) [Defaultně 0 (nelogovat)]
+[ ] none - Nastavení pro @log_this(None) [Defaultně 0 (nelogovat)]
+[ ] empty - Nastavení pro @log_this() [Defaultně 0 (nelogovat)]
+
+Výběr možností:
+(Pohyb šipkami nahoru a dolu, a pro výběr enter, pro ukončení Ctrl+c)
+> 'indent' Nastavení počtu mezer odsazení při zanořeném logování, defaultně 2
+  'blank_lines' Nastavení zobrazení prázdného řádku mezi logy, defaultně True
+  'docstring_lines' Nastavení počtu řádků pro zobrazení docstringu, defaultně 3
+  'max_depth' Nastavení úrovně rekurze pro serializaci dat, defaultně 100
+  'skip_this' Nastavení pro @log_this(skip_this), defaultně 0 - nelogovat
+  'one_line' Nastavení pro @log_this(one_line), defaultně 1 - jednořádkový log
+  'simple' Nastavení pro @log_this(simple), defaultně 2 - log s 4 řádky
+  'detailed' Nastavení pro @log_this(detailed), defaultně 3 - log s 6. řádky
+  'report' Nastavení pro @log_this(report), defaultně 4 - log s 10+ řádky
+  'true' Nastavení pro @log_this(True), defaultně 1 - jednořádkový log
+  'false' Nastavení pro @log_this(False), defaultně 0 - nelogovat
+  'none' Nastavení pro @log_this(None), defaultně 0 - nelogovat
+  'empty' Nastavení pro @log_this(), defaultně 0 - nelogovat
+
+Výběr možností:
+(Pohyb šipkami nahoru a dolu, a pro výběr enter, pro ukončení Ctrl+c)
+[x] Nastavení počtu mezer odsazení při zanořeném logování.  [klíč: 'indent', defaultní hodnota: 2]
+[ ] Nastavení zobrazení prázdného řádku mezi logy.  [klíč: 'blank_lines', defaultní hodnota: True]
+[ ] Nastavení počtu řádků pro zobrazení docstringu.  [klíč: 'docstring_lines', defaultní hodnota: 3]
+[ ] Nastavení úrovně rekurze pro serializaci dat.  [klíč: 'max_depth', defaultní hodnota: 100]
+[ ] Nastavení pro @log_this(skip_this)  [klíč: 'skip_this', defaultní hodnota: 0 (nelogovat)]
+[ ] Nastavení pro @log_this(one_line)  [klíč: 'one_line', defaultní hodnota: 1 (jednořádkový log)]
+[ ] Nastavení pro @log_this(simple)  [klíč: 'simple', defaultní hodnota: 2 (log s 4 řádky)]
+[ ] Nastavení pro @log_this(detailed)  [klíč: 'detailed', defaultní hodnota: 3 (log s 6. řádky)]
+[ ] Nastavení pro @log_this(report)  [klíč: 'report', defaultní hodnota: 4 (log s 10+ řádky)]
+[ ] Nastavení pro @log_this(True)  [klíč: 'true', defaultní hodnota: 0 (nelogovat)]
+[ ] Nastavení pro @log_this(False)  [klíč: 'false', defaultní hodnota: 0 (nelogovat)]
+[ ] Nastavení pro @log_this(None)  [klíč: 'none', defaultní hodnota: 0 (nelogovat)]
+[ ] Nastavení pro @log_this()  [klíč: 'empty', defaultní hodnota: 0 (nelogovat)]
+
+Výběr možností:
+(Pohyb šipkami nahoru a dolu, a pro výběr Enter, pro ukončení Ctrl+c)
+[x] Nastavení počtu mezer odsazení při zanořeném logování.
+[ ] Nastavení zobrazení prázdného řádku mezi logy.
+[ ] Nastavení počtu řádků pro zobrazení docstringu.
+[ ] Nastavení úrovně rekurze pro serializaci dat.
+[ ] Nastavení pro @log_this(skip_this)
+[ ] Nastavení pro @log_this(one_line)
+[ ] Nastavení pro @log_this(simple)
+[ ] Nastavení pro @log_this(detailed)
+[ ] Nastavení pro @log_this(report)
+[ ] Nastavení pro @log_this(True)
+[ ] Nastavení pro @log_this(False)
+[ ] Nastavení pro @log_this(None)
+[ ] Nastavení pro @log_this()
+
+Výběr klíče pro nastavení jeho hodnoty
+
+Hint:
+- Klíč můžete buť zadat přímo v první možnosti, nebo můžete za pomoci
+  šipek nahoru a dolu požadovaný klíč vyhledat a vybrat entrem.
+
+> Zadat klíč přímo: ___
+  Nastavení pro 'indent' - Počet mezer odsazení při zanořeném logování.
+  Nastavení pro 'blank_lines' - Zobrazení prázdného řádku mezi logy.
+  Nastavení pro 'docstring_lines' - Počtu řádků pro zobrazení docstringu.
+  Nastavení pro 'max_depth' - Hodnota maximální rekurze pro serializaci dat.
+  Nastavení pro 'skip_this' - @log_this(skip_this)
+  Nastavení pro 'one_line' - @log_this(one_line)
+  Nastavení pro 'simple' - @log_this(simple)
+  Nastavení pro 'detailed' - @log_this(detailed)
+  Nastavení pro 'report' - @log_this(report)
+  Nastavení pro 'true' - @log_this(True)
+  Nastavení pro 'false' - @log_this(False)
+  Nastavení pro 'none' - @log_this(None)
+  Nastavení pro 'empty' - @log_this()
+
+Zadání nové hodnoty pro klíč 'indent': ___
+
+Options:
+- 0 (Skrytí odsazení.)
+- od 1 do 4 (Počet mezer pro jedno odsazení.)
+
+Hint:
+- Klíč 'indent' nastavuje počet mezer odsazení od kraje pro zanořené logování.
+- Pro skrytí odsazení slouží hodnota 0.
+- Více než 4 mezery pro jedno odsazení nelze zadat.
+
+Defaultní hodnota: 2
+Současná hodnota: 2
+
+Uspěšně jste nastavili klíč 'indent' na hodnotu 4
+- Jednotlivé logy budou při zanoření odsazené od kraje o 4 mezery.
+
+Vyberte další akci:
+> Hlavní menu
+  Ukončit interaktivní režim
+
+

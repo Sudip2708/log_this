@@ -1,7 +1,7 @@
 import pytest
 from pathlib import Path
 
-from log_this.manager.config.mixins.class_methods import GetConfigFilePathMixin
+from log_this.manager.config.init_mixins.class_methods import GetConfigFilePathMixin
 
 class MockConfigClass(GetConfigFilePathMixin):
     # Mockovaný atribut pro testování (upravený aby zobrazoval cestu ve formátu dle operačního systému)

@@ -1,16 +1,16 @@
 import pytest
-from log_this.manager.config.mixins import ConfigMixin
-from log_this.manager.config.mixins.static_methods import (
+from log_this.manager.config.init_mixins import ConfigMixin
+from log_this.manager.config.init_mixins.static_methods import (
     ReadConfigFileMixin,
     SaveConfigToFileMixin
 )
-from log_this.manager.config.mixins.class_methods import (
+from log_this.manager.config.init_mixins.class_methods import (
     GetConfigFilePathMixin,
     KeyAndValueCheckMixin,
     ValidateValueMixin,
     ValidateConfigDictMixin
 )
-from log_this.manager.config.mixins.instance_methods2 import (
+from log_this.manager.config.init_mixins.instance_methods2 import (
     LoadDefaultConfigMixin,
     ResetConfigMixin,
     UpdateConfigMixin,
@@ -18,7 +18,7 @@ from log_this.manager.config.mixins.instance_methods2 import (
     ImportConfigFromFileMixin,
     ExportConfigToFileMixin
 )
-from log_this.manager.config.mixins.dunder_methods import (
+from log_this.manager.config.init_mixins.dunder_methods import (
     StrMixin,
     GetItemMixin,
 )

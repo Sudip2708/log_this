@@ -1,5 +1,5 @@
 from typing import Union
-from log_this.manager.config.mixins.class_methods._validate_key_and_value2 import CLIKeyError, CLIValueError
+from log_this.manager.config.init_mixins.class_methods._validate_key_and_value2 import CLIKeyError, CLIValueError
 
 
 class SetNewValueMixin:

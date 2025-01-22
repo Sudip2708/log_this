@@ -1,25 +1,12 @@
 from pathlib import Path
 import json
 
-class CLIReadConfigFileError(Exception):
-    """Vlastní výjimka pro chyby při validaci hodnoty pro CLI."""
-
-    def __init__(self, exception_type, config_file_path, error_info: dict):
-        # Inicializace základní výjimky
-        self.exception_type = exception_type
-        message = f"An error occurred while reading config file: '{config_file_path}'."
-        super().__init__(message)
-
-        # Přidání extra informací o klíči pro CLI logging
-        self.extra = {
-            "detail": error_info.get("detail", ""),
-            "hint": error_info.get("hint", "")
-        }
+from ..errors import ReadConfigFileError
 
 
 def read_config_file(
         config_file_path: Path
-) -> config_dict:
+) -> dict:
     """
     Reads a configuration file and returns a dictionary with configurations.
 
@@ -52,7 +39,7 @@ def read_config_file(
         Zda může nastat: Ano, tato výjimka je zcela relevantní. Pokud soubor, který se pokoušíš načíst, neexistuje, Python vyhodí tuto výjimku.
         Doporučení: Tento blok by měl zůstat v kódu.
         """
-        raise CLIReadConfigFileError(
+        raise ReadConfigFileError(
             exception_type=FileNotFoundError,
             config_file_path=config_file_path,
             error_info={
@@ -67,7 +54,7 @@ def read_config_file(
         Zda může nastat: Ano, pokud soubor existuje, ale nemáš oprávnění k jeho čtení, tato výjimka nastane.
         Doporučení: Tento blok by měl zůstat v kódu.
         """
-        raise CLIReadConfigFileError(
+        raise ReadConfigFileError(
             exception_type=PermissionError,
             config_file_path=config_file_path,
             error_info={
@@ -83,7 +70,7 @@ def read_config_file(
         Zda může nastat: Ano, pokud soubor není validní JSON (například má syntaktickou chybu), vyvolá se tato výjimka.
         Doporučení: Tento blok by měl zůstat v kódu, protože je zaměřen na konkrétní problém s deserializací JSON.
         """
-        raise CLIReadConfigFileError(
+        raise ReadConfigFileError(
             json.JSONDecodeError,
             config_file_path,
             error_info={
@@ -101,7 +88,7 @@ def read_config_file(
         Zda může nastat: Ano, pokud dojde k nějakým nečekaným problémům při práci se souborem (například soubor je zamčený nebo došlo k nějaké jiní IO chybě).
         Doporučení: Tento blok může být zachován pro obecné chyby s I/O operacemi.
         """
-        raise CLIReadConfigFileError(
+        raise ReadConfigFileError(
             OSError,
             config_file_path,
             error_info={
@@ -116,7 +103,7 @@ def read_config_file(
         Zda může nastat: Ano, tato výjimka slouží jako „záchyt“ pro všechny nečekané chyby, které by mohly nastat.
         Doporučení: Tento blok je dobrý jako poslední záchyt pro neznámé chyby.
         """
-        raise CLIReadConfigFileError(
+        raise ReadConfigFileError(
             exception_type=type(e),
             config_file_path=config_file_path,
             error_info={

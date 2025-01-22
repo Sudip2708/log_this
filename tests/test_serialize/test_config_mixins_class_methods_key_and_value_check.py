@@ -1,5 +1,5 @@
 import pytest
-from log_this.manager.config.mixins.class_methods import KeyAndValueCheckMixin
+from log_this.manager.config.init_mixins.class_methods import KeyAndValueCheckMixin
 
 
 class MockConfigClass(KeyAndValueCheckMixin):

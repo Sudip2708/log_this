@@ -1,7 +1,7 @@
 import pytest
 from typing import Dict, Any
 from unittest.mock import patch
-from log_this.manager.config.mixins.class_methods import ValidateConfigDictMixin
+from log_this.manager.config.init_mixins.class_methods import ValidateConfigDictMixin
 
 
 class MockConfigClass(ValidateConfigDictMixin):

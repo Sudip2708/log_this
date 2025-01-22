@@ -3,7 +3,7 @@ import logging
 import os
 import pytest
 from unittest.mock import patch, mock_open
-from log_this.manager.config.mixins.static_methods._save_config_to_file import SaveConfigToFileMixin
+from log_this.manager.config.init_mixins.static_methods._save_config_to_file import SaveConfigToFileMixin
 
 
 @pytest.fixture
