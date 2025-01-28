@@ -16,6 +16,13 @@ class DocstringLinesKey(ConfigKey):
         "Pokud je zadaná hodnota celé číslo, vztahuje se pouze na řádky s textem. Prázdné řádky jsou vynechány. \n"
         "Pokud je zadaná hodnota 'all' docstring se objeví v podobě v jaké je zapsán."
     )
+    VALUES_DICT = {
+        1: "Pouze první řádek obsahující text",
+        3: "3 první řádky obsahující text",
+        10: "10 řádků obsahujících text",
+        "all": "Přepis celého docstringu v nezměněnné podobě",
+        "input": "Nastavení vlastní hodnoty"
+    }
 
     def validate(self, value: Any) -> bool:
         return (

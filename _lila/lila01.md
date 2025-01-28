@@ -1,0 +1,53 @@
+## Obsah:
+
+- Vstup do místnosti - flétna
+- Pohled dovnitř
+- Poslední myšlenka: Tak takhle vzniká vesmír!
+- Prvotní blaho a naprosté nevim
+- Věčnost promítnuta do pár okamžiků a prvotní procitnutí na Zemi
+- Upamatování si pohledu na Zem a znovu zapomění
+- Prvotní vědomí kamene postupně měnícího se na prach
+- Skrze půdu posunutí se do rostliné říše
+- Nejprve prvotní řasy a po té stále složitější struktury
+- A nakonec stromy jako poslední zastávka před zvířecí říší
+- Prvotníí existence v moři již není potřeba a tak vystupuji na souš a po té i na oblohu
+- Pohyb v potravním řetězci směrem nahoru
+- Dosažení nepřemožitelnosti ve světě titánů
+- Dopad asterouidu a pád mezi savce
+- Znovu postup tentokráte ale více pomaleji
+- Nestojím o dominanci a chci mít klid
+- Setkání s člověkem jenž rozhodlo o přestup ze psa do lidské říše
+- Prvotní zážitky a vnímání světa
+- Rozvoj civilaze během tisíců let
+- Skrze duchovní inkernace stále silněji jsem cítil svoje vnitřní pouto
+- Zjištění jak svět na tom je a že vlk na lovu je nejčastěji v beránkově rouše
+- Inkernace k teré vycházela stejná flétna jako v místnosti - krátké rozpomenutí se
+- Narodil jsem se do rodiny kde jsem všechny duše už předem znal z předchozích životů a kterým jsem důvěřoval a tak jsem věděl, že s nikým nebudu mít problém
+- Dětství, Beatles a Kapela
+- Přání na každý den, molitební kámen a cesta na chatu
+- Odchod z práce, a kapely a čajová konvička v Ústí
+- Poprvé pohled na Trandcendentál a počátek pouti
+- Touha po světle bržděna nánosy ostatních tužeb
+- První vzájemný pohled
+- 10 let života v naprostém neby
+- Výpověď v práci a chatička s knížečkou a prvotním pohledem na sebe sama
+- Cesta do Ameriky a anglická verze
+- Návrat do reality a cesta do Norska
+- Švýcarsko a odchod z cesty
+- Insolvence jako prvotní krok z dluhů
+- Spokojený pes a Rozárka
+- Florit a vstup do Pythonu
+- Poznání konečného já
+- Porozumění celému příběhu a tomu kde zrovna stojí
+- Porozumění aktuálnímu stavu světa
+- Nahlédnutí do budoucích životů a příslib lepších zítřků
+- Pochopení smyslu všeho a života jako takového
+- Pohled na to co vše je potřeba ještě udělat
+- Pohled na své nejvzdálenější Já a vstup do místnosti
+- Navrácení se k životu, protože vše chci dále prožít - ale nyní i s ujištěním, že nyní se budu moci snáze vracet
+- Porozumění že mé já které v místnosti sedí zažívá svou poslední inkernaci, což je velký svátek a ta nejhezčí ze všech
+- Návrat do místnosti a odchod do normálu
+- Pochopení společnosti a postupného vývoje
+- Poznání svých nejbližších a těch s kterými jsme něco prožili
+- Vyprávění si příběhů z jednotlivých životů a používání tamnějšího jazyka
+- Ponoření se do nejhlubší podstaty a spočinutí ve věčném blahu - Kdykoliv se mohu vracet, kdykoliv mohu být vším ale vše co chci je dobro a aby bylo všem jen bobře a aby všechno zkvétalo a s touto myšlenkou odesílám svůj poslední pohled světu a jako další neomylně potvrzený výpočet předávám hodnotu True volbě že dobro je více než zlo a láska vždycky vítězí.

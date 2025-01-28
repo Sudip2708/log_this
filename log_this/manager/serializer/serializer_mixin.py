@@ -40,6 +40,7 @@ class SerializerMixin(
     def serialize(
             self,
             obj: Any,
+            max_depth: int = None,
             depth: int = 0
     ) -> Any:
         """
@@ -108,8 +109,12 @@ class SerializerMixin(
 
         try:
 
+            # Kontrola, zda byl zadán parametr maximální hloubky pro zanoření
+            if not max_depth:
+                max_depth = self.max_depth
+
             # Kontrola maximální hloubky rekurze
-            if depth >= self.max_depth:
+            if depth >= max_depth:
                 return "<SerializationError: Maximum serialization depth exceeded>"
 
             # Kontrola přímé rekurze (objekty mají shodné ID)

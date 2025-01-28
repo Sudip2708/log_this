@@ -17,6 +17,13 @@ class MaxDepthKey(ConfigKey):
         "- Pro detailnější analýzu kodu se však někdy mohou hodit i velmi malé hodnoty. \n"
         "- Upozornění: Pokud necháte nastavenou malou hodnotu, může se vám stát, že bude hlášen falešný error pro kód který je v pořádku."
     )
+    VALUES_DICT = {
+        0: "Bez možnosti rekurze - pro ladění jednoho kodu",
+        3: "3 rekurzní volání - pro ladění jednoho kodu",
+        10: "10 rekurzních volání - pro detekci hlubší rekurze",
+        100: "100 rekurzních volání - pro bezpečný chod aplikace",
+        "input": "Nastavení vlastní hodnoty"
+    }
 
     def validate(self, value: Any) -> bool:
         return (

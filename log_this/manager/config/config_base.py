@@ -3,22 +3,8 @@ from typing import Dict, Union, Set
 
 from .init_mixins import CreateConfigFileMixin, LoadConfigMixin
 from .singleton_meta import SingletonMeta
-from log_this.manager.logger import cli_log
-from .keys_data import (
-    SkipThisKey,
-    OneLineKey,
-    SimpleKey,
-    DetailedKey,
-    ReportKey,
-    TrueKey,
-    FalseKey,
-    NoneKey,
-    EmptyKey,
-    IndentKey,
-    BlankLinesKey,
-    DocstringLinesKey,
-    MaxDepthKey,
-)
+from .utils import cli_print
+from .keys_data import KEYS_DATA
 
 class LogThisConfig(
     LoadConfigMixin,
@@ -52,23 +38,8 @@ class LogThisConfig(
         if not hasattr(self, '_initialized'):
 
             """Inicializace správce konfigurace"""
-            self.keys_data = {
-                'skip_this': SkipThisKey(),
-                'one_line': OneLineKey(),
-                'simple': SimpleKey(),
-                'detailed': DetailedKey(),
-                'report': ReportKey(),
-                'true': TrueKey(),
-                'false': FalseKey(),
-                'none': NoneKey(),
-                'empty': EmptyKey(),
-                'indent': IndentKey(),
-                'blank_lines': BlankLinesKey(),
-                'docstring_lines': DocstringLinesKey(),
-                'max_depth': MaxDepthKey()
-            }
-
-            self.cli_log = cli_log
+            self.keys_data = KEYS_DATA
+            self.cli_print = cli_print
             self.config_path = Path(__file__).parent / "config.json"
             self._create_config_file = False
             self.config = self.load_config()
@@ -88,6 +59,16 @@ class LogThisConfig(
     def valid_keys(self) -> Set[str]:
         """Vrátí množinu s platnými klíči."""
         return set(self.keys_data.keys())
+
+    @property
+    def get_valid_keys_with_descriptions(self) -> str:
+        """Vrátí výpis klíčů s krátkým popisem."""
+        text = (
+            f"\nSeznam konfiguračních klíčů:\n"
+        )
+        for key in self.keys_data:
+            text += f"'  {key}' - {self.keys_data[key].info}\n"
+        return text
 
 
 config = LogThisConfig()

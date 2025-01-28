@@ -105,7 +105,7 @@ class SafeSerializer(SerializerMixin):
 
 
     # Nastavení metody pro přímé volání funkce
-    def __call__(self, obj: Any) -> Any:
+    def __call__(self, obj: Any, max_depth: int = None) -> Any:
         """
         Umožňuje použít instanci SafeSerializer jako funkci.
 
@@ -148,7 +148,7 @@ class SafeSerializer(SerializerMixin):
             ```
         """
 
-        return self.serialize(obj)
+        return self.serialize(obj, max_depth)
 
 
 serializer = SafeSerializer()

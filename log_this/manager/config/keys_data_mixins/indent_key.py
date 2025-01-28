@@ -16,6 +16,13 @@ class IndentKey(ConfigKey):
         "Pro skrytí odsazení slouží hodnota 0. \n"
         "Více než 4 mezery pro jedno odsazení nelze zadat."
     )
+    VALUES_DICT = {
+        0: "Bez odsazení",
+        1: "Odsazení o 1 mezeru",
+        2: "Odsazení o 2 mezery",
+        3: "Odsazení o 3 mezery",
+        4: "Odsazení o 4 mezery"
+    }
 
     def validate(self, value: Any) -> bool:
         return (

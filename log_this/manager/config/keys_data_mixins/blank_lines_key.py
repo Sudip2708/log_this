@@ -16,6 +16,10 @@ class BlankLinesKey(ConfigKey):
         "Pro jednořádkové výpisy je přehlednější výstup bez prázdné řádky (hodnota: False). \n"
         "Pro víceřádkové výpisy je přehlednější výstup s prázdnou řádkou (hodnota: True)."
     )
+    VALUES_DICT = {
+        True: "Zobrazit mezi logy prázdný řádek",
+        False: "Nezobrazovat mezi logy prázdný řádek",
+    }
 
     def validate(self, value: Any) -> bool:
         return isinstance(value, bool)

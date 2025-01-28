@@ -18,6 +18,13 @@ class ModeConfigKey(ConfigKey):
         "Pro dočasnou celopločnou změnu chování. \n"
         "Doporučuje se ponechat defaultní hodnotu."
     )
+    VALUES_DICT = {
+        0: "Bez logování",
+        1: "Jednořádkový výstup",
+        2: "Základní výpis (4 řádky)",
+        3: "Rozšířený výpis (6 řádek)",
+        4: "Report (10+ řádek)"
+    }
 
     def validate(self, value: Any) -> bool:
         return (

@@ -7,7 +7,7 @@ Závislosti:
 from abc import ABC, abstractmethod
 from typing import Union, Set, Dict
 
-from ..keys_data import ConfigKey
+from ..keys_data_mixins import ConfigKey
 from ..errors import ValidateValueError, ValidateKeyError
 
 

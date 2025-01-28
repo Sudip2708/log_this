@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import Any
+from typing import Any, Dict, Union
 
 
 class ConfigKey(ABC):
@@ -7,9 +7,10 @@ class ConfigKey(ABC):
 
     # Třídní atributy které musí být definovány v potomcích
     INFO: str
-    DEFAULT_VALUE: Any
+    DEFAULT_VALUE: Union[int, str, bool]
     OPTIONS: str
     HINT: str
+    VALUES_DICT: Dict[Union[int, str, bool]: str]
 
     def __init__(self):
         """
@@ -20,6 +21,7 @@ class ConfigKey(ABC):
         self.info = self.INFO
         self.options = self.OPTIONS
         self.hint = self.HINT
+        self.values_dict = self.VALUES_DICT
 
     @abstractmethod
     def validate(self, value: Any) -> bool:
