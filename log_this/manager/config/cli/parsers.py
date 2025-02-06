@@ -1,8 +1,8 @@
 # log_this/manager/config/cli/parsers.py
 import argparse
+from log_this.manager.config.keys import allowed_keys_with_descriptions
 
-
-def create_parser(config):
+def create_parser():
     """Creates the main parser and subparsers."""
 
     # Main parser setup
@@ -30,7 +30,7 @@ def create_parser(config):
     set_parser.add_argument(
         "key",
         help="Configuration key.",
-        choices=list(config.DEFAULTS.keys()),
+        choices=allowed_keys_with_descriptions(),
         metavar="KEY"
     )
     # Volitelný poziční argument "to" (jen pro čitelnost)

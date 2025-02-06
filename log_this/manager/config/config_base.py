@@ -1,14 +1,32 @@
 from pathlib import Path
-from typing import Dict, Union, Set
+from typing import Dict, Union
+from collections import deque
 
-from .init_mixins import CreateConfigFileMixin, LoadConfigMixin
-from .singleton_meta import SingletonMeta
-from .utils import cli_print
-from .keys_data import KEYS_DATA
+from ._singleton_meta import SingletonMeta
+from ._load_config import LoadConfigMixin
+from ._set_new_value import SetNewValueMixin
+from ._save_to_config_file import SaveToConfigFileMixin
+from ._save_to_history import SaveToHistoryMixin
+from ._restore_from_history import RestoreFromHistoryMixin
+from ._reset_to_defaults import ResetToDefaultMixin
+from ._import_config_from_file import ImportConfigFromFileMixin
+from ._export_config_to_file import ExportConfigToFileMixin
+from ._print_current_settings import PrintCurrentSettingsMixin
+
+from .access_tester import system_access_tester
+from .keys import default_values
+
 
 class LogThisConfig(
     LoadConfigMixin,
-    CreateConfigFileMixin,
+    SaveToConfigFileMixin,
+    SaveToHistoryMixin,
+    RestoreFromHistoryMixin,
+    ResetToDefaultMixin,
+    SetNewValueMixin,
+    ImportConfigFromFileMixin,
+    ExportConfigToFileMixin,
+    PrintCurrentSettingsMixin,
     metaclass=SingletonMeta
 ):
     """
@@ -21,6 +39,14 @@ class LogThisConfig(
     - Podpora exportu, importu a resetu konfigurace
     """
 
+    HISTORY_SNAPSHOT_LIMIT = 10  # Počet uchovaných verzí
+
+    # Definice základních atributů
+    config_file: bool = True
+    config_file_path: Path = None
+    default_values: Dict[str, Union[int, str, bool]] = {}
+    config: Dict[str, Union[int, str, bool]] = {}
+    _history: deque[Dict[str, Union[int, str, bool]]] = deque()
 
     # Základní inicializace instance
     def __init__(self) -> None:
@@ -36,39 +62,43 @@ class LogThisConfig(
 
         # Pokud instance nebvyla ještě inicializovaná
         if not hasattr(self, '_initialized'):
-
             """Inicializace správce konfigurace"""
-            self.keys_data = KEYS_DATA
-            self.cli_print = cli_print
-            self.config_path = Path(__file__).parent / "config.json"
-            self._create_config_file = False
+
+            # Vytvoření adresy pro případný konfigurační soubor
+            self.config_file_path = Path(__file__).parent / "config.json"
+
+            # Vytvoření hodnoty pro atribut signalizující zda je k dispozici ukládání na toto umístění
+            self.config_file = system_access_tester(self.config_file_path)
+
+            # Vytvoření atributu pro defaultní hodnoty
+            self.default_values = default_values()
+
+            # Načtení konfigurace
             self.config = self.load_config()
-            self.create_config_file()
+
+            # Vytvoření atributu pro zachycení změn nastavení
+            self._history = deque(maxlen=self.HISTORY_SNAPSHOT_LIMIT)
+
+            # Nastavení oznamu o provedené inicializaci
             self._initialized = True
 
+    def __call__(self):
+        """Vrátí konfigurační slovník při volání instance"""
+        return self.config
 
-    @property
-    def defaults(self) -> Dict[str, Union[int, str, bool]]:
-        """Vrátí slovník s výchozími hodnotami konfigurace."""
-        return {
-            key: config_key.default_value
-            for key, config_key in self.keys_data.items()
-        }
+    def __getitem__(self, key):
+        """Umožní přístup pomocí config[key]"""
+        return self.config[key]
 
-    @property
-    def valid_keys(self) -> Set[str]:
-        """Vrátí množinu s platnými klíči."""
-        return set(self.keys_data.keys())
-
-    @property
-    def get_valid_keys_with_descriptions(self) -> str:
-        """Vrátí výpis klíčů s krátkým popisem."""
-        text = (
-            f"\nSeznam konfiguračních klíčů:\n"
-        )
-        for key in self.keys_data:
-            text += f"'  {key}' - {self.keys_data[key].info}\n"
-        return text
+    def get(self, key, default=None):
+        """Umožní použití metody get() jako u slovníku"""
+        return self.config.get(key, default)
 
 
 config = LogThisConfig()
+set_new_value = config.set_new_value
+reset_previous = config.restore_last_set_from_history
+reset_default = config.reset_to_default_settings
+import_config_from_file = config.import_config_from_file
+export_config_to_file = config.export_config_to_file
+print_current_settings = config.print_current_settings

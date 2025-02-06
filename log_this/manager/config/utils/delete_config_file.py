@@ -1,4 +1,3 @@
-import json
 from pathlib import Path
 
 from ..errors import DeleteConfigFileError
@@ -20,34 +19,48 @@ def delete_config_file(config_file_path: Path) -> None:
         # Smazání aktuálního souboru
         config_file_path.unlink()
 
+
+    # Pokud soubor na umístění neexistuje
     except FileNotFoundError as e:
         raise DeleteConfigFileError(
-            exception_type=FileNotFoundError,
-            config_file_path=config_file_path,
-            error_info={
-                "detail": f"File not found: {type(e).__name__}({str(e)})",
-                "hint": "The config file may have already been deleted."
-            }
+            message="Soubor na daném umístění nebyl nalezen.",
+            detail=(
+                "Zachycený typ výjimky: FileNotFoundError",
+                f"Popis: {str(e)}"
+            ),
+            hint=(
+                f"Je-li to možné zkontrolujte umístění souboru: {config_file_path}",
+                "Dle zachycené výjimky se dá předpokládat, že na zadaném umístění soubor neexistuje."
+            )
         )
 
+    # Pokud nemáme potřebná oprávnění k smazání souboru
     except PermissionError as e:
         raise DeleteConfigFileError(
-            exception_type=PermissionError,
-            config_file_path=config_file_path,
-            error_info={
-                "detail": f"Permission denied: {type(e).__name__}({str(e)})",
-                "hint": "Check the file's permissions."
-            }
+            message="Nepovedlo se odstranit konfigurační soubor",
+            detail=(
+                "Zachycený typ výjimky: PermissionError",
+                f"Popis: {str(e)}"
+            ),
+            hint=(
+                f"Je-li to možné zkontrolujte soubor na umístění: {config_file_path}",
+                "Dle zachycené výjimky, pravděpodobně nemáte nastenena oprávnění pro jeho smazání."
+            )
         )
 
+    # Všechny ostatní případy
     except Exception as e:
         raise DeleteConfigFileError(
-            exception_type=type(e),
-            config_file_path=config_file_path,
-            error_info={
-                "detail": f"Unexpected error: {type(e).__name__}({str(e)})",
-                "hint": "Contact system administrator."
-            }
+            message="Nepovedlo se odstranit konfigurační soubor",
+            detail=(
+                "Došlo k vyvolání všeobecné výjimky, zachycující nepodchycené výjimky.",
+                f"Popis: {str(e)}"
+            ),
+            hint=(
+                f"Je-li to možné zkontrolujte soubor na umístění: {config_file_path}",
+                "Pokud soubor existuje, je pravděpodobné že chybu způsobuje nekonzistentí kod."
+            )
         )
+
 
 
