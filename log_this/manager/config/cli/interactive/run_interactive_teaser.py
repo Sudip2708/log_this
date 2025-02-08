@@ -1,13 +1,13 @@
 from prompt_toolkit.shortcuts import radiolist_dialog
 from prompt_toolkit.styles import Style
 
-# from log_this.manager.config.cli.styler import dialog_style
-from log_this.manager.config.cli.interactive.dialogs._exit_interactive_mode import exit_interactive_mode
-from log_this.manager.config.cli.interactive.dialogs._show_help import show_help
-from log_this.manager.config.cli.interactive.exceptions._exit_interactive_mode import ExitInteractiveMode
-from log_this.manager.config.cli.interactive.run_interactive_menu import run_interactive_menu
+# # from log_this.manager.config.cli.styler import dialog_style
+# from log_this.manager.config.cli.interactive.dialogs._exit_interactive_mode import exit_interactive_mode
+# from log_this.manager.config.cli.interactive.dialogs._show_help import show_help
+# from log_this.manager.config.cli.interactive.exceptions._exit_interactive_mode import ExitInteractiveMode
+# from log_this.manager.config.cli.interactive.run_interactive_menu import run_interactive_menu
 
-from .run_interactive_menu import run_interactive_menu
+# from .run_interactive_menu import run_interactive_menu
 
 
 def run_interactive_teaser() -> None:
@@ -39,20 +39,27 @@ def run_interactive_teaser() -> None:
 
             # Pokud byl zadán požadavek na změnu konfigurace
             if result == 'interactive':
-                run_interactive_menu()
+                # run_interactive_menu()
+                pass
 
             # Pokud byl zadán požadavek na nápovědu
             elif result == 'help':
-                show_help()
+                # show_help()
+                pass
 
             # Pokud byl zadán požadavek na ukončení interaktivního režimu
             if result == 'exit':
-                ExitInteractiveMode()
+                # ExitInteractiveMode()
+                pass
 
     # Pokud došlo k přerušení interaktivního modu
-    except ExitInteractiveMode as e:
-        exit_interactive_mode(e.message)
+    # except ExitInteractiveMode as e:
+    #     exit_interactive_mode(e.message)
+
+    except BaseException as e:
+        pass
 
 
+run_interactive_teaser()
 
 
