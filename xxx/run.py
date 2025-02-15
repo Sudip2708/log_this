@@ -1,4 +1,4 @@
-from interactive_main_menu import ImprovedInlineMenu
+from interactive_cli import InteractiveCli
 from print_response import PrintResponse
 from prompt_toolkit.styles import Style
 from prompt_toolkit import print_formatted_text
@@ -22,7 +22,7 @@ if __name__ == "__main__":
     print("Vítejte v ineraktivním režimu:")
     print("--------------------------------")
     while True:
-        ImprovedInlineMenu(menu_type="main").run()
+        InteractiveCli(menu_type="main").run()
         if PrintResponse.response:
             PrintResponse.print_response()
         else:

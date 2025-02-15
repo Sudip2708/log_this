@@ -1,10 +1,13 @@
-from abc import ABC, abstractclassmethod, abstractmethod
 from prompt_toolkit.key_binding import KeyBindings
 
 
-class SetupKeyBindings(ABC):
+class GetKeyBindings:
 
-    kb = KeyBindings()
+    def __init__(self):
+
+        # Vytvoření klávesových zkratek
+        self.kb = KeyBindings()
+        self.setup_key_bindings()
 
     def setup_key_bindings(self):
 

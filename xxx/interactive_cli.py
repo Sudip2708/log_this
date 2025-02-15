@@ -7,22 +7,30 @@ from prompt_toolkit.key_binding import KeyBindings
 from help_instructions import help_instructions
 from print_response import PrintResponse
 from setup_key_bindings import setup_key_bindings
+from get_menu_items import get_menu_items
 
 
-class ImprovedInlineMenu:
+class InteractiveCli:
+    """Definic e třídy vytvářející interaktivní režim"""
+
     def __init__(self, menu_type="main"):
+        """
+        Inicializace třídy
+
+        menu_type: Název menu k teré má být zobrazeno
+        """
+
+        # Atribut pro zaznamenání vybrané hodnoty (přednastavena první v řadě)
         self.current_selection = 0
+
+        # Atribut pro zaznamenání zda se má zobrazit rychlá nápověda
         self.show_help = False
+
+        # Atribut pro zaznamenání menu, které se má zobrazit
         self.menu_type = menu_type
 
-        # Definice menu položek podle typu menu
-        if menu_type == "main":
-            self.menu_items = [
-                ("Nápověda", self.show_help_handler),
-                ("Zobrazit konfiguraci", self.show_config_handler),
-                ("Nastavit hodnotu", self.set_value_handler),
-                ("Ukončit", self.exit_handler)
-            ]
+        # Načtení položek menu dle typu
+        self.menu_items = self.get_menu_items(self.menu_type)
 
         # Vytvoření klávesových zkratek
         self.kb = KeyBindings()
@@ -48,6 +56,20 @@ class ImprovedInlineMenu:
             full_screen=False,
             erase_when_done=False
         )
+
+    def get_menu_items(self, menu_type):
+        """Metoda vrátí nabídku pro interaktivní menu"""
+        menu_items = []
+        # Definice menu položek podle typu menu
+        if menu_type == "main":
+            menu_items = [
+                ("Nápověda", self.show_help_handler),
+                ("Zobrazit konfiguraci", self.show_config_handler),
+                ("Nastavit hodnotu", self.set_value_handler),
+                ("Ukončit", self.exit_handler)
+            ]
+
+        return menu_items
 
     def setup_key_bindings(self):
         setup_key_bindings(self)

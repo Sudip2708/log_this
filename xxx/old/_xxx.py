@@ -44,7 +44,7 @@ def help_instructions():
         ('', '\n')
     ]
 
-class ImprovedInlineMenu:
+class InteractiveCli:
     def __init__(self, menu_type="main"):
         self.current_selection = 0
         self.show_help = False
@@ -85,8 +85,22 @@ class ImprovedInlineMenu:
         )
 
     def setup_key_bindings(self):
-        from _xxx_setup_key_bindings import setup_key_bindings
-        setup_key_bindings(self)
+        @self.kb.add('up')
+        def handle_up(event):
+            self.current_selection = max(0, self.current_selection - 1)
+
+        @self.kb.add('down')
+        def handle_down(event):
+            self.current_selection = min(len(self.menu_items) - 1,
+                                         self.current_selection + 1)
+
+        @self.kb.add('enter')
+        def handle_enter(event):
+            self.menu_items[self.current_selection][1]()
+
+        @self.kb.add('c-c')
+        def handle_ctrl_c(event):
+            self.exit_handler()
 
     def get_menu_text(self):
 
@@ -135,7 +149,7 @@ if __name__ == "__main__":
     print("Vítejte v ineraktivním režimu:")
     print("--------------------------------")
     while True:
-        ImprovedInlineMenu(menu_type="main").run()
+        InteractiveCli(menu_type="main").run()
         if PrintResponse.response:
             PrintResponse.print_response()
         else:

@@ -1,7 +1,3 @@
-from prompt_toolkit import prompt
-from prompt_toolkit.styles import Style
-
-
 class PrintResponse:
     response = None
 
@@ -13,8 +9,8 @@ class PrintResponse:
 
     @classmethod
     def set_value(cls):
-        key = input('Zadejte klíč: ')
-        value = input('Zadejte hodnotu: ')
+        key = input("\nZadejte klíč: ")
+        value = input("Zadejte hodnotu: ")
         print(f"\nNastaveno: {key} = {value}")
 
     @classmethod
