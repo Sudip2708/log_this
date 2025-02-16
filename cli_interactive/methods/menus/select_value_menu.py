@@ -23,7 +23,7 @@ class SelectValueMenuMixin(ABC):
 
     def get_select_value_menu(self):
         """Vrací data (nadpis a položky) pro menu pro výběr hodnoty pro daný klíč."""
-        title = f"▼ VYBERTE HODNOTU PRO {self.selected_key.upper()}: "
+        title = f"VYBERTE HODNOTU PRO {self.selected_key.upper()}:"
         items = [
             ("value_1", lambda: self.set_value_and_print("value_1")),
             ("value_2", lambda: self.set_value_and_print("value_2")),

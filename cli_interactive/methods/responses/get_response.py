@@ -4,7 +4,7 @@ from abc import ABC
 from abc_helper import abc_property, abc_method
 from utils.print_configuration import print_configuration
 from utils.set_value import set_value
-
+from cli_styler import cli_style, cli_print
 
 class GetResponseMixin(ABC):
 
@@ -55,7 +55,7 @@ class GetResponseMixin(ABC):
         set_value()
 
     def print_new_response(self):
-        print(f"Vybrán klíč: {self.selected_key}, hodnota: {self.selected_value}")
+        cli_print("cli_success.title", f" ☑ Vybrán klíč: {self.selected_key}, hodnota: {self.selected_value} ")
         print()
         self.selected_key = None
         self.selected_value = None

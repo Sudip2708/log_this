@@ -15,9 +15,11 @@ class RunMenuMixin(ABC):
 
     def run_menu(self):
         """Metoda načte a zobrazí aktuální nabídku interaktivního menu"""
+
         try:
             self.current_menu.run()
+
+        # Zachycení neočekávaných chyb a výpis tracebacku
         except Exception as e:
-            # Zachycení neočekávaných chyb a výpis tracebacku
-            cli_print("error", f"⛝ Došlo k neočekávané chybě: {str(e)}")
-            cli_print("error", traceback.format_exc())
+            cli_print("cli_error", f"⛝ Došlo k neočekávané chybě: {str(e)}")
+            print(traceback.format_exc())

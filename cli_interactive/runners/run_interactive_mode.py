@@ -17,18 +17,16 @@ def run_interactive_mode(start_menu="main_menu", silent=False):
         silent (bool): Potlačí uvítací zprávu
     """
     try:
-
         if not silent:
             # Úvod do interaktivního režimu
-            cli_print("main.title", "\n■ VÍTEJTE V INTERAKTIVNÍM REŽIMU!")
-            cli_print("main.line", "-------------------------------------")
+            cli_print("cli_intro.title", "\n ■ VÍTEJTE V INTERAKTIVNÍM REŽIMU! \n")
 
         # Inicializace a spuštění hlavní smyčky
         cli_menu = InteractiveCli(menu_name=start_menu)
         run_interactive_loop(cli_menu)
 
+    # Zachycení neočekávaných chyb a výpis tracebacku
     except Exception as e:
-        # Zachycení neočekávaných chyb a výpis tracebacku
-        cli_print("error", f"⛝ Došlo k neočekávané chybě: {str(e)}")
-        cli_print("error", traceback.format_exc())
+        cli_print("cli_error", f"⛝ Došlo k neočekávané chybě: {str(e)}")
+        print(traceback.format_exc())
 

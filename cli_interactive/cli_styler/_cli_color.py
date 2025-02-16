@@ -1,6 +1,6 @@
 # Červené odstíny
 RED_LIGHT = "#ff9999"      # Světle červená pro nadpisy
-RED_DARK = "#cc6666"       # Tmavší červená pro text
+RED_DARK = "#b22222"       # Tmavší červená pro text
 
 # Červeno-oranžové odstíny
 RED_ORANGE_LIGHT = "#ffad85"  # Světle červeno-oranžová pro nadpisy
@@ -28,7 +28,7 @@ GREEN_DARK = "#4d994d"      # Tmavší zelená pro text (původní)
 
 # Zeleno-modré odstíny
 GREEN_BLUE_LIGHT = "#66ccbb"  # Světle zeleno-modrá pro nadpisy
-GREEN_BLUE_DARK = "#4d9989"   # Tmavší zeleno-modrá pro text
+GREEN_BLUE_DARK = "#4d9988"   # Tmavší zeleno-modrá pro text
 
 # Modré odstíny
 BLUE_LIGHT = "#268bd2"      # Světle modrá pro nadpisy (původní)

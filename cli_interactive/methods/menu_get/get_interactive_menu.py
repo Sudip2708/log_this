@@ -21,24 +21,25 @@ class GetInteractiveMenuMixin(ABC):
 
         # Načtení formátovaného textu a obladačů pro výběr
         main_content = FormattedTextControl(
-            text=self.get_menu_text,
-            key_bindings=self.kb,
-            focusable=True
+            text=self.get_menu_text,  # Načtení textu
+            key_bindings=self.kb,  # Načtení klávesových ovladačů
+            focusable=True,  # Povolení klávesového ovládání
+            show_cursor = False  # Skrytí kurzoru
         )
 
         # Vytvoření layoutu
         layout = Layout(
             HSplit([
                 Window(
-                    content=main_content,
+                    content=main_content,  # Přidání obsahu
                 )
             ])
         )
 
         # Vytvoření aplikace
         return Application(
-            layout=layout,
-            full_screen=False,
-            erase_when_done=False,
-            style=cli_style
+            layout=layout,  # Přidání layoutu
+            full_screen=False,  # Nastavení zobrazení v dialogu konzole
+            erase_when_done=False,  # Nastavení zobrazení předchozích příkazů
+            style=cli_style  # Přidání stylu
         )

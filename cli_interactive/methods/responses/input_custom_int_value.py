@@ -1,6 +1,10 @@
 from abc import ABC
+from prompt_toolkit import prompt
 
 from abc_helper import abc_property, abc_method
+from cli_styler import cli_style, cli_print
+from .number_validator import NumberValidator
+
 
 class InputCustomIntValueMixin(ABC):
 
@@ -19,57 +23,49 @@ class InputCustomIntValueMixin(ABC):
     # Metoda načte a zobrazí aktuální nabídku interaktivního menu
     run_menu = abc_method("run_menu")
 
+    # Metoda uzavře aktuální interaktivní menu
+    exit_menu = abc_method("exit")
+
     def input_custom_int_value(self):
         """Metoda umožňující ruční zadání int hodnoty (0 - 1000)"""
 
-        # Intro text
-        print(f"Ruční zadání hodnoty pro klíč '{self.selected_key}'")
-        print("Povolené hodnoty: celé číslo v rozmezí 0 - 1000")
-        print("(Pro návrat bez zadání ponechte prázdné pole a stiskněte Enter.)")
-        print()
+        try:
 
-        # Cyklus pro zadání hodnoty
-        while True:
+            # Intro text
+            cli_print("cli_info.title", f" ☐ Ruční zadání hodnoty pro klíč '{self.selected_key}'")
+            cli_print("cli_info.text", " - Povolené hodnoty: celé číslo v rozmezí 0 - 1000")
+            cli_print("cli_info.text", " - Pro návrat bez zadání ponechte prázdné pole a stiskněte Enter.")
+            # print()
 
-            # Zadání hodnoty (změnít input na promp a nastylovat)
-            selected_value = input("Zadejte hodnotu: ")
+            # Zadání hodnoty
+            selected_value = prompt(
+                " » Zadejte hodnotu: ",
+                validator = NumberValidator(),
+                validate_while_typing = True,
+                style=cli_style
+            )
             print()
 
-            # Kontrola zda nebyla zadaná žádná hodnota (pro opuštění zadání)
-            # Pokud ano, dojde k přerušení cyklu
-            if not selected_value:
-                break
+            # Kontrola zda byla zadaná hodnota
+            # Nastaví atributu 'selected_value' na danou hodnotu
+            # Nastaví atributu 'response' na vytištění výsledku
+            if selected_value:
+                self.selected_value = selected_value
+                self.response = "print_new"
 
-            # Kontrola zda je hodnota číslem mezi 0 - 1000
-            # Pokud ano, dojde k přerušení cyklu
-            # Pokud ne vyvolá se ValueError
-            try:
-                if 0 <= int(selected_value) <= 1000:
-                    break
-                else:
-                    raise ValueError()
-
-            # Pokud kontrola byla zadaná nevalidní hodnota
-            # Vypíše se oznam a znovu se nabídne možnost zadání
-            except ValueError:
-                print(f"Nesprávně zadaná hodnota: '{selected_value}'")
-                print("Hodnota musí být celé číslo v rozsahu 0–1000")
-                print("Zkuste to ještě jednou.")
+            # Pokud nebyla zadaná žádná hodnota (pro opuštění zadání)
+            # Vypíše se oznam o návratu do menu pro výběr hodnoty
+            # Zavolá se metoda pro zobrazení menu
+            else:
+                print("Nebyla zadaná žádná hodnota. ")
+                print("Návrat do menu pro výběr hodnoty. ")
                 print()
+                self.display_menu("select_value_menu")
+                self.run_menu()
 
-        # Kontrola zda byla zadaná hodnota
-        # Nastaví atributu 'selected_value' na danou hodnotu
-        # Nastaví atributu 'response' na vytištění výsledku
-        if selected_value:
-            self.selected_value = selected_value
-            self.response = "print_new"
+        except KeyboardInterrupt:
+            cli_print("cli_error", "\n ⚠ Zadávání přerušeno uživatelem... \n")
+            self.response = None
+            self.exit_menu()
 
-        # Pokud nebyla zadaná žádná hodnota (pro opuštění zadání)
-        # Vypíše se oznam o návratu do menu pro výběr hodnoty
-        # Zavolá se metoda pro zobrazení menu
-        else:
-            print("Nebyla zadaná žádná hodnota. ")
-            print("Návrat do menu pro výběr hodnoty. ")
-            print()
-            self.display_menu("select_value_menu")
-            self.run_menu()
+

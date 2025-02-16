@@ -118,7 +118,9 @@ class InteractiveCli(
 
 
     def __init__(self, menu_name):
+        """Inicializační metoda pro interaktivní režim"""
 
+        # Kontrola zda již proběhla inicializace
         if not hasattr(self, "_initialized"):
 
             # Inicializace třídy KeyBindings pro mapování kláves
@@ -139,12 +141,22 @@ class InteractiveCli(
             # Potvrzení o proběhlé inicializaci
             self._initialized = True
 
+
     def get_menu_attributes(self):
         """Na základě 'menu_name' vrátí obsah pro 'menu_title' a 'menu_items'"""
         self.menu_title, self.menu_items = self.get_menu_data()
 
 
 
+from prompt_toolkit.application import get_app
+
+# Skrytí kurzoru
+def hide_cursor():
+    app = get_app()
+    app.output.hide_cursor()
+
+# Zavolání funkce před vykreslením menu
+hide_cursor()
 
 
 

@@ -9,7 +9,7 @@ class ConfigMenuMixin(ABC):
 
     def get_config_menu(self):
         """# Vrací data (nadpis a položky) pro konfigurační menu."""
-        title = "▼ VYBERTE ÚKON: "
+        title = "VYBERTE ÚKON:"
         items = [
             ("Nastavit hodnotu 1", lambda: self.display_menu("select_key_menu")),
             ("Nastavit hodnotu 2", self.no_methods_yet),

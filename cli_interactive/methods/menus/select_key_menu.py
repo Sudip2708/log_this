@@ -13,7 +13,7 @@ class SelectKeyMenuMixin(ABC):
 
     def get_select_key_menu(self):
         """Vrací data (nadpis a položky) pro menu pro výběr klíče."""
-        title = "▼ VYBERTE KLÍČ: "
+        title = "VYBERTE KLÍČ:"
         items = [
             ("key_1", lambda: self.switch_to_set_key("key_1")),
             ("key_2", lambda: self.switch_to_set_key("key_2")),

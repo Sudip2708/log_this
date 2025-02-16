@@ -32,7 +32,7 @@ def run_interactive_loop(cli_menu):
             cli_menu.response = None
 
             # Výpis do terminálu a přerušení cyklu
-            cli_print("main.end", "☑ Ukončuji interaktivní režim...")
+            cli_print("cli_intro.end", "Ukončuji interaktivní režim... ")
             break
 
         # Zobrazení menu pro potvrzení ukončení

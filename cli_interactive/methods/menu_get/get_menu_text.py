@@ -30,18 +30,18 @@ class GetMenuTextMixin(ABC):
 
         # Přídání nadpisu (je-li)
         if self.menu_title:
-            lines.append(("class:selection.title", f"{self.menu_title}\n"))
+            lines.append(("class:cli_menu.title", f" ▼ {self.menu_title} \n"))
 
         # Cyklus pro přidání položek menu
         for i, (text, _) in enumerate(self.menu_items):
 
             # Pokud je položka i aktuálně vybranou (zobrazení reverzně a se šipkou)
             if i == self.current_selection:
-                lines.append(('class:selection.focus', f'» {text}\n'))
+                lines.append(('class:cli_menu.focus', f' » {text} \n'))
 
             # Ve všech ostatních případech (zobrazení normálně a bez šipky)
             else:
-                lines.append(("class:selection.offer", f'  {text}\n'))
+                lines.append(("class:cli_menu.offer", f'   {text} \n'))
 
         return lines
 

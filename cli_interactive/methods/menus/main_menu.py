@@ -20,7 +20,7 @@ class MainMenuMixin(ABC):
 
     def get_main_menu(self):
         """Vrací data (nadpis a položky) pro hlavní menu"""
-        title = "▼ VYBERTE ÚKON: "
+        title = "VYBERTE ÚKON:"
         items = [
             ("Nápověda", self.toggle_show_instruction),
             ("Zobrazit konfiguraci", self.show_current_configuration),
