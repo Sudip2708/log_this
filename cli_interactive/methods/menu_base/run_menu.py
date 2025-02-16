@@ -1,6 +1,9 @@
 from abc import ABC
+import traceback
 
 from abc_helper import abc_property, abc_method
+from cli_styler import cli_print
+
 
 class RunMenuMixin(ABC):
 
@@ -15,5 +18,6 @@ class RunMenuMixin(ABC):
         try:
             self.current_menu.run()
         except Exception as e:
-            print(f"Došlo k chybě: {e}")
-            self.exit_menu()
+            # Zachycení neočekávaných chyb a výpis tracebacku
+            cli_print("error", f"⛝ Došlo k neočekávané chybě: {str(e)}")
+            cli_print("error", traceback.format_exc())

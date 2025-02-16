@@ -1,7 +1,9 @@
+import traceback
+
 from cli_styler import cli_print
 from interactive_cli import InteractiveCli
 from .run_interactive_loop import run_interactive_loop
-import traceback
+
 
 
 def run_interactive_mode(start_menu="main_menu", silent=False):
@@ -26,7 +28,7 @@ def run_interactive_mode(start_menu="main_menu", silent=False):
         run_interactive_loop(cli_menu)
 
     except Exception as e:
-        # Zachycení neočekávaných chyb
+        # Zachycení neočekávaných chyb a výpis tracebacku
         cli_print("error", f"⛝ Došlo k neočekávané chybě: {str(e)}")
-        cli_print("error", traceback.format_exc())  # Výpis tracebacku
+        cli_print("error", traceback.format_exc())
 
