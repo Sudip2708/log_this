@@ -5,7 +5,7 @@ from abc_helper import abc_property
 class ExitMenuMixin(ABC):
 
     # Aplikace s aktuálním menu
-    interactive_menu = abc_property("interactive_menu")
+    current_menu = abc_property("current_menu")
 
     # Atribut zaznamenávající požadavek z interaktivního menu
     response = abc_property("response")
@@ -14,7 +14,7 @@ class ExitMenuMixin(ABC):
         """Metoda uzavře aktuální nabídku interaktivního menu"""
 
         # kontrola zda interaktivní menu běží
-        if self.interactive_menu.is_running:
+        if self.current_menu.is_running:
 
             # Kontrola zda je zadána atribut pro odezvu
             if not self.response:
@@ -23,4 +23,4 @@ class ExitMenuMixin(ABC):
                 self.response = "exit"
 
             # Ukončení aktuálního menu
-            self.interactive_menu.exit()
+            self.current_menu.exit()

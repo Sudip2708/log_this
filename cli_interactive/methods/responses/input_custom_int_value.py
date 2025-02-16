@@ -25,13 +25,15 @@ class InputCustomIntValueMixin(ABC):
         # Intro text
         print(f"Ruční zadání hodnoty pro klíč '{self.selected_key}'")
         print("Povolené hodnoty: celé číslo v rozmezí 0 - 1000")
-        print("(Pro návrat bez zadání ponechte prázdné pole a stiskněte Enter.)\n")
+        print("(Pro návrat bez zadání ponechte prázdné pole a stiskněte Enter.)")
+        print()
 
         # Cyklus pro zadání hodnoty
         while True:
 
             # Zadání hodnoty (změnít input na promp a nastylovat)
             selected_value = input("Zadejte hodnotu: ")
+            print()
 
             # Kontrola zda nebyla zadaná žádná hodnota (pro opuštění zadání)
             # Pokud ano, dojde k přerušení cyklu
@@ -40,25 +42,25 @@ class InputCustomIntValueMixin(ABC):
 
             # Kontrola zda je hodnota číslem mezi 0 - 1000
             # Pokud ano, dojde k přerušení cyklu
+            # Pokud ne vyvolá se ValueError
             try:
                 if 0 <= int(selected_value) <= 1000:
                     break
+                else:
+                    raise ValueError()
 
             # Pokud kontrola byla zadaná nevalidní hodnota
             # Vypíše se oznam a znovu se nabídne možnost zadání
             except ValueError:
-                print()
                 print(f"Nesprávně zadaná hodnota: '{selected_value}'")
                 print("Hodnota musí být celé číslo v rozsahu 0–1000")
                 print("Zkuste to ještě jednou.")
                 print()
 
         # Kontrola zda byla zadaná hodnota
-        # Vytiskne prázdný řádek
         # Nastaví atributu 'selected_value' na danou hodnotu
         # Nastaví atributu 'response' na vytištění výsledku
         if selected_value:
-            print()
             self.selected_value = selected_value
             self.response = "print_new"
 
@@ -66,7 +68,6 @@ class InputCustomIntValueMixin(ABC):
         # Vypíše se oznam o návratu do menu pro výběr hodnoty
         # Zavolá se metoda pro zobrazení menu
         else:
-            print()
             print("Nebyla zadaná žádná hodnota. ")
             print("Návrat do menu pro výběr hodnoty. ")
             print()

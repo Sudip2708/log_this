@@ -6,15 +6,15 @@ __all__ = [
 
     "ExitMenuMixin",  # exit_menu()
     # Metoda uzavře aktuální interaktivní menu.
-    # Používá atributy: 'interactive_menu'
+    # Používá atributy: 'current_menu'
 
     "ReloadMenuMixin",  # reload_menu()
     # Metoda znovu načte data pro vykreselní menu
-    # Používá atributy: 'interactive_menu'
+    # Používá atributy: 'current_menu'
 
     "RunMenuMixin",   # run_menu()
     # Metoda načte a zobrazí aktuální nabídku interaktivního menu
-    # Používá atributy: 'interactive_menu'
+    # Používá atributy: 'current_menu'
     # Používá metody: exit_menu()
 
 ]

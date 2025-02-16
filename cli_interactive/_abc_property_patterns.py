@@ -4,7 +4,7 @@ from .abc_helper import abc_property
 current_selection = abc_property("current_selection")
 
 # Aplikace s aktuálním menu
-interactive_menu = abc_property("interactive_menu")
+current_menu = abc_property("current_menu")
 
 # Atribut obsahující instanci KeyBindings
 kb = abc_property("kb")

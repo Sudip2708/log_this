@@ -30,16 +30,16 @@ class InteractiveCli(
     ### Základní metody:
     ExitMenuMixin,  # exit_menu()
     # Metoda uzavře aktuální interaktivní menu.
-    # Používá atributy: 'interactive_menu'
+    # Používá atributy: 'current_menu'
 
     RunMenuMixin,  # run_menu()
     # Metoda načte a zobrazí aktuální nabídku interaktivního menu
-    # Používá atributy: 'interactive_menu'
+    # Používá atributy: 'current_menu'
     # Používá metody: exit_menu()
 
     ReloadMenuMixin,  # reload_menu()
     # Metoda znovu načte data pro vykreselní menu
-    # Použité atributy: 'interactive_menu'
+    # Použité atributy: 'current_menu'
     # Používá metody: run_menu()
 
     DisplayMenuMixin,  # display_menu(new_menu_name)
@@ -83,6 +83,10 @@ class InteractiveCli(
 
 
     ### Get metody:
+    GetMenuDataMixin,  # get_menu_data(menu_name)
+    # Na základě 'menu_name' načte data pro požadované menu.
+    # Používá metody: get_main_menu(), get_config_menu(), get_ending_menu(), get_select_key_menu(), get_select_value_menu()
+
     GetMenuTextMixin,  # get_menu_text()
     # Vrací naformátovaný text pro menu
     # Používá atributy: 'menu_title', 'menu_items', 'show_instruction', 'current_selection'
@@ -91,15 +95,6 @@ class InteractiveCli(
     # Vytvoří interaktivní menu
     # Používá atributy: 'kb',
     # Používá metodu: get_menu_text()
-
-    GetMenuDataMixin,  # get_menu_data(menu_name)
-    # Na základě 'menu_name' načte data pro požadované menu.
-    # Používá metody: get_main_menu(), get_config_menu(), get_ending_menu(), get_select_key_menu(), get_select_value_menu()
-
-    # GetMenuAttributesMixin,  # get_menu_attributes()
-    # # Na základě 'menu_name' vrátí obsah pro 'menu_title' a 'menu_items'.
-    # # Používá atributy: 'menu_name', 'menu_title', 'menu_items'
-    # # Používá metody: get_menu_data()
 
     GetResponseMixin,  # get_response()
     # Vrací výstupní reakci na daný požadavek
@@ -112,7 +107,7 @@ class InteractiveCli(
     ### Atributy použité v mixinech:
     show_instruction = False  # Boolean atribut pro zobrazení instrukcí ovládání interaktivního menu
     current_selection = 0  # Atribut pro zaznamenání vybrané položky
-    interactive_menu = None # Atribut obsahující data aktuálního menu
+    current_menu = None # Atribut obsahující data aktuálního menu
     response = None  # Atribut pro zaznamenání požadavku na odpověď z interaktivního menu
     menu_name = None  # Atribut pro zaznamenání jaké menu má být zobrazeno
     menu_title = None  # Atribut pro zaznamenání nadpisu zobrazeného menu
@@ -138,8 +133,8 @@ class InteractiveCli(
             # Získání položek pro nadpis a položky menu
             self.get_menu_attributes()
 
-            # Vytvoření okna aplikace
-            self.interactive_menu = self.get_interactive_menu()
+            # Vytvoření interaktivního okna
+            self.current_menu = self.get_interactive_menu()
 
             # Potvrzení o proběhlé inicializaci
             self._initialized = True

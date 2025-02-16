@@ -5,7 +5,7 @@ from abc_helper import abc_property, abc_method
 class ReloadMenuMixin(ABC):
 
     # Aplikace s aktuálním menu
-    interactive_menu = abc_property("interactive_menu")
+    current_menu = abc_property("current_menu")
 
     # Metoda načte a zobrazí aktuální nabídku interaktivního menu
     run_menu = abc_method("run_menu")
@@ -15,10 +15,10 @@ class ReloadMenuMixin(ABC):
         """Metoda znovu načte data pro vykreselní menu"""
 
         # Kontrola zda interaktivní menu běží
-        if self.interactive_menu:
+        if self.current_menu:
 
             # Požadavek na obnovu menu
-            self.interactive_menu.invalidate()
+            self.current_menu.invalidate()
 
         # Pokud menu nebježí
         else:
