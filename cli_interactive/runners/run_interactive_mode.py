@@ -19,7 +19,7 @@ def run_interactive_mode(start_menu="main_menu", silent=False):
     try:
         if not silent:
             # Úvod do interaktivního režimu
-            cli_print("cli_intro.title", "\n ■ VÍTEJTE V INTERAKTIVNÍM REŽIMU! \n")
+            cli_print("intro.title", "\n ■ VÍTEJTE V INTERAKTIVNÍM REŽIMU! \n")
 
         # Inicializace a spuštění hlavní smyčky
         cli_menu = InteractiveCli(menu_name=start_menu)
@@ -27,6 +27,6 @@ def run_interactive_mode(start_menu="main_menu", silent=False):
 
     # Zachycení neočekávaných chyb a výpis tracebacku
     except Exception as e:
-        cli_print("cli_error", f"⛝ Došlo k neočekávané chybě: {str(e)}")
+        cli_print("error", f"⛝ Došlo k neočekávané chybě: {str(e)}")
         print(traceback.format_exc())
 

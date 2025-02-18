@@ -1,7 +1,8 @@
 from abc import ABC
 
 from abc_helper import abc_property
-from texts import HELP_INSTRUCTION
+from texts import HELP_INSTRUCTION, get_help_instruction
+from cli_styler import END_LINE, DROPDOWN, SELECTED, UNSELECTED
 
 class GetMenuTextMixin(ABC):
 
@@ -26,22 +27,27 @@ class GetMenuTextMixin(ABC):
 
         # Zobrazení nápovědy (je-li aktivní)
         if self.show_instruction:
-            lines.extend(HELP_INSTRUCTION)
+            lines.extend(get_help_instruction())
 
         # Přídání nadpisu (je-li)
         if self.menu_title:
-            lines.append(("class:cli_menu.title", f" ▼ {self.menu_title} \n"))
+            lines.append(set_menu_title(self.menu_title))
 
         # Cyklus pro přidání položek menu
         for i, (text, _) in enumerate(self.menu_items):
-
-            # Pokud je položka i aktuálně vybranou (zobrazení reverzně a se šipkou)
-            if i == self.current_selection:
-                lines.append(('class:cli_menu.focus', f' » {text} \n'))
-
-            # Ve všech ostatních případech (zobrazení normálně a bez šipky)
-            else:
-                lines.append(("class:cli_menu.offer", f'   {text} \n'))
+            lines.append(
+                set_menu_selected_offer(text)
+                if i == self.current_selection
+                else set_menu_offer(text)
+            )
 
         return lines
 
+def set_menu_title(title):
+    return "class:menu.title", f"{DROPDOWN}{title}{END_LINE}"
+
+def set_menu_selected_offer(text):
+    return "class:menu.focus", f"{SELECTED}{text}{END_LINE}"
+
+def set_menu_offer(text):
+    return "class:menu.offer", f"{UNSELECTED}{text}{END_LINE}"

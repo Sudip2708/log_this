@@ -55,7 +55,7 @@ class GetResponseMixin(ABC):
         set_value()
 
     def print_new_response(self):
-        cli_print("cli_success.title", f" ☑ Vybrán klíč: {self.selected_key}, hodnota: {self.selected_value} ")
+        cli_print("success.title", f" ☑ Vybrán klíč: {self.selected_key}, hodnota: {self.selected_value} ")
         print()
         self.selected_key = None
         self.selected_value = None

@@ -21,5 +21,5 @@ class RunMenuMixin(ABC):
 
         # Zachycení neočekávaných chyb a výpis tracebacku
         except Exception as e:
-            cli_print("cli_error", f"⛝ Došlo k neočekávané chybě: {str(e)}")
+            cli_print("error", f"⛝ Došlo k neočekávané chybě: {str(e)}")
             print(traceback.format_exc())

@@ -32,9 +32,9 @@ class InputCustomIntValueMixin(ABC):
         try:
 
             # Intro text
-            cli_print("cli_info.title", f" ☐ Ruční zadání hodnoty pro klíč '{self.selected_key}'")
-            cli_print("cli_info.text", " - Povolené hodnoty: celé číslo v rozmezí 0 - 1000")
-            cli_print("cli_info.text", " - Pro návrat bez zadání ponechte prázdné pole a stiskněte Enter.")
+            cli_print("_info.title", f" ☐ Ruční zadání hodnoty pro klíč '{self.selected_key}'")
+            cli_print("info.text", " - Povolené hodnoty: celé číslo v rozmezí 0 - 1000")
+            cli_print("info.text", " - Pro návrat bez zadání ponechte prázdné pole a stiskněte Enter.")
             # print()
 
             # Zadání hodnoty
@@ -57,14 +57,14 @@ class InputCustomIntValueMixin(ABC):
             # Vypíše se oznam o návratu do menu pro výběr hodnoty
             # Zavolá se metoda pro zobrazení menu
             else:
-                print("Nebyla zadaná žádná hodnota. ")
-                print("Návrat do menu pro výběr hodnoty. ")
+                cli_print("error.title", " ⚠ Nebyla zadaná žádná hodnota. ")
+                cli_print("error.text", " » Návrat do menu pro výběr hodnoty. ")
                 print()
                 self.display_menu("select_value_menu")
                 self.run_menu()
 
         except KeyboardInterrupt:
-            cli_print("cli_error", "\n ⚠ Zadávání přerušeno uživatelem... \n")
+            cli_print("error", "\n ⚠ Zadávání přerušeno uživatelem... \n")
             self.response = None
             self.exit_menu()
 

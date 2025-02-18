@@ -148,15 +148,3 @@ class InteractiveCli(
 
 
 
-from prompt_toolkit.application import get_app
-
-# Skrytí kurzoru
-def hide_cursor():
-    app = get_app()
-    app.output.hide_cursor()
-
-# Zavolání funkce před vykreslením menu
-hide_cursor()
-
-
-
