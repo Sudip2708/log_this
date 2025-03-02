@@ -1,0 +1,13 @@
+# Znaky
+INTRO = " ■ "
+INFO = " ☐ "
+LIST = " - "
+SUCCESS = " ☑ "
+DROPDOWN = " ▼ "
+SELECTED = " » "
+UNSELECTED = "   "
+ERROR = " ⛝ "
+WARNING = " ⚠ "
+NO_SIGN = ""
+END_LINE = " \n"
+EMPTY_LINE = "\n"
