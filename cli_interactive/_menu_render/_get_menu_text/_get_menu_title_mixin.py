@@ -2,13 +2,13 @@
 from abc import ABC
 
 from abc_helper import abc_property
-from cli_styler import get_style
 
 class GetMenuTitleMixin(ABC):
     """Mixin přidávající metodu pro přidání naformátovaného nadpisu"""
 
     # Atribut pro instanci MenuRenderer
-    menus_manager = abc_property("menus_manager")
+    mm = abc_property("mm")
+    get_style = abc_property("get_style")
     lines = abc_property("lines")
 
 
@@ -17,10 +17,9 @@ class GetMenuTitleMixin(ABC):
         """Metoda pro přidání nadpisu menu"""
 
         # Kontrola zde je nadpis uvedem
-        if self.menus_manager.menu.title:
+        if self.mm.menu.title:
 
             # Přidání ostylovaného nadpisu
             self.lines.append(
-                get_style.menu.title(self.menus_manager.menu.title)
+                self.mm.styler.get_style.menu.title(self.mm.menu.title)
             )
-

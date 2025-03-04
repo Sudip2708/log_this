@@ -25,8 +25,8 @@ class GetMenuText(
 
     # Atributy použité v mixinech
     lines = []  # Atribut pro seznam s naformátovaným textem
-    menus_manager = None  # Atribut pro přístup k instanci InteractiveCli
-
+    mm = None  # Atribut pro přístup k instanci InteractiveCli
+    get_style = None  # Atribut s metodou navrácející tuple se stylem a textem
 
     def __init__(self, menus_manager):
         """Inicializační metoda singleton instance"""
@@ -35,7 +35,7 @@ class GetMenuText(
         if not hasattr(self, "_initialized"):
 
             # Načtení instance hlvní třídy
-            self.menus_manager = menus_manager
+            self.mm = menus_manager
 
             # Potvrzení o proběhlé inicializaci
             self._initialized = True
@@ -58,5 +58,6 @@ class GetMenuText(
 
         # Vrácení seznamu s tuple obsahující naformátovaný text pro menu
         output = self.lines
+        # print("### output: ", output)
 
         return output

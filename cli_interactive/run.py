@@ -1,7 +1,6 @@
 # print("run.py")
 import traceback
 
-from cli_styler import cli_print
 from _manager import InteractiveCliManager
 
 def run(start_menu="main_menu", silent=False):
@@ -13,7 +12,7 @@ def run(start_menu="main_menu", silent=False):
 
         # Zobrazení nadpisu (je-li požadováno)
         if not silent:
-            cli_print.intro.title(
+            menu_app.styler.cli_print.intro.title(
                 "VÍTEJTE V INTERAKTIVNÍM REŽIMU!"
             )
 
@@ -22,9 +21,7 @@ def run(start_menu="main_menu", silent=False):
 
     # Zachycení nepodchycených chyb
     except Exception as e:
-        cli_print.error.title(
-            f"Došlo k neočekávané chybě: {str(e)}"
-        )
+        print(f"Došlo k neočekávané chybě: {str(e)}")
         print(traceback.format_exc())
 
 

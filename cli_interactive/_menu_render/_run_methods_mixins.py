@@ -25,4 +25,3 @@ class RunMethodsMixin(ABC):
     def is_running(self):
         """Vrátí True, pokud je interaktivní menu spuštěné"""
         return not self.menu_app.future.done()
-        pass

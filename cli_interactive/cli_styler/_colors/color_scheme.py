@@ -4,11 +4,12 @@ from ._colors_definitions import colors_definitions
 
 class ColorScheme(metaclass=AbcSingletonMeta):
 
-    colors_modes_choices = [
-        "light",
-        "dark",
-        "native"
-    ]
+
+    color_modes_choices = {
+        "light": "Mod pro světlý režim",
+        "dark": "Mod pro tmavý režim",
+        "native": "Bez barev - nativní vzhled"
+    }
 
     colors = None
 
@@ -21,9 +22,9 @@ class ColorScheme(metaclass=AbcSingletonMeta):
         return self.colors
 
     def validate_mode(self, mode: str):
-        if mode not in self.colors_modes_choices:
+        if mode not in self.color_modes_choices:
             raise ValueError(
                 f"Neplatný mod pro barevný režim: {mode}. "
-                f"Povolené mody: {', '.join(self.colors_modes_choices)}"
+                f"Povolené mody: {', '.join(self.color_modes_choices)}"
             )
 

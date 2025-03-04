@@ -2,13 +2,14 @@
 from abc import ABC
 
 from abc_helper import abc_property
-from cli_styler import get_style
+
 
 class GetMenuOfferMixin(ABC):
     """Mixin přidávající metodu pro přidání naformátované nabídky menu"""
 
     # Atribut pro instanci MenuRenderer
-    menus_manager = abc_property("menus_manager")
+    mm = abc_property("mm")
+    get_style = abc_property("get_style")
     lines = abc_property("lines")
 
 
@@ -16,10 +17,13 @@ class GetMenuOfferMixin(ABC):
         """Metoda pro přidání položek menu"""
 
         # Načtení id aktuálně vybrané nabýdky
-        selected_line_id = self.menus_manager.current_selection
+        selected_line_id = self.mm.current_selection
+
+        # Načtení metody get_style
+        get_style = self.mm.styler.get_style
 
         # Cyklus procházející položky
-        for i, (text, _) in enumerate(self.menus_manager.menu.items):
+        for i, (text, _) in enumerate(self.mm.menu.items):
 
             # Přidání položky do hlavního seznamu 'lines'
             self.lines.append(

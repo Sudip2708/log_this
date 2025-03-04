@@ -2,14 +2,13 @@
 from abc import ABC
 
 from abc_helper import abc_property
-from cli_styler import get_style
-
 
 class GetInstructionMixin(ABC):
     """Mixin přidávající metodu pro zobrazení/skrytí nápovědy"""
 
     # Atribut pro instanci MenuRenderer
-    menus_manager = abc_property("menus_manager")
+    mm = abc_property("mm")
+    get_style = abc_property("get_style")
     lines = abc_property("lines")
 
 
@@ -17,6 +16,9 @@ class GetInstructionMixin(ABC):
         """
         Metoda pro zobrazení/skrytí nápovědy k používání interaktivního režimu
         """
+
+        # Načtení metody get_style
+        get_style = self.mm.styler.get_style
 
         # Text pro nápovědu
         instruction = [
@@ -27,6 +29,6 @@ class GetInstructionMixin(ABC):
         ]
 
         # Zobrazení nápovědy (je-li aktivní)
-        if self.menus_manager.show_instruction:
+        if self.mm.show_instruction:
             self.lines.extend(instruction)
 

@@ -7,15 +7,15 @@ class SuccessStyle(StyleBase):
     def __init__(self, colors, symbols):
 
         self.title = StyleItems(
-            symbol=symbols["ERROR"],
-            color=colors["LIGHT_RED"],
+            symbol=symbols["SUCCESS"],
+            color=colors["BROWN"],
             style=self.BOLD + self.REVERSE,
-            end_line=self.END_LINE
+            end_line=self.CONTINUE
         )
 
         self.text = StyleItems(
             symbol=symbols["LIST_ITEM"],
-            color=colors["RED"],
-            style=self.BOLD + self.REVERSE,
+            color=colors["ORANGE"],
+            style=self.NONE,
             end_line=self.CONTINUE
         )

@@ -1,7 +1,4 @@
 # print("_response_manager/response_manager.py")
-from ._print_configuration import print_configuration
-from ._set_value import set_value
-from ._print_new_settings import print_new_settings
 from ._input_int_value import input_int_value
 
 
@@ -11,24 +8,45 @@ class ResponseManager:
     def __init__(self, menus_manager):
 
         # Přiřazení instance hlavní třídy
-        self.menus_manager = menus_manager
+        self.mm = menus_manager
 
         # Definice akcí odezvy
         self.response_actions = {
-            "print_configuration": lambda: print_configuration(),
-            "set_value": lambda: set_value(),
-            "print_new": lambda: print_new_settings(self.menus_manager),
-            "input_int_value": lambda: input_int_value(self.menus_manager)
+            "print_configuration": self.print_configuration,
+            "print_new_settings": self.print_new_settings,
+            "input_int_value": self.input_int_value,
         }
 
     def __call__(self):
         """Vrací výstupní reakci na daný požadavek"""
-        action = self.response_actions.get(self.menus_manager.response)
+        action = self.response_actions.get(self.mm.response)
         if action:
             action()
-            self.menus_manager.response = None  # Reset odpovědi
+            self.mm.response = "exit_menu"  # Nastavení zobrazení exut menu
 
 
+    def print_configuration(self):
+        self.mm.styler.cli_print.success.title("Aktuální konfigurace:")
+        self.mm.styler.cli_print.success.text("key1: value1")
+        self.mm.styler.cli_print.success.text("key2: value2")
+        print()
 
+
+    def print_new_settings(self):
+        """Tiskne aktuálně změněnou hodnotu"""
+        self.mm.styler.cli_print.success.title(
+            f"Klíč '{self.mm.selected_key}', "
+            f"byl nastaven na hodnotu '{self.mm.selected_value}'"
+        )
+        print()
+        self.mm.selected_key = None
+        self.mm.selected_value = None
+
+
+    def input_int_value(self):
+        self.mm.selected_value = input_int_value(self.mm)
+        # Pokud nebyla zadána žádná hodnota, vrací se None
+        if self.mm.selected_value:
+            self.print_new_settings()
 
 

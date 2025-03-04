@@ -1,7 +1,6 @@
 # print("_methods_mixins/loop_methods.py")
 from abc import ABC
 
-from cli_styler import cli_print
 from abc_helper import abc_property, abc_method
 
 class LoopMethodsMixin(ABC):
@@ -20,7 +19,11 @@ class LoopMethodsMixin(ABC):
     # Metoda pro zobrazení menu
     show_menu = abc_method("show_menu")
 
+    # Atribut zprostředkovávající instanci styleru
+    styler = abc_property("styler")
 
+    # Atribut zaznamenávající menu s ktým se má prokračovat po response kolečku
+    continue_with_menu = abc_property("continue_with_menu")
 
     def run_loop(self):
         """Hlavní interaktivní smyčka programu"""
@@ -34,12 +37,22 @@ class LoopMethodsMixin(ABC):
             # Cyklus pro zpracování vybraného úkonu
             self._response_loop()
 
-            # Zpracování ukončení režimu
-            if self._exit_response():
+            # Kontrola zda je nastaven požadavek pro ukončení
+            if self.response == "exit":
+
+                # Reset hodnoty atributu pro odpověď
+                self.response = None
+
+                # Vytištění oznamu o ukončení a přerušení smyčky
+                self.styler.cli_print.intro.end("Ukončuji interaktivní režim... ")
                 break
 
             # Zobrazení menu pro potvrzení ukončení
-            self.show_menu("exit_menu")
+            if self.continue_with_menu:
+                self.show_menu(self.continue_with_menu)
+                self.continue_with_menu = None
+            else:
+                self.show_menu("exit_menu")
 
 
     def _response_loop(self):
@@ -49,24 +62,10 @@ class LoopMethodsMixin(ABC):
         while self.response:
 
             # Zachycení přerušení cyklu uživatelem a přerušení smyčky
-            if self.response == "exit":
+            if self.response in ("exit", "exit_menu"):
                 break
 
             # Zpracování vybraného úkonu
             self.response_manager()
 
 
-    def _exit_response(self):
-        """Zpracování ukončení režimu"""
-
-        # Kontrola zda je nastaven požadavek pro ukončení
-        if self.response == "exit":
-
-            # Reset hodnoty atributu pro odpověď
-            self.response = None
-
-            # Vytištění oznamu o ukončení a přerušení smyčky
-            cli_print.intro.end("Ukončuji interaktivní režim... ")
-
-            # Navrácení potvrzení o ukončovacím procesu
-            return True

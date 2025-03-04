@@ -2,7 +2,6 @@
 from abc import ABC
 import traceback
 
-from cli_styler import cli_print
 from abc_helper import abc_property
 
 class RunMethodsMixin(ABC):
@@ -14,6 +13,9 @@ class RunMethodsMixin(ABC):
     # Atribut pro definici odpovědí
     response = abc_property("response")
 
+    # Atribut zprostředkovávající instanci styleru
+    styler = abc_property("styler")
+
 
     def run_menu(self):
         """Spustí interaktivní režim s ošetřením chyb"""
@@ -23,15 +25,12 @@ class RunMethodsMixin(ABC):
 
         except Exception as e:
             # Výpis o chybě a trekování chby
-            cli_print.error.title(f"Došlo k neočekávané chybě: {str(e)}")
+            self.styler.cli_print.error.title(f"Došlo k neočekávané chybě: {str(e)}")
             print(traceback.format_exc())
 
 
     def exit_menu(self):
         """Ukončí interaktivní režim"""
-
-        # Nastavení odezvy na ukončení aplikace
-        self.response = "exit"
 
         # Požadavek na ukončení menu
         self.menu_renderer.exit()
@@ -41,11 +40,11 @@ class RunMethodsMixin(ABC):
         """Znovu načte interaktivní režim"""
 
         # Kontrola zda interaktivní menu běží
-        if self.menu_renderer.is_running():
+        # if self.menu_renderer.is_running():
 
-            # Požadavek na obnovu menu
-            self.menu_renderer.refresh()
+        # Požadavek na obnovu menu
+        self.menu_renderer.refresh()
 
-        else:
-            # Požadavek na zpuštění menu
-            self.run_menu()
+        # else:
+        #     # Požadavek na zpuštění menu
+        #     self.run_menu()

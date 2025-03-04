@@ -69,6 +69,8 @@ class InteractiveCliManager(
     show_instruction = False
     selected_value = None
     selected_key = None
+    styler = None
+    continue_with_menu = None
 
     def __init__(self, menu_name):
         """Inicializační metoda singleton instance"""
@@ -94,36 +96,16 @@ class InteractiveCliManager(
             # Potvrzení o proběhlé inicializaci
             self._initialized = True
 
-    def show_menu(self, new_menu_name):
+
+    def show_menu(self, new_menu_name, target_reset=True):
         """Přepne na nové menu"""
 
         # Načtení menu k zobrazení
         self.menu = self.menus(new_menu_name)
 
         # Nastavení pozice výběru na první položku
-        self.current_selection = 0
+        if target_reset:
+            self.current_selection = 0
 
         # Obnovení zobrazení
         self.refresh_menu()
-
-    # def colors_mode_settings(self, color_mode):
-    #     set_colors_mode(color_mode)
-    #     self.mm.show_menu("colors_select_menu")
-
-    def toggle_show_instruction(self):
-        self.show_instruction = not self.show_instruction
-
-    def set_value_and_print(self, value):
-        """Uloží vybranou hodnotu, vypíše výsledek a vrátí se do hlavního menu."""
-        self.selected_value = value
-        self.response = "print_new"
-        self.exit_menu()
-
-    def switch_to_set_key(self, key=None):
-        """Uloží vybraný klíč a přepne na výběr hodnoty."""
-        if key:
-            self.selected_key = key
-            self.show_menu("select_value_menu")
-        else:
-            print("Není vybrán žádný klíč, zadejte klíč prosím znovu.")
-            self.show_menu("select_key_menu")

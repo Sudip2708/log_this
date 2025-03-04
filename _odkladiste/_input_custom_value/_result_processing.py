@@ -1,5 +1,3 @@
-from cli_styler import cli_print
-
 
 # print("_response_manager/_input_int_value/_result_processing.py")
 def result_processing(selected_value, cli):
@@ -11,14 +9,14 @@ def result_processing(selected_value, cli):
         cli.selected_value = selected_value
 
         # Nastaví atributu 'response' na vytištění výsledku
-        cli.response = "print_new"
+        cli.response = "print_new_settings"
 
     # Pokud nebyla zadaná žádná hodnota (pro opuštění zadání)
     else:
 
         # Vypíše se oznam o návratu do menu pro výběr hodnoty
-        cli_print.warning.title("Nebyla zadaná žádná hodnota.")
-        cli_print.warning.direction("Návrat do menu pro výběr hodnoty.")
+        cli.styler.cli_print.warning.title("Nebyla zadaná žádná hodnota.")
+        cli.styler.cli_print.warning.direction("Návrat do menu pro výběr hodnoty.")
 
         # Vyčistí se obsah atributu 'response'
         cli.response = None
