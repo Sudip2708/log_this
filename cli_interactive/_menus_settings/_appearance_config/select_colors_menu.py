@@ -4,14 +4,20 @@
 class SelectColorsMenu:
     def __init__(self, menus_manager):
 
-        # Navázání instance managera
+        # Navázání instance menus managera
         self.mm = menus_manager
 
-        # Nadpis menu
+        # Definice nadpisu
         self.title = "VYBERTE BAREVNÝ MOD:"
 
         # Inicializace položek
         self.items = self.get_color_mode_items()
+
+        # Přidání doplňujících položek
+        self.items += [
+            ("Zpět do předchozí nabídky", self.show_appearance_menu),
+            ("Ukončit", self.mm.close_interactive_mode)
+        ]
 
 
     def get_color_mode_items(self):
@@ -33,14 +39,10 @@ class SelectColorsMenu:
             for color_mode, label in self.mm.styler.color_modes.items()
         ]
 
-        # Přidání statických položek
-        items += [
-            ("Zpět do předchozí nabídky", lambda: self.mm.show_menu("appearance_menu")),
-            ("Ukončit", self.mm.exit_menu)
-        ]
         return items
 
 
+    # Metoda pro nastavení barev
     def color_mode_settings(self, color_mode):
         """Nastaví barevný režim a obnoví menu."""
 
@@ -56,3 +58,7 @@ class SelectColorsMenu:
         # Obnovíme menu, což znovu zavolá __init__ a aktualizuje položky
         self.mm.show_menu("select_colors_menu", target_reset=False)
 
+
+    # Metoda pro přepnutí na menu pro nastavení vzhledu
+    def show_appearance_menu(self):
+        self.mm.show_menu("appearance_menu")

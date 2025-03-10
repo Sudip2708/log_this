@@ -5,7 +5,7 @@ from .utils import setup_logging
 from .data._parse_input_value import parse_input_value
 from .data._handle_general_config_commands import handle_general_config_commands
 from .data._handle_key_value_config_commands import handle_key_value_config_commands
-from log_this.manager.config import get_config
+from log_this_old.manager.config import get_config
 
 
 def main() -> None:

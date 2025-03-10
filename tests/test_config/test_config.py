@@ -2,7 +2,7 @@
 import os
 import pytest
 import json
-from log_this.config.data import LogThisConfig
+from log_this_old.config.data import LogThisConfig
 
 
 # def test_singleton_instance():

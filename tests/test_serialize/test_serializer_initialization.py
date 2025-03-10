@@ -1,5 +1,5 @@
 import pytest
-from log_this.manager.serializer import get_serializer
+from log_this_old.manager.serializer import get_serializer
 
 
 @pytest.fixture

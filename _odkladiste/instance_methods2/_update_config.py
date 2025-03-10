@@ -69,7 +69,7 @@ class UpdateConfigMixin:
 
             # Dodatečná úprava pro nastavení maximální rekurze pro serializer
             if key == "max_depth":
-                from log_this.manager.serializer import get_serializer
+                from log_this_old.manager.serializer import get_serializer
                 serializer = get_serializer()
                 serializer.max_depth = value
                 logging.debug(

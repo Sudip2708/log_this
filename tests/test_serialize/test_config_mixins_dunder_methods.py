@@ -1,6 +1,6 @@
 import pytest
-from log_this.manager.config.init_mixins.dunder_methods import GetItemMixin
-from log_this.manager.config.init_mixins.dunder_methods import StrMixin
+from log_this_old.manager.config.init_mixins.dunder_methods import GetItemMixin
+from log_this_old.manager.config.init_mixins.dunder_methods import StrMixin
 
 
 # Mockovaná základní třída pro testování

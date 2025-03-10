@@ -1,7 +1,7 @@
 import pytest
 from pathlib import Path
 import json
-from log_this.manager.config import get_config
+from log_this_old.manager.config import get_config
 
 
 @pytest.fixture

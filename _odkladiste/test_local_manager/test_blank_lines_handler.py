@@ -1,6 +1,6 @@
 import pytest
 from unittest.mock import Mock
-from log_this.manager_old._blank_lines_handler import BlankLinesHandler
+from log_this_old.manager_old._blank_lines_handler import BlankLinesHandler
 
 
 @pytest.fixture

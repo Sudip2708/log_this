@@ -2,7 +2,7 @@ import pytest
 from datetime import datetime
 import os
 from unittest.mock import Mock, patch
-from log_this.manager.config.init_mixins.instance_methods2 import ExportConfigToFileMixin
+from log_this_old.manager.config.init_mixins.instance_methods2 import ExportConfigToFileMixin
 
 
 # Fixture pro základní instanci mixinu

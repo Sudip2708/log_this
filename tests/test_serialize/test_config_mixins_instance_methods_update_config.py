@@ -1,7 +1,7 @@
 import pytest
 from unittest.mock import Mock, patch
 
-from log_this.manager.config.init_mixins.instance_methods2 import UpdateConfigMixin
+from log_this_old.manager.config.init_mixins.instance_methods2 import UpdateConfigMixin
 
 
 # Fixture pro základní instanci mixinu

@@ -1,5 +1,5 @@
 import pytest
-from log_this.log_this import log_this
+from log_this_old.log_this import log_this
 
 
 @pytest.mark.parametrize("report_mode", [4, 'report'])

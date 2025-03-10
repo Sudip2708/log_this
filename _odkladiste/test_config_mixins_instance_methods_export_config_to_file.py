@@ -2,7 +2,7 @@ import os
 import pytest
 from unittest.mock import patch, MagicMock
 from datetime import datetime
-from log_this.manager.config.init_mixins.instance_methods2._export_config_to_file import ExportConfigToFileMixin
+from log_this_old.manager.config.init_mixins.instance_methods2._export_config_to_file import ExportConfigToFileMixin
 
 
 @pytest.fixture

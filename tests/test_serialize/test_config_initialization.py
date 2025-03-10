@@ -1,6 +1,6 @@
 import pytest
-from log_this.manager.config import get_config
-from log_this.manager.config._config_base import LogThisConfig
+from log_this_old.manager.config import get_config
+from log_this_old.manager.config._config_base import LogThisConfig
 import os
 import inspect
 

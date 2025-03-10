@@ -1,5 +1,5 @@
 import pytest
-from log_this.manager.methods._get_limited_docstring_mixin import GetLimitedDocstringMixin
+from log_this_old.manager.methods._get_limited_docstring_mixin import GetLimitedDocstringMixin
 
 
 @pytest.fixture

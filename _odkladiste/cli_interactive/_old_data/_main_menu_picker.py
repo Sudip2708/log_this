@@ -1,5 +1,5 @@
 from prompt_toolkit.shortcuts import radiolist_dialog
-from log_this.manager.config.styler import dialog_style
+from log_this_old.manager.config.styler import dialog_style
 
 def main_menu_picker() -> str:
     """

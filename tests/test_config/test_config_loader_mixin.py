@@ -3,8 +3,8 @@ import pytest
 import os
 import json
 import tempfile
-from log_this.config.data._loader_mixin import ConfigLoaderMixin
-from log_this.config.data.mixins_data import ConfigConstants
+from log_this_old.config.data._loader_mixin import ConfigLoaderMixin
+from log_this_old.config.data.mixins_data import ConfigConstants
 
 
 def test_load_config_updates_values():

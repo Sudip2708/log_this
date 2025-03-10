@@ -1,7 +1,7 @@
 import pytest
 from unittest.mock import Mock
 from typing import Tuple
-from log_this.manager.methods._get_blank_lines_mixin import GetBlankLinesMethodsMixins
+from log_this_old.manager.methods._get_blank_lines_mixin import GetBlankLinesMethodsMixins
 
 
 @pytest.fixture

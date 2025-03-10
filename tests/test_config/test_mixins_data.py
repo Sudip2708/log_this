@@ -2,13 +2,13 @@ import os
 import json
 import tempfile
 import pytest
-from log_this.config.data.mixins_data import (
+from log_this_old.config.data.mixins_data import (
     ConfigConstants,
     ensure_config_file,
     validate_and_update_config,
 )
-from log_this.config.data.mixins_data._read_config import read_config
-from log_this.config.data.mixins_data._validate_value import validate_value
+from log_this_old.config.data.mixins_data._read_config import read_config
+from log_this_old.config.data.mixins_data._validate_value import validate_value
 
 
 def test_config_constants():

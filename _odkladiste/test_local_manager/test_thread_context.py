@@ -1,5 +1,5 @@
 import pytest
-from log_this.manager_old._thread_context import ThreadContext
+from log_this_old.manager_old._thread_context import ThreadContext
 
 
 def test_thread_context_initialization():

@@ -3,7 +3,7 @@
 import pytest
 from dataclasses import dataclass
 from collections import namedtuple
-from log_this.modes.utils._safe_serialize import safe_serialize
+from log_this_old.modes.utils._safe_serialize import safe_serialize
 # from log_this.config import Config, set_config
 
 

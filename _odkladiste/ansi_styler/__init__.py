@@ -1,5 +1,5 @@
 print("log_this/manager/ansi_styler/__init__.py")
-from log_this.manager.ansi_styler.ansi_formatter import ANSIFormatter, style, color, cli_format
+from log_this_old.manager.ansi_styler.ansi_formatter import ANSIFormatter, style, color, cli_format
 
 __all__ = [
     "ANSIFormatter",  # Hlavní třída pro ANSI formátování testu

@@ -13,8 +13,14 @@ class SelectSymbolsMenu:
         # Nadpis menu
         self.title = "VYBERTE SET ZNAČEK:"
 
-        # Dynamicky generované položky menu podle slovníku symbol_mode_settings
+        # Inicializace položek
         self.items = self.get_symbol_mode_items()
+
+        # Přidání statických položek
+        self.items += [
+            ("Zpět do předchozí nabídky", self.show_appearance_menu),
+            ("Ukončit", self.mm.close_interactive_mode)
+        ]
 
 
     def get_symbol_mode_items(self):
@@ -36,19 +42,15 @@ class SelectSymbolsMenu:
             for symbol_mode, label in self.mm.styler.symbol_modes.items()
         ]
 
-        # Přidání statických položek
-        items += [
-            ("Zpět do předchozí nabídky", lambda: self.mm.show_menu("appearance_menu")),
-            ("Ukončit", self.mm.exit_menu)
-        ]
         return items
 
 
+    # Metoda pro nastavení symbolů
     def symbol_mode_settings(self, symbol_mode):
 
         # Změna barevného modu na instanci styleru
         self.mm.styler.set_symbol_mode(symbol_mode)
-        
+
         # Změna instance ColorsModeSelectMenu
         self.mm.menus.refresh_select_symbols_menu()
 
@@ -57,3 +59,8 @@ class SelectSymbolsMenu:
 
         # Přepnutí na menu s ponechání current_selection
         self.mm.show_menu("select_symbols_menu", target_reset=False)
+
+
+    # Metoda pro přepnutí na menu pro nastavení vzhledu
+    def show_appearance_menu(self):
+        self.mm.show_menu("appearance_menu")

@@ -2,7 +2,7 @@ from pathlib import Path
 from typing import Dict, Union
 
 from .config_mixin import ConfigMixin
-from log_this.manager.logger import cli_log
+from log_this_old.manager.logger import cli_log
 
 class LogThisConfig(ConfigMixin):
     """

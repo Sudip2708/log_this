@@ -1,6 +1,6 @@
 # log_this/manager/config/cli/_main.py
-from log_this.manager.config import config
-from log_this.manager.config.cli.parsers import create_parser
+from log_this_old.manager.config import config
+from log_this_old.manager.config.cli.parsers import create_parser
 
 
 def main() -> None:

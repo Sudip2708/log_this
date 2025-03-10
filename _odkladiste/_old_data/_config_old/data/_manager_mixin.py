@@ -44,7 +44,7 @@ class ConfigManagerMixin:
             return False
 
         # Ověření, že je hodnota planá
-        from log_this.config.data.mixins_data._validate_value import validate_value
+        from log_this_old.config.data.mixins_data._validate_value import validate_value
         if validate_value(value, False, key):
             raise ValueError(f"Uvedená hodnota není validní. Hodnota: {value} Klíč: {key} ")
 

@@ -1,5 +1,5 @@
 import pytest
-from log_this.modes.utils._get_limited_docstring import get_limited_docstring
+from log_this_old.modes.utils._get_limited_docstring import get_limited_docstring
 
 
 @pytest.fixture

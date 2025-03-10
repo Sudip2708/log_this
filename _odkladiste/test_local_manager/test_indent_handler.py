@@ -1,6 +1,6 @@
 import pytest
 from unittest.mock import Mock
-from log_this.manager.methods._get_indent_mixin import GetIndentMethodMixins
+from log_this_old.manager.methods._get_indent_mixin import GetIndentMethodMixins
 
 
 @pytest.fixture

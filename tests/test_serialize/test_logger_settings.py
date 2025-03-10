@@ -1,6 +1,6 @@
 import pytest
 import logging
-from log_this.manager.logger import get_logger
+from log_this_old.manager.logger import get_logger
 import io
 
 

@@ -1,23 +1,23 @@
 # print("run.py")
 import traceback
 
-from _manager import InteractiveCliManager
+from _menus_manager import MenusManager
 
 def run(start_menu="main_menu", silent=False):
     """Spustí interaktivní CLI režim"""
     try:
 
         # Inicializace CLI menu
-        menu_app = InteractiveCliManager(menu_name=start_menu)
+        mm = MenusManager(menu_name=start_menu)
 
         # Zobrazení nadpisu (je-li požadováno)
         if not silent:
-            menu_app.styler.cli_print.intro.title(
+            mm.styler.cli_print.intro.title(
                 "VÍTEJTE V INTERAKTIVNÍM REŽIMU!"
             )
 
         # Spuštění hlavní smyčky
-        menu_app.run_loop()
+        mm.run_loop()
 
     # Zachycení nepodchycených chyb
     except Exception as e:

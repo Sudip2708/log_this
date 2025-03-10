@@ -1,4 +1,4 @@
-from log_this.config import get_config
+from log_this_old.config import get_config
 
 def safe_serialize(obj, seen=None, depth=0,):
     """

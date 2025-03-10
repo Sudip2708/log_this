@@ -1,8 +1,8 @@
 import pytest
-from log_this.log_this import log_this, manager
+from log_this_old.log_this import log_this, manager
 
 import pytest
-from log_this.log_this import log_this
+from log_this_old.log_this import log_this
 
 
 

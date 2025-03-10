@@ -1,5 +1,5 @@
 import logging
-from log_this.manager.ansi_styler import cli_format
+from log_this_old.manager.ansi_styler import cli_format
 
 
 class LogManager:

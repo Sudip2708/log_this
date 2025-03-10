@@ -1,4 +1,4 @@
-from log_this.manager.config import get_config
+from log_this_old.manager.config import get_config
 
 def is_serialization_depth_exceeded(depth: int) -> bool:
     """

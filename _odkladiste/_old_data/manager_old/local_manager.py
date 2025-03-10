@@ -1,4 +1,4 @@
-from log_this.config import get_config
+from log_this_old.config import get_config
 from ._thread_context import ThreadContext
 from ._indent_handler import IndentHandler
 from ._blank_lines_handler import BlankLinesHandler

@@ -1,6 +1,6 @@
 import pytest
 from unittest.mock import Mock, patch
-from log_this.manager_old.local_manager import LocalManager
+from log_this_old.manager_old.local_manager import LocalManager
 
 
 def test_local_manager_initialization():

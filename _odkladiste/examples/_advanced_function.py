@@ -1,5 +1,5 @@
 from typing import List, Any
-from log_this import log_this
+from log_this_old import log_this
 
 
 def try_out_advanced(

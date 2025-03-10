@@ -1,5 +1,5 @@
 from typing import Union
-from log_this.manager.config.cli.raise_with_extra import raise_with_extra
+from log_this_old.manager.config.cli.raise_with_extra import raise_with_extra
 from .key_hint import key_hint
 
 class CLIValueError(ValueError):

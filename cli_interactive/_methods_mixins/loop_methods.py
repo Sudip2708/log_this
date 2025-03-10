@@ -37,6 +37,8 @@ class LoopMethodsMixin(ABC):
             # Cyklus pro zpracování vybraného úkonu
             self._response_loop()
 
+            # print("### self.response", self.response)
+
             # Kontrola zda je nastaven požadavek pro ukončení
             if self.response == "exit":
 
@@ -47,11 +49,14 @@ class LoopMethodsMixin(ABC):
                 self.styler.cli_print.intro.end("Ukončuji interaktivní režim... ")
                 break
 
-            # Zobrazení menu pro potvrzení ukončení
+            # KOntrola, zda je vyžadováno pokračující menu
             if self.continue_with_menu:
-                self.show_menu(self.continue_with_menu)
+                # Zobrazení pokračujícího menu
+                self.show_menu(self.continue_with_menu, target_reset=False)
+                # Reset hodnoty
                 self.continue_with_menu = None
             else:
+                # Zobrazení menu pro potvrzení ukončení
                 self.show_menu("exit_menu")
 
 

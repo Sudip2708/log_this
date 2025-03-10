@@ -3,7 +3,7 @@ from typing import Tuple, Optional
 import argparse
 from ..handlers import parse_value
 
-from log_this.manager.config import get_config
+from log_this_old.manager.config import get_config
 
 
 def validate_args(args: argparse.Namespace) -> Tuple[bool, Optional[str]]:

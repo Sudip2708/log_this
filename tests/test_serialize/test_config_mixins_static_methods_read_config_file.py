@@ -3,7 +3,7 @@ import logging
 import os
 import pytest
 from unittest.mock import patch, mock_open
-from log_this.manager.config.init_mixins.static_methods._read_config_file import ReadConfigFileMixin
+from log_this_old.manager.config.init_mixins.static_methods._read_config_file import ReadConfigFileMixin
 
 
 @pytest.fixture

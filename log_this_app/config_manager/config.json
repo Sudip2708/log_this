@@ -1,0 +1,17 @@
+{
+    "indent": 2,
+    "blank_lines": true,
+    "docstring_lines": 3,
+    "skip_this": 0,
+    "one_line": 1,
+    "simple": 2,
+    "detailed": 3,
+    "report": 4,
+    "true": 1,
+    "false": 0,
+    "none": 0,
+    "empty": 0,
+    "colors": 2,
+    "symbols": 2,
+    "max_depth": 100
+}

@@ -1,5 +1,5 @@
 from typing import Union
-from log_this.manager.config.init_mixins.class_methods._validate_key_and_value2 import CLIKeyError, CLIValueError
+from log_this_old.manager.config.init_mixins.class_methods._validate_key_and_value2 import CLIKeyError, CLIValueError
 
 
 class SetNewValueMixin:
@@ -79,7 +79,7 @@ class SetNewValueMixin:
 
     def update_max_depth_in_serealizer(self, value):
         try:
-            from log_this.manager.serializer import get_serializer
+            from log_this_old.manager.serializer import get_serializer
             serializer = get_serializer()
             serializer.max_depth = value
         except (KeyError, ValueError) as e:
@@ -121,7 +121,7 @@ class SetNewValueMixin:
 
             # Dodatečná úprava pro nastavení maximální rekurze pro serializer
             if key == "max_depth":
-                from log_this.manager.serializer import get_serializer
+                from log_this_old.manager.serializer import get_serializer
                 serializer = get_serializer()
                 serializer.max_depth = value
                 self.file_log.info(

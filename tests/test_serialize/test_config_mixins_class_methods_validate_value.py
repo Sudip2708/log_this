@@ -1,5 +1,5 @@
 import pytest
-from log_this.manager.config.init_mixins.class_methods import ValidateValueMixin
+from log_this_old.manager.config.init_mixins.class_methods import ValidateValueMixin
 
 
 @pytest.fixture

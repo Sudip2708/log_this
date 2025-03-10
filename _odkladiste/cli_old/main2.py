@@ -3,7 +3,7 @@ from .parsers import create_parser, validate_args
 from .data._setup_logging import setup_logging
 from .data._handle_general_commands import handle_general_commands
 from .data._handle_key_value_commands import handle_key_value_commands
-from log_this.manager.config import get_config
+from log_this_old.manager.config import get_config
 
 
 def main() -> None:

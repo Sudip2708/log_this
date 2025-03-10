@@ -1,5 +1,5 @@
 from typing import List
-from log_this import log_this
+from log_this_old import log_this
 
 def try_out_simple(log_level_1: int, log_level_2: int):
     """Demonstrační funkce pro ukázku různých úrovní logování.

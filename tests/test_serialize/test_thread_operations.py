@@ -16,7 +16,7 @@ ensuring that its state updates correctly under various conditions.
 
 
 import pytest
-from log_this.manager.thread import get_thread
+from log_this_old.manager.thread import get_thread
 
 
 @pytest.fixture

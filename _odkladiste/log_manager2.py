@@ -1,6 +1,6 @@
 import logging
 from typing import Optional, Dict
-from log_this.manager.ansi_styler import cli_format
+from log_this_old.manager.ansi_styler import cli_format
 
 class LogManager:
     """Třída pro správu loggerů s podporou Singleton patternu."""
