@@ -1,37 +1,22 @@
 # print("_menus_settings/_menus_config/menus_config_symbols_select.py")
 
 from cli_styler import styler
-
-class SelectSymbolsMenu:
-
-    def proxy_method(self):
-        pass
-
-    def __init__(self, menus_manager):
-
-        # Navázání instance managera
-        self.mm = menus_manager
-
-        # Nadpis menu
-        self.title = "VYBERTE SET ZNAČEK:"
-
-        # Inicializace položek
-        self.items = self.get_symbol_mode_items()
-
-        # Přidání statických položek
-        self.items += [
-            ("Zpět do předchozí nabídky", self.show_appearance_menu),
-            ("Ukončit", self.mm.close_interactive_mode)
-        ]
+from .._base_menu import BaseMenu
 
 
-    def get_symbol_mode_items(self):
-        """Dynamicky vygeneruje položky menu s označením aktuálního výběru."""
+class SelectSymbolsMenu(BaseMenu):
+
+    # Nadpis menu
+    title = "VYBERTE SET ZNAČEK:"
+
+    # Definice položek
+    @property
+    def items(self):
 
         # Načtní klíče aktuálního modu
         current_mode = styler.symbol_mode
 
-        # Vytvoření položek dle slovníku
+        # Inicializace položek
         items = [
             (
                 # Vytvoření labelu s přidáním označení aktuálně vybrané možnosti
@@ -42,6 +27,12 @@ class SelectSymbolsMenu:
             )
             # Cyklus procházející slovník a předávající jednotlivé položky
             for symbol_mode, label in styler.symbol_modes.items()
+        ]
+
+        # Přidání statických položek
+        items += [
+            ("Zpět do předchozí nabídky", self.show_appearance_menu),
+            ("Ukončit", self.mm.close_interactive_mode)
         ]
 
         return items

@@ -1,8 +1,9 @@
 {
-    "indent": 2,
+    "indent": 1,
     "blank_lines": true,
     "docstring_lines": 3,
-    "skip_this": 0,
+    "max_depth": 100,
+    "skip_this": 4,
     "one_line": 1,
     "simple": 2,
     "detailed": 3,
@@ -12,6 +13,5 @@
     "none": 0,
     "empty": 0,
     "colors": 2,
-    "symbols": 2,
-    "max_depth": 100
+    "symbols": 2
 }

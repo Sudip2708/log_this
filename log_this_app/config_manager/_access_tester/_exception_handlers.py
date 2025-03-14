@@ -1,12 +1,12 @@
 from cli_styler import styler
 
-INTRO_TEXT = "Zapisování do souboru není možné"
+INTRO_TEXT = "Zapisování do souboru není momentálně možné: "
 
 def attribute_error_handler(e):
-    styler.cli_print.warning.title(INTRO_TEXT)
+    styler.cli_print.warning.title(INTRO_TEXT+"Chyba atributu.")
     styler.multiple_lines(styler.cli_print.warning.text,
         "Popis výjimky: Chyba atributu.",
-        "Možné příčiny: Vyvolá se, když je nesprávně definovaný některý atribut.",
+        "Možné příčiny: Pravděpodobně je nesprávně definovaný některý atribut třídy AccessTester.",
         "Možné řešení: Ujistěte se, zda má správně definované všechny potřebné atributy.",
         f"Zachycené podrobnosti: {e}",
     )

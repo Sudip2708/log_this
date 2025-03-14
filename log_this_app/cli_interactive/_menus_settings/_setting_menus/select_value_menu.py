@@ -1,9 +1,9 @@
 # print("_menus_settings/_key_and_value_config/config_value_select.py")
 # from ._input_int_value import input_int_value
 from .._base_menu import BaseMenu
+from functools import partial
 
 class SelectValueMenu(BaseMenu):
-
 
     # Definice nadpisu
     @property
@@ -16,20 +16,17 @@ class SelectValueMenu(BaseMenu):
     @property
     def items(self):
 
-        # Reset používaných atributů
-        self.mm.selected_value = None
+        key = self.mm.selected_key
 
-        # Definice položek
+        # Nápověda k této sekci
         items = [
-            ("value_1", lambda: self.set_value_and_print("value_1")),
-            ("value_2", lambda: self.set_value_and_print("value_2")),
-            ("value_3", lambda: self.set_value_and_print("value_3")),
-
+            (f"Zobrazit nápovědu pro {key}", self.show_help),
         ]
 
-        # Přidání inputu
+        # Načtení možností
         items += [
-            ("Zadat vlastní hodnotu", self.input_custom_int_value),
+            ("• "+label, partial(self.set_value_and_print, value))
+            for value, label in self.get_options_for_key(key).items()
         ]
 
         # Přidání statických položek
@@ -40,15 +37,24 @@ class SelectValueMenu(BaseMenu):
 
         return items
 
+    def get_options_for_key(self, key):
+        """Získá předefinované možnosti pro zadání hodnoty"""
+        mode_class = self.mm.config_manager.items_manager.KEYS_DATA[key]
+        return mode_class.VALUES_DICT
 
     # Metoda pro uložení a vytisknutí vybraného klíče a hodnoty
     def set_value_and_print(self, value):
+        print("### value: ", value)
         self.mm.selected_value = value
+        self.mm.config_manager.change_value(
+            self.mm.selected_key,
+            self.mm.selected_value
+        )
         self.mm.response = "print_new_settings"
         self.mm.exit_menu()
 
     # Metoda pro zadání celočíselné hodnoty (rozmezí 1 - 1000)
-    def input_custom_int_value(self):
+    def show_help(self):
         self.mm.response = "input_int_value"
         self.mm.exit_menu()
 

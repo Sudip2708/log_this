@@ -7,15 +7,15 @@ from abc_helper import abc_property
 class ResetMethodsMixin(ABC):
 
     config = abc_property("config")
-    _file_manager = abc_property("_file_manager")
+    file_manager = abc_property("file_manager")
     items_manager = abc_property("items_manager")
     _history = abc_property("_history")
 
 
     def reset_to_default_configuration(self):
         self.config = self.items_manager.default_values()
-        if self._file_manager:
-            self._file_manager.save_configuration()
+        if self.file_manager:
+            self.file_manager.save_configuration()
 
     def reset_to_previous_configuration(self):
 
@@ -25,8 +25,8 @@ class ResetMethodsMixin(ABC):
             print("Došlo k změně konfigurace na předchozí. Nastavení před změnou je nyní k dispozici jako předešlé.")
 
             # Kontrola, zda je používán i konfigurační soubor:
-            if self._file_manager:
-                self._file_manager.save_configuration(self.config)
+            if self.file_manager:
+                self.file_manager.save_configuration(self.config)
                 print("Změna konfigurace úspěšně zaznamenána i do souboru.")
 
         else:

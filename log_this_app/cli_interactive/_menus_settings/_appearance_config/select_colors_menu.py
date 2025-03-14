@@ -1,29 +1,17 @@
 # print("_menus_settings/_menus_config/menus_config_colors_select.py")
 
 from cli_styler import styler
+from .._base_menu import BaseMenu
 
 
-class SelectColorsMenu:
-    def __init__(self, menus_manager):
+class SelectColorsMenu(BaseMenu):
 
-        # Navázání instance menus managera
-        self.mm = menus_manager
+    # Definice nadpisu
+    title = "VYBERTE BAREVNÝ MOD:"
 
-        # Definice nadpisu
-        self.title = "VYBERTE BAREVNÝ MOD:"
-
-        # Inicializace položek
-        self.items = self.get_color_mode_items()
-
-        # Přidání doplňujících položek
-        self.items += [
-            ("Zpět do předchozí nabídky", self.show_appearance_menu),
-            ("Ukončit", self.mm.close_interactive_mode)
-        ]
-
-
-    def get_color_mode_items(self):
-        """Dynamicky vygeneruje položky menu s označením aktuálního výběru."""
+    # Definice položek
+    @property
+    def items(self):
 
         # Načtní klíče aktuálního modu
         current_mode = styler.color_mode
@@ -41,7 +29,14 @@ class SelectColorsMenu:
             for color_mode, label in styler.color_modes.items()
         ]
 
+        # Přidání doplňujících položek
+        items += [
+            ("Zpět do předchozí nabídky", self.show_appearance_menu),
+            ("Ukončit", self.mm.close_interactive_mode)
+        ]
+
         return items
+
 
 
     # Metoda pro nastavení barev
@@ -53,6 +48,11 @@ class SelectColorsMenu:
 
         # Změna instance ColorsModeSelectMenu
         self.mm.menus.refresh_select_colors_menu()
+
+        # Uložení změny do souboru (je-li) používán
+        if self.mm.config_manager.file_manager:
+            color_mode_id = styler.get_current_color_mode_id()
+            self.mm.config_manager.file_manager.change_value("colors", color_mode_id)
 
         # Načtení indexu pro aktuálně zvolenou položku
         self.mm.current_selection = styler.get_current_color_mode_id()

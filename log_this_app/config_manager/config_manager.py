@@ -3,7 +3,7 @@ from pathlib import Path
 from abc_helper import AbcSingletonMeta  # type: ignore
 from cli_styler import styler  # type: ignore
 
-from ._config_items_settings import ConfigItemsRegistry
+from ._items_manager import ConfigItemsManager
 from ._access_tester import AccessTester
 
 
@@ -19,20 +19,20 @@ from ._mixins import (
 class ConfigManager(
 
     InitMethodsMixin,
-    # Přidává metody: _create_file_manager(), _load_config()
-    # Používá atributy: CONFIG_FILE_PATH, _file_manager, items_manager
+    # Přidává metody: _create_file_manager_or_none(), _load_config()
+    # Používá atributy: CONFIG_FILE_PATH, file_manager, items_manager
 
     ResetMethodsMixin,
     # Přidává metody: reset_to_default_configuration(), reset_to_previous_configuration()
-    # Používá atributy: config, _file_manager, items_manager, _history
+    # Používá atributy: config, file_manager, items_manager, _history
 
     ImportExportMethodsMixin,
     # Přidává metody: export_current_configuration(path), import_configuration(path)
-    # Používá atributy: config, _file_manager, _access_tester
+    # Používá atributy: config, file_manager, _access_tester
 
     ChangeValueMixin,
     # Přidává metody: change_value(key, value)
-    # Používá atributy: config, _file_manager, items_manager, _history
+    # Používá atributy: config, file_manager, items_manager, _history
 
     PrintActualConfigurationMixin,
     # Přidává metody: print_actual_configuration()
@@ -51,12 +51,12 @@ class ConfigManager(
     # Připojení instance pro testování cesty
     _access_tester = AccessTester()
 
-    _file_manager = None
+    file_manager = None
     items_manager = None
     config = None
 
     # Základní inicializace instance
-    def __init__(self) -> None:
+    def __init__(self, log_this_manager) -> None:
         """
         Inicializace instance třídy.
 
@@ -71,11 +71,14 @@ class ConfigManager(
         if not hasattr(self, '_initialized'):
             """Inicializace správce konfigurace"""
 
+            # Napojení na hlavní třídu LogThisManager
+            self.ltm = log_this_manager
+
             # Napojení třídy starající definici jednotlivých položek konfigurace
-            self.items_manager = ConfigItemsRegistry(self)
+            self.items_manager = ConfigItemsManager(self)
 
             # Napojení třídy starající se o správu konfiguračního souboru
-            self._file_manager = self._create_file_manager()
+            self.file_manager = self._create_file_manager_or_none()
 
             # Načtení konfigurace
             self.config = self._load_config()

@@ -1,5 +1,5 @@
-from .run import run_interactive_menu
+from .menus_manager import MenusManager
 
 __all__ = [
-    "run_interactive_menu"
+    "MenusManager"
 ]

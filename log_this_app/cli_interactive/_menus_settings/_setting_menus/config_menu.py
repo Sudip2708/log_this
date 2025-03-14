@@ -11,13 +11,13 @@ class ConfigMenu(BaseMenu):
     @property
     def items(self):
 
-        # Reset používaných atributů
-        self.mm.selected_key = None
-        self.mm.selected_value = None
-
+        # Nápověda k této sekci
+        items = [
+            (f"Nápověda k této nabídce", self.show_help),
+        ]
 
         # Definice položek
-        items = [
+        items += [
             ("• Nastavit chování módů", self.show_modes_settings_menu),
             ("• Nastavit výstup", self.show_aspects_settings_menu),
         ]
@@ -31,13 +31,16 @@ class ConfigMenu(BaseMenu):
         return items
 
 
-    # Metoda pro nastavení nové hodnoty
+    # Metoda pro zobrazení nápovědy
+    def show_help(self):
+        pass
+
+    # Metoda pro zobrazení menu pro nastavení položek modů
     def show_modes_settings_menu(self):
         self.mm.menus_category = "log_this_modes"
         self.mm.show_menu("select_key_menu")
 
-
-    # Metoda pro nastavení nové hodnoty
+    # Metoda pro zobrazení menu pro nastavení položek aspektů
     def show_aspects_settings_menu(self):
         self.mm.menus_category = "log_this_aspects"
         self.mm.show_menu("select_key_menu")

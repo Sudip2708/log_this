@@ -31,7 +31,7 @@ class AccessTester(AccessTesterMethodsMixin):
             self._delete_test()
 
             # Pokud vše proběhne v pořádku
-            print("Ověření zadané cesty proběhlo v pořádku.")
+            # print("Ověření zadané cesty proběhlo v pořádku.")
             return True
 
         # Chyba atributů instance třídy AccessTester.

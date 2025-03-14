@@ -1,32 +1,33 @@
 # print("_menus_settings/_key_and_value_config/config_key_select.py")
+from .._base_menu import BaseMenu
 
-class SelectKeyMenu:
 
-    def __init__(self, menus_manager):
+class SelectKeyMenu(BaseMenu):
 
-        # Navázání instance menus managera
-        self.mm = menus_manager
+    # Definice nadpisu
+    title = "VYBERTE KLÍČ:"
+
+    # Definice položek
+    @property
+    def items(self):
 
         # Reset používaných atributů
         self.mm.selected_key = None
 
-        # Definice nadpisu
-        self.title = "VYBERTE KLÍČ:"
-
-
         # Definice položek
-        self.items = [
+        items = [
             ("key_1", self.switch_to_set_key2),
             ("key_2", lambda: self.switch_to_set_key("key_2")),
             ("key_3", lambda: self.switch_to_set_key("key_3")),
         ]
 
         # Přidání doplňujících položek
-        self.items += [
+        items += [
             ("Zpět do konfiguračního menu", self.show_config_menu),
             ("Ukončit", self.mm.close_interactive_mode)
         ]
 
+        return items
 
     def switch_to_set_key2(self):
         """Uloží vybraný klíč a přepne na výběr hodnoty."""

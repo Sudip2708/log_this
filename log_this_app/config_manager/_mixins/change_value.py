@@ -7,7 +7,7 @@ from abc_helper import abc_property
 class ChangeValueMixin(ABC):
 
     config = abc_property("config")
-    _file_manager = abc_property("_file_manager")
+    file_manager = abc_property("file_manager")
     items_manager = abc_property("items_manager")
     _history = abc_property("_history")
 
@@ -33,8 +33,8 @@ class ChangeValueMixin(ABC):
                 print("Byla zadaná již nastavená hodoty. Žádná změna nebyla učiněna.")
 
             # Kontrola, zda je používán i konfigurační soubor:
-            if self._file_manager:
-                self._file_manager.save_configuration(self.config)
+            if self.file_manager:
+                self.file_manager.save_configuration(self.config)
                 print("Změna konfigurace úspěšně zaznamenána i do souboru.")
 
             # Uložení změny do hystorie

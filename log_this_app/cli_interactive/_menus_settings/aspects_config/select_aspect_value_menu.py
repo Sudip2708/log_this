@@ -1,8 +1,9 @@
 # print("_menus_settings/_key_and_value_config/config_value_select.py")
 # from ._input_int_value import input_int_value
 from .._base_menu import BaseMenu
+from functools import partial
 
-class SelectValueMenu(BaseMenu):
+class SelectAspectValueMenu(BaseMenu):
 
 
     # Definice nadpisu
@@ -16,15 +17,13 @@ class SelectValueMenu(BaseMenu):
     @property
     def items(self):
 
-        # Reset používaných atributů
-        self.mm.selected_value = None
+        # Načtení options
+        options = self.get_options_for_key(self.mm.selected_key)
 
         # Definice položek
         items = [
-            ("value_1", lambda: self.set_value_and_print("value_1")),
-            ("value_2", lambda: self.set_value_and_print("value_2")),
-            ("value_3", lambda: self.set_value_and_print("value_3")),
-
+            ("• "+label, partial(self.set_value_and_print, value))
+            for value, label in options.items()
         ]
 
         # Přidání inputu

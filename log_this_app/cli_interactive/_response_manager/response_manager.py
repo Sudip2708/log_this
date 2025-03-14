@@ -35,11 +35,29 @@ class ResponseManager:
 
     def print_new_settings(self):
         """Tiskne aktuálně změněnou hodnotu"""
-        styler.cli_print.success.title(
-            f"Klíč '{self.mm.selected_key}', "
-            f"byl nastaven na hodnotu '{self.mm.selected_value}'"
-        )
-        print()
+
+        # Načtení klíče
+        key = self.mm.selected_key
+        value = self.mm.selected_value
+
+        # Ověření že došlo ke změně:
+        if self.mm.config_manager.config.get(key) == value:
+
+            # Načtení třídy klíče
+            key_class = self.mm.config_manager.items_manager.KEYS_DATA.get(key)
+            # Získání textové reprezentace hodnoty
+            value_str = key_class.VALUES_DICT.get(value)
+            # Výpis o změně
+            styler.cli_print.success.title(
+                f"Klíč '{key}', "
+                f"byl nastaven na '{value_str}'"
+            )
+            print()
+
+        else:
+            print("Změnu se nepovvedlo provést. Klíč obsahuje hodnotu. Zkuste to znovu.")
+
+        # Reset hodnot
         self.mm.selected_key = None
         self.mm.selected_value = None
 
