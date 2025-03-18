@@ -34,3 +34,4 @@ class InitMethodsMixin(ABC):
             if self.file_manager
             else self.items_manager.default_values()
         )
+

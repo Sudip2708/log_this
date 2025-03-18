@@ -1,5 +1,16 @@
 # print("_response_manager/response_manager.py")
-from ._input_int_value import input_int_value
+from .dialogs import (
+    dialog_import_file_path,
+    dialog_export_file_path,
+    dialog_export_directory_path
+)
+from .inputs import (
+    input_int_value,
+    input_import_file_path,
+    input_export_file_path,
+    input_export_directory_path
+)
+
 
 from cli_styler import styler
 
@@ -13,9 +24,19 @@ class ResponseManager:
 
         # Definice akcí odezvy
         self.response_actions = {
-            "print_configuration": self.print_configuration,
-            "print_new_settings": self.print_new_settings,
+
+            # Vstup pro zadíní číslené hodnoty
             "input_int_value": self.input_int_value,
+
+            # Vstup pro zadání cesty
+            "input_import_file_path": self.input_import_file_path,
+            "input_export_file_path": self.input_export_file_path,
+            "input_export_directory_path": self.input_export_directory_path,
+
+            # Dialog pro zadání cesty
+            "dialog_import_file_path": self.dialog_import_file_path,
+            "dialog_export_file_path": self.dialog_export_file_path,
+            "dialog_export_directory_path": self.dialog_export_directory_path,
         }
 
     def __call__(self):
@@ -25,47 +46,58 @@ class ResponseManager:
             action()
             self.mm.response = "exit_menu"  # Nastavení zobrazení exut menu
 
-
-    def print_configuration(self):
-        styler.cli_print.success.title("Aktuální konfigurace:")
-        styler.cli_print.success.text("key1: value1")
-        styler.cli_print.success.text("key2: value2")
-        print()
-
-
-    def print_new_settings(self):
-        """Tiskne aktuálně změněnou hodnotu"""
-
-        # Načtení klíče
-        key = self.mm.selected_key
-        value = self.mm.selected_value
-
-        # Ověření že došlo ke změně:
-        if self.mm.config_manager.config.get(key) == value:
-
-            # Načtení třídy klíče
-            key_class = self.mm.config_manager.items_manager.KEYS_DATA.get(key)
-            # Získání textové reprezentace hodnoty
-            value_str = key_class.VALUES_DICT.get(value)
-            # Výpis o změně
-            styler.cli_print.success.title(
-                f"Klíč '{key}', "
-                f"byl nastaven na '{value_str}'"
-            )
-            print()
-
-        else:
-            print("Změnu se nepovvedlo provést. Klíč obsahuje hodnotu. Zkuste to znovu.")
-
-        # Reset hodnot
-        self.mm.selected_key = None
-        self.mm.selected_value = None
-
-
+    # Vstup pro zadíní číslené hodnoty
     def input_int_value(self):
+        # Výběr hodnoty
         self.mm.selected_value = input_int_value(self.mm)
         # Pokud nebyla zadána žádná hodnota, vrací se None
         if self.mm.selected_value:
-            self.print_new_settings()
+            # Zapsání hodnoty
+            self.mm.config_manager.change_value(
+                self.mm.selected_key,
+                self.mm.selected_value
+            )
 
+    # Vstup pro zadání cesty
+    def input_import_file_path(self):
+        # Výběr hodnoty
+        self.mm.selected_path = input_import_file_path(self.mm)
+        # Pokud nebyla zadána žádná hodnota, vrací se None
+        if self.mm.selected_path:
+            print("### self.mm.selected_path: ", self.mm.selected_path)
 
+    def input_export_file_path(self):
+        # Výběr hodnoty
+        self.mm.selected_path = input_export_file_path(self.mm)
+        # Pokud nebyla zadána žádná hodnota, vrací se None
+        if self.mm.selected_path:
+            print("### self.mm.selected_path: ", self.mm.selected_path)
+
+    def input_export_directory_path(self):
+        # Výběr hodnoty
+        self.mm.selected_path = input_export_directory_path(self.mm)
+        # Pokud nebyla zadána žádná hodnota, vrací se None
+        if self.mm.selected_path:
+            print("### self.mm.selected_path: ", self.mm.selected_path)
+
+    # Dialog pro zadání cesty
+    def dialog_import_file_path(self):
+        # Výběr hodnoty
+        self.mm.selected_path = dialog_import_file_path(self.mm)
+        # Pokud nebyla zadána žádná hodnota, vrací se None
+        if self.mm.selected_path:
+            print("### self.mm.selected_path: ", self.mm.selected_path)
+
+    def dialog_export_file_path(self):
+        # Výběr hodnoty
+        self.mm.selected_path = dialog_export_file_path(self.mm)
+        # Pokud nebyla zadána žádná hodnota, vrací se None
+        if self.mm.selected_path:
+            print("### self.mm.selected_path: ", self.mm.selected_path)
+
+    def dialog_export_directory_path(self):
+        # Výběr hodnoty
+        self.mm.selected_path = dialog_export_directory_path(self.mm)
+        # Pokud nebyla zadána žádná hodnota, vrací se None
+        if self.mm.selected_path:
+            print("### self.mm.selected_path: ", self.mm.selected_path)

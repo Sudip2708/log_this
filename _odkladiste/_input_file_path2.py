@@ -1,9 +1,12 @@
 from pathlib import Path
 from prompt_toolkit.shortcuts import input_dialog
-# from log_this.manager.config.cli.styler import dialog_style
+
+from cli_styler import styler
 
 
-def input_path() -> Path:
+
+
+def input_file_path() -> Path:
     """
     Zobrazí dialog pro zadání adresy souboru nebo složky a provede její validaci.
 
@@ -48,4 +51,3 @@ def input_path() -> Path:
 
         except Exception as e:
             print(f"Neplatný formát cesty: {e}. Zkuste to znovu.")
-            input_path()

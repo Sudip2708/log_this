@@ -26,6 +26,7 @@ class StylePrinter:
         return self._print_styled_text(attr)
 
 
+
     def _load_style_instance(self, attr):
         """
         Metoda pro zpracování prvního průchodu metody __getattr__
@@ -59,7 +60,7 @@ class StylePrinter:
 
         # Ověření atributu a navrácení metody pro tisk do konzole
         if hasattr(self._style_instance, attr):
-            return lambda text: self._execute_print(attr, text)
+            return lambda *text: self._execute_print(attr, *text)
 
         # Vyvolání výjimky, pokud atribut neexistuje
         raise AttributeError(
@@ -67,21 +68,39 @@ class StylePrinter:
             f"v '{self._style_instance.__class__.__name__}'."
         )
 
-
-    def _execute_print(self, attr, text):
+    def _execute_print(self, attr, *texts):
         """
-        Pomocná metoda pro vytištění ostylovaného textu
+        Pomocná metoda pro vytištění ostylovaného textu.
 
-        Metoda nejhprve získá tuple se stylem a doplněným textem.
-        Ten pak mopocí metod prompt_toolkit vytiskne do konzole.
-        Nakonec metoda resetuje stav pro instanci stylu.
+        Podporuje jak jeden řetězec, tak více řetězců.
         """
 
-        # Získání tuple s ostylovaným textem
-        styled_text = getattr(self._style_instance, attr)(text)
+        # Získání instance stylu
+        style_method = getattr(self._style_instance, attr)
 
-        # Vytištení tuple do konzole
-        print_formatted_text(FormattedText([styled_text]))
+        # Pokud nejsou argun´menty předané jako tuple, převeď je na tuple
+        if not isinstance(texts, tuple):
+            texts = tuple(texts)
 
-        # Reset atributu pro instanci stylu
+
+        # Iterace přes všechny řetězce a jejich výpis
+        for text in texts:
+            if text:
+                styled_text = style_method(text)
+                print_formatted_text(FormattedText([styled_text]))
+            else:
+                self.empty_line() # pro rozřádkování v textu - aktivuje se prázdným řetězcem
+
+        # Vytisknutí odělujícího řádku (pouze pokud je více řádků)
+        if len(texts) > 1:
+            self.empty_line()
+
+        # Po ukončení iterace resetujeme instanci stylu
         self._style_instance = None
+
+    @staticmethod
+    def empty_line():
+        """Vytisknutí prázdného řádku"""
+        print_formatted_text(FormattedText([('', '')]))
+
+

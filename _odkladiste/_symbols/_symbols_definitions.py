@@ -1,5 +1,11 @@
 # print("cli_styler/_symbols/_symbols_definitions.py")
-symbols_definitions = {
+SYMBOL_MODES = {
+        "ascii": "Základní set symbolů",
+        "emoji": "Obrázkové symboly",
+        "no_symbols": "Symboly nezobrazovat"
+    }
+
+SYMBOL_DEFINITIONS = {
     "INTRO": {
         "ascii": " ■ ",
         "emoji": "🟢 "

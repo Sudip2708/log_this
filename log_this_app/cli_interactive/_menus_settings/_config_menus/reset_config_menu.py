@@ -2,7 +2,7 @@
 from functools import partial
 from .._base_menu import BaseMenu
 
-class ConfigMenu(BaseMenu):
+class ResetConfigMenu(BaseMenu):
 
     # Definice nadpisu
     title = "VYBERTE ÚKON:"
@@ -13,18 +13,18 @@ class ConfigMenu(BaseMenu):
 
         # Nápověda k této sekci
         items = [
-            (f"Nápověda k této nabídce", self.show_help),
+            (f"Nápověda", self.show_help),
         ]
 
         # Definice položek
         items += [
-            ("• Nastavit chování módů", self.show_modes_settings_menu),
-            ("• Nastavit výstup", self.show_aspects_settings_menu),
+            ("• Resetovat na předchozí nastavení", self.reset_to_previous),
+            ("• Resetovat na defaultní nastavení", self.reset_to_default),
         ]
 
         # Přidání doplňujících položek
         items += [
-            ("Zpět do hlavního menu", self.mm.show_main_menu),
+            ("Zpět do předchozího menu", self.show_config_menu),
             ("Ukončit", self.mm.close_interactive_mode)
         ]
 
@@ -35,12 +35,16 @@ class ConfigMenu(BaseMenu):
     def show_help(self):
         pass
 
+    # Metoda pro přepnutí na konfigurační menu
+    def show_config_menu(self):
+        self.mm.show_menu("config_menu")
+
     # Metoda pro zobrazení menu pro nastavení položek modů
-    def show_modes_settings_menu(self):
-        self.mm.menus_category = "log_this_modes"
-        self.mm.show_menu("select_key_menu")
+    def reset_to_previous(self):
+        self.mm.config_manager.reset_to_previous_configuration()
+        self.mm.exit_menu()
 
     # Metoda pro zobrazení menu pro nastavení položek aspektů
-    def show_aspects_settings_menu(self):
-        self.mm.menus_category = "log_this_aspects"
-        self.mm.show_menu("select_key_menu")
+    def reset_to_default(self):
+        self.mm.config_manager.reset_to_default_configuration()
+        self.mm.exit_menu()

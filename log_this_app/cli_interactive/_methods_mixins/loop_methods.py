@@ -35,8 +35,6 @@ class LoopMethodsMixin(ABC):
             # Cyklus pro zpracování vybraného úkonu
             self._response_loop()
 
-            # print("### self.response", self.response)
-
             # Kontrola zda je nastaven požadavek pro ukončení
             if self.response == "exit":
 

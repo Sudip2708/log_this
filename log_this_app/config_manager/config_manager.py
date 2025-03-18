@@ -98,9 +98,31 @@ class ConfigManager(
         """Umožní použití metody get() jako u slovníku"""
         return self.config.get(key, default)
 
+    def current_id(self, key):
+        """Vrátí id hodnoty z nabídky hodnot"""
+        actual_value = self.config[key]
+        return self.get_value_id(key, actual_value)
 
+    def get_value_id(self, key, value):
+        value_list = list(self.items_manager.KEYS_DATA[key].VALUES_DICT)
+        if value in value_list:
+            return value_list.index(value)
+        if "input" in value_list:
+            return value_list.index("input")
+        raise ValueError(
+            f"Nepovedlo se dohledat klíč '{key}' v seznamu hodnot: {value_list}"
+        )
 
-
+    def get_value_meaning(self, key, value):
+        """Získá pojmenování hodnoty"""
+        value_dict = self.items_manager.KEYS_DATA[key].VALUES_DICT
+        if value in value_dict.keys():
+            return value_dict[value]
+        if "input" in value_dict.keys():
+            return value_dict["input"]
+        raise ValueError(
+            f"Nepovedlo se dohledat klíč '{key}' v seznamu hodnot: {value_dict}"
+        )
 
 
 

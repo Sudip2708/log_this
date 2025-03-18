@@ -35,7 +35,8 @@ class ConfigFileManager(
         self._cm = config_manager
 
         # Vytvoření konfiguračního souboru
-        self.save_configuration()
+        if not self._cm.CONFIG_FILE_PATH.exists():
+            self.save_configuration()
 
 
 

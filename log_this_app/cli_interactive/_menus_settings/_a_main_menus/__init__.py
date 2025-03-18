@@ -2,6 +2,7 @@
 from .main_menu import MainMenu
 from .exit_menu import ExitMenu
 
+
 __all__ = [
 
     "MainMenu",

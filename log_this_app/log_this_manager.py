@@ -13,7 +13,7 @@ class LogThisManager(LogThisManagerMethodsMixin):
 
         # Inicializace singleton instance styleru
         # (Používá se napříč aplikací pro ostylování výstupu)
-        CliStyler()
+        self.styler = CliStyler()
 
         # Inicializace konfigurace
         self.config_manager = ConfigManager(self)
@@ -21,5 +21,11 @@ class LogThisManager(LogThisManagerMethodsMixin):
         # Inicializace interaktivního menu
         self.menus_manager = MenusManager(self.config_manager)
 
+        # Nastavení styleru
+        self.styler_settings()
 
 
+    def styler_settings(self):
+        # Nastavení styleru
+        self.styler.change_mode("colors", self.config_manager.config.get("colors"))
+        self.styler.change_mode("symbols", self.config_manager.config.get("symbols"))

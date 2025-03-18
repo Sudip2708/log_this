@@ -20,11 +20,4 @@ class LogThisManagerMethodsMixin(ABC):
             if value.CATEGORY == category:
                 outcome.append(key)
 
-
-
-
-
-        print("### category: ", category)
-        # outcome = self.config_manager.items_manager.filter_keys_by_category(category)
-        print("### outcome: ", outcome)
         return outcome

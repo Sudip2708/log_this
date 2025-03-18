@@ -12,11 +12,11 @@ class ChangeValueMixin(ABC):
     _history = abc_property("_history")
 
 
-    def change_value(self, key, value):
+    def change_value(self, key, value, silent=False):
         """Změna konfigurace"""
 
         # Zálohování aktuálního nastavení
-        config_backup = self.config
+        self._history = self.config.copy()
 
         # Ověření hodnoty
         self.items_manager.value_validation(key, value)
@@ -25,21 +25,35 @@ class ChangeValueMixin(ABC):
 
             # Ověření, zda nebyla zadaná již platná hodnota
             if self.config[key] != value:
+
+                # Nastavení hodnoty v konfiguračním slovníku
                 self.config[key] = value
-                print(f"Klíč {key} byl úspěšně nastaven na hodnotu {value}")
+
+                # Výpis o změně
+                key_class = self.items_manager.KEYS_DATA.get(key)
+                value_str = key_class.VALUES_DICT.get(value, value)
+                if not silent:
+                    styler.cli_print.success.title(
+                        f"Klíč '{key}' byl úspěšně nastaven na hodnotu '{value_str}'"
+                    )
+
+                # Zapsání změny do konfiguračního souboru:
+                if self.file_manager:
+                    self.file_manager.save_configuration(self.config)
+                    if not silent:
+                        styler.cli_print.success.text(
+                            "Změna konfigurace úspěšně zaznamenána i do souboru."
+                        )
 
             # Pokud se hodnoty schodují
             else:
-                print("Byla zadaná již nastavená hodoty. Žádná změna nebyla učiněna.")
+                if not silent:
+                    styler.cli_print.info.title("Byla zadaná již nastavená hodoty.")
+                    styler.cli_print.info.text("Žádná změna nebyla učiněna.")
 
-            # Kontrola, zda je používán i konfigurační soubor:
-            if self.file_manager:
-                self.file_manager.save_configuration(self.config)
-                print("Změna konfigurace úspěšně zaznamenána i do souboru.")
-
-            # Uložení změny do hystorie
-            self._history = config_backup
-
+            # Vytisknutí prázdného řádku
+            if not silent:
+                styler.cli_print.empty_line()
 
         except Exception as e:
             raise RuntimeError(

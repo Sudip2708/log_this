@@ -19,6 +19,7 @@ class BlankLinesKey(ConfigKey):
         "Pro jednořádkové výpisy je přehlednější výstup bez prázdné řádky (hodnota: False).",
         "Pro víceřádkové výpisy je přehlednější výstup s prázdnou řádkou (hodnota: True)."
     )
+    VALUES_TITLE = None
     VALUES_DICT = {
         True: "Zobrazit mezi logy prázdný řádek",
         False: "Nezobrazovat mezi logy prázdný řádek",

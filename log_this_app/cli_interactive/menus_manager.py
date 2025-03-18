@@ -2,7 +2,7 @@
 import traceback
 
 from abc_helper import AbcSingletonMeta
-from cli_styler import cli_print
+from cli_styler import styler
 
 from ._methods_mixins import (
     NavigationMethodsMixin,
@@ -125,13 +125,14 @@ class MenusManager(
         try:
             # Zobrazení nadpisu (je-li požadováno)
             if not silent:
-                cli_print.intro.title(
+                styler.cli_print.intro.title(
                     "VÍTEJTE V INTERAKTIVNÍM REŽIMU!"
                 )
             # Načtení menu k zobrazení
             self.menu = self.menus(menu_name)
             # Spuštění hlavní smyčky
             self.run_loop()
+
 
         # Zachycení nepodchycených chyb
         except Exception as e:

@@ -20,6 +20,7 @@ class MaxDepthKey(ConfigKey):
         "Pro detailnější analýzu kodu se však někdy mohou hodit i velmi malé hodnoty.",
         "Upozornění: Pokud necháte nastavenou malou hodnotu, může se vám stát, že bude hlášen falešný error pro kód který je v pořádku."
     )
+    VALUES_TITLE = None
     VALUES_DICT = {
         0: "Bez možnosti rekurze - pro ladění jednoho kodu",
         3: "3 rekurzní volání - pro ladění jednoho kodu",

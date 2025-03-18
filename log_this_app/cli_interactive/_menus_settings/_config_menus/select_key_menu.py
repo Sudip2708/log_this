@@ -14,7 +14,7 @@ class SelectKeyMenu(BaseMenu):
 
         # Nápověda k této sekci
         items = [
-            (f"Nápověda k této nabídce", self.show_help),
+            ("Nápověda", self.show_help),
         ]
 
         # Dynamická definice položek menu
@@ -54,7 +54,10 @@ class SelectKeyMenu(BaseMenu):
 
     # Metoda pro přepnutí na předchozí menu
     def show_previous_menu(self):
-        self.mm.show_menu("config_menu")
+        if self.mm.menus_category == "interactive_cli":
+            self.mm.show_menu("main_menu")
+        else:
+            self.mm.show_menu("config_menu")
 
 
 

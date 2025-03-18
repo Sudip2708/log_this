@@ -22,6 +22,7 @@ class ModeConfigKey(ConfigKey):
         "Pro dočasnou celopločnou změnu chování.",
         "Doporučuje se ponechat defaultní hodnotu."
     )
+    VALUES_TITLE = None
     VALUES_DICT = {
         0: "Bez logování",
         1: "Jednořádkový výstup",

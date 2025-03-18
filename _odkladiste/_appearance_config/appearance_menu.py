@@ -29,10 +29,10 @@ class AppearanceMenu(BaseMenu):
 
 
     def show_select_colors_menu(self):
-        self.mm.current_selection = styler.get_current_color_mode_id()
-        self.mm.show_menu("select_colors_menu", target_reset=False)
+        self.mm.selected_key = "colors"
+        self.mm.show_menu("select_value_menu")
 
     def show_select_symbols_menu(self):
-        self.mm.current_selection = styler.get_current_symbol_mode_id()
-        self.mm.show_menu("select_symbols_menu", target_reset=False)
+        self.mm.selected_key = "symbols"
+        self.mm.show_menu("select_value_menu")
 

@@ -1,16 +1,27 @@
 # print("cli_styler/cli_styler.py")
 from abc_helper import AbcSingletonMeta
-from ._colors import ColorScheme
-from ._symbols import SymbolScheme
 from ._styles_settings import StylesManager
 from ._style_printer import StylePrinter
 from .utils.get_method_hierarchy import get_method_hierarchy
 
+from ._colors_definitions import COLOR_MODES, COLOR_DEFINITIONS
+from ._symbols_definitions import SYMBOL_MODES, SYMBOL_DEFINITIONS
+
 class CliStyler(metaclass=AbcSingletonMeta):
 
-    _color_scheme = ColorScheme()
-    _symbol_scheme = SymbolScheme()
 
+    VALID_KEYS = {
+        "colors": {
+            "modes": COLOR_MODES,
+            "definitions": COLOR_DEFINITIONS
+        },
+        "symbols": {
+            "modes": SYMBOL_MODES,
+            "definitions": SYMBOL_DEFINITIONS
+        },
+    }
+    _colors = None
+    _symbols = None
 
     def __init__(self,
                  color_mode: str = "dark",
@@ -21,17 +32,8 @@ class CliStyler(metaclass=AbcSingletonMeta):
         if not hasattr(self, "_initialized"):
 
             # Inicializace barevného režimu
-            # Načtení barevného schématu
-            self._colors = self._color_scheme(color_mode)
-            # Atribut pro slovník s klíči a labely jednotlivých modů
-            self.color_modes = self._color_scheme.color_modes_choices
-            # Aktuálně zvolený mod (jako klíč k slovníku color_modes)
-            self.color_mode = color_mode
-
-            # Inicializace setu značek
-            self._symbols = self._symbol_scheme(symbol_mode)
-            self.symbol_modes = self._symbol_scheme.symbol_modes_choices
-            self.symbol_mode = symbol_mode
+            self._initialize_colors(color_mode)
+            self._initialize_symbols(symbol_mode)
 
             # Inicializace třídy
             self._initialize_styler()
@@ -40,16 +42,74 @@ class CliStyler(metaclass=AbcSingletonMeta):
             self._initialized = True
 
 
+    # Inicializace barevného režimu
+    def _initialize_colors(self, color_mode):
+        self._colors = self.get_current_style("colors", color_mode)
+
+    # Inicializace setu značek
+    def _initialize_symbols(self, symbol_mode):
+        self._symbols = self.get_current_style("symbols", symbol_mode)
+
+    # Pomocná metorda pro inicializaci výstupních hodnot
     def _initialize_styler(self):
         """Inicializuje CLI styler a printer podle aktuálních módů."""
         self.get_style = StylesManager(self._colors, self._symbols)
         self.cli_print = StylePrinter(self.get_style)
 
+    # Pomocná metoda pro validaci klíče
+    def _validate_key(self, key):
+        valid_keys = self.VALID_KEYS.keys()
+        if key not in valid_keys:
+            raise ValueError(
+                f"Byl zadán nepodporovaný klíč: {key}"
+                f"Podporované klíče: {', '.join(valid_keys)}"
+            )
 
+    # Metoda pro validaci klíče a hodnoty
+    def validate_key_and_value(self, key, value):
+        self._validate_key(key)
+        valid_modes = self.VALID_KEYS[key]["modes"].keys()
+        if not value in valid_modes:
+            raise ValueError(
+                f"Pro klíč '{key}' byla zadána nepodporovaná hodnota: {value}"
+                f"Podporované hodnoty: {', '.join(valid_modes)}"
+            )
+
+    # Metoda pro získání modu
+    def get_current_style(self, key, value):
+
+        # Validace klíče a hodnoty
+        self.validate_key_and_value(key, value)
+
+        # Načtení stylů
+        definitions = self.VALID_KEYS[key]["definitions"]
+
+        # Vrácení slovníku aktuálního stylu
+        return {
+            color_name: color_sets.get(value, "")
+            for color_name, color_sets in definitions.items()
+        }
+
+    # Metoda pro změnu modu
+    def change_mode(self, key, value):
+        # Validace klíče a hodnoty
+        self.validate_key_and_value(key, value)
+
+        # Změna modu
+        if key == "colors":
+            self._initialize_colors(value)
+        elif key == "symbols":
+            self._initialize_symbols(value)
+
+        # Reinicializace třídy
+        self._initialize_styler()
+
+    # Metoda pro zadání více řádků
     def multiple_input(self, style_method, *lines):
         """Vytiskne více řádků s uživatelem zadaným stylem."""
         try:
             for line in lines:
+                # print("### line", line)
                 style_method(line)
         except AttributeError:
             print(f"Chyba: Neplatný styl: {style_method}")
@@ -60,6 +120,7 @@ class CliStyler(metaclass=AbcSingletonMeta):
         except Exception as e:
             print(f"Neočekávaná chyba: {e}")
 
+    # Pomocná metoda pro diagnostiku chyb
     def _check_style_method(self, style_method):
         """
         Ověří, zda metoda stylování existuje.
@@ -84,50 +145,11 @@ class CliStyler(metaclass=AbcSingletonMeta):
             print(f"Položka '{hierarchy[3]}' neexistuje ve stylu '{hierarchy[2]}'.")
 
 
-    def set_color_mode(self, color_mode: str = None):
-        """Změní mód a znovu inicializuje styly."""
-        if color_mode in self.color_modes:
-            self._colors = self._color_scheme(color_mode)
-            self.color_mode = color_mode
-            self._initialize_styler()
-        else:
-            raise ValueError(
-                f"Byl zadán nepodporovaný barevný mod: {color_mode}"
-                f"Podporované mody: {', '.join(self.color_modes)}"
-            )
-
-    def set_symbol_mode(self, symbol_mode: str = None):
-        """Změní mód a znovu inicializuje styly."""
-        if symbol_mode in self.symbol_modes:
-            self._symbols = self._symbol_scheme(symbol_mode)
-            self.symbol_mode = symbol_mode
-            self._initialize_styler()
-        else:
-            raise ValueError(
-                f"Byl zadán nepodporovaný mod pro značky: {symbol_mode}"
-                f"Podporované mody: {', '.join(self.symbol_modes)}"
-            )
-
-
-    def get_current_color_mode_id(self):
-        """Metoda pro získání id klíče modu barev"""
-        mode_keys_list = list(self.color_modes.keys())
-        return mode_keys_list.index(self.color_mode) if (
-                self.color_mode in mode_keys_list) else 0
-
-
-    def get_current_symbol_mode_id(self):
-        """Metoda pro získání id klíče modu barev"""
-        mode_keys_list = list(self.symbol_modes.keys())
-        return mode_keys_list.index(self.symbol_mode) if (
-                self.symbol_mode in mode_keys_list) else 0
-
 
 # Použití StyleManageru
 styler = CliStyler()
 cli_print = styler.cli_print
 get_style = styler.get_style
-set_colors_mode = styler.set_color_mode
-set_symbols_mode = styler.set_symbol_mode
+
 
 

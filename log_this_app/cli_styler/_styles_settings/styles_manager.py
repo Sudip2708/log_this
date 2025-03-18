@@ -8,6 +8,7 @@ from ._prompt import PromptStyle
 from ._success import SuccessStyle
 from ._warning import WarningStyle
 
+
 class StylesManager:
     """Spravuje všechny styly CLI"""
 

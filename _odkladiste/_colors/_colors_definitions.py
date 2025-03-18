@@ -1,5 +1,11 @@
 # print("cli_styler/_colors/_colors_definitions.py")
-colors_definitions = {
+COLOR_MODES = {
+        "light": "Mod pro světlý režim",
+        "dark": "Mod pro tmavý režim",
+        "native": "Bez barev - nativní vzhled"
+    }
+
+COLOR_DEFINITIONS = {
     "LAVENDER": {
         "dark": "#d19bfe",
         "light": "#8e41d0"

@@ -20,3 +20,10 @@ class InfoStyle(StyleBase):
             end_line=self.NONE
         )
 
+        self.text_blank = StyleItems(
+            symbol=symbols["UNSELECTED"],
+            color=colors["PURPLE"],
+            style=self.NONE,
+            end_line=self.NONE
+        )
+

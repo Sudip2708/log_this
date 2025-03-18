@@ -13,7 +13,8 @@ class MainMenu(BaseMenu):
             ("Nápověda", self.toggle_show_instruction),
             ("• Zobrazit konfiguraci", self.show_actual_configuration),
             ("• Nastavit konfiguraci", self.show_config_menu),
-            ("• Nastavení vzhledu", self.show_appearance_menu),
+            ("• Import/Export konfigurace", self.import_export_menu),
+            ("• Nastavení vzhledu interaktivního režimu", self.show_appearance_menu),
             ("Ukončit", self.mm.close_interactive_mode),
         ]
 
@@ -23,8 +24,7 @@ class MainMenu(BaseMenu):
 
     # Metoda pro výpis aktuální konfigurace
     def show_actual_configuration(self):
-        self.mm.response = "print_configuration"
-        self.mm.exit_menu()
+        self.mm.show_menu("show_configuration_menu")
 
     # Metoda pro přepnutí na konfigurační menu
     def show_config_menu(self):
@@ -32,5 +32,9 @@ class MainMenu(BaseMenu):
 
     # Metoda přepne na menu pro konfiguraci vzhledu
     def show_appearance_menu(self):
-        self.mm.show_menu("appearance_menu")
+        self.mm.menus_category = "interactive_cli"
+        self.mm.show_menu("select_key_menu")
 
+    # Metoda přepne na menu pro konfiguraci vzhledu
+    def import_export_menu(self):
+        self.mm.show_menu("import_export_menu")

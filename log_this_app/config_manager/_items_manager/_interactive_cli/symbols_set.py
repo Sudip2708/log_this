@@ -6,7 +6,7 @@ class SymbolsSetKey(ConfigKey):
     """Konfigurační klíč pro odsazení"""
 
     INFO = "Nastavení sady značek používaných v interaktivním režimu."
-    DEFAULT_VALUE = 2
+    DEFAULT_VALUE = "ascii"
     LABEL = "Nastavit zobrazení značek"
     OPTIONS = (
         "Povolené hodnoty pro klíč 'symbols': ",
@@ -20,9 +20,10 @@ class SymbolsSetKey(ConfigKey):
         "Nastavením hodnoty 'emoji' získáme obrázkovou sadu značek. ",
         "Nastavením hodnoty 'no_symbols' skryjeme zobrazení značek. ",
     )
+    VALUES_TITLE = "VYBERTE SET ZNAČEK:"
     VALUES_DICT = {
-        "ascii": "Základní set ASCII symbolů",
+        "ascii": "Základní set symbolů",
         "emoji": "Obrázkové symboly",
-        "no_symbols": "Bez symbolů - nativní vzhled"
+        "no_symbols": "Symboly nezobrazovat"
     }
     CATEGORY = "interactive_cli"

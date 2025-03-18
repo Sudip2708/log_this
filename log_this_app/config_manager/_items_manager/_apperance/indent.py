@@ -18,6 +18,7 @@ class IndentKey(ConfigKey):
         "Pro skrytí odsazení slouží hodnota 0. ",
         "Více než 4 mezery pro jedno odsazení nelze zadat. "
     )
+    VALUES_TITLE = None
     VALUES_DICT = {
         0: "Bez odsazení",
         1: "Odsazení o 1 mezeru",
