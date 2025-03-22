@@ -1,49 +1,52 @@
-# print("_menus_settings/_key_and_value_config/config_menu.py")
-from functools import partial
+from typing import Dict, Optional, List, Tuple
+
 from .._base_menu import BaseMenu
 
+
 class ShowConfigurationMenu(BaseMenu):
+    """
+    Menu s nabídkou pro výpis aktuální konfigurace.
 
-    # Definice nadpisu
-    title = "VYBERTE ÚKON:"
+    Poskytuje možnosti pro zobrazení konfigurace v různých úrovních detailu.
+    """
 
-    # Definice položek
+    # Definice názvu a klíčů menu
+    menu_name: str = "Menu s nabídkou pro výpis aktuální konfigurace"
+    _menu_key: str = "show_configuration_menu"
+    _previous_menu_key: Optional[str] = "main_menu"
+
+    # Definice dostupných položek menu
+    _menu_items: Dict[str, Dict[str, str]] = {
+        "show_config_simple": {
+            "label": "Stručný výpis",
+            "help": "Vypíše aktuální konfiguraci.",
+        },
+        "show_category_menu": {
+            "label": "Podrobný výpis s popisem",
+            "help": "Přístup k menu pro výpis konfigurace s podrobnostmi.",
+        },
+    }
+
     @property
-    def items(self):
+    def items(self) -> List[Tuple[str, callable]]:
+        """
+        Vrací seznam položek dostupných v menu pro výpis konfigurace.
 
-        # Nápověda k této sekci
-        items = [
-            (f"Nápověda", self.show_help),
+        :return: Seznam dvojic obsahujících název a metodu spuštění.
+        """
+        return [
+            self.get_help_offer(),
+            self.get_response_offer("show_config_simple"),
+            self.get_menu_offer("show_category_menu"),
+            self.get_previous_menu(),
+            self.get_close_offer(),
         ]
 
-        # Definice položek
-        items += [
-            ("• Stručný výpis", self.show_config_simple),
-            ("• Podrobný výpis s popisem", self.show_category_menu),
-        ]
+    def _response_action(self, _: str) -> None:
+        """
+        Spustí akci pro zobrazení aktuální konfigurace a ukončí menu.
 
-        # Přidání doplňujících položek
-        items += [
-            ("Zpět do hlavního menu", self.mm.show_main_menu),
-            ("Ukončit", self.mm.close_interactive_mode)
-        ]
-
-        return items
-
-
-    # Metoda pro zobrazení nápovědy
-    def show_help(self):
-        pass
-
-    # Metoda pro zobrazení menu pro nastavení položek modů
-    def show_config_simple(self):
-        self.mm.config_manager.print_actual_configuration2()
+        Přetížení metody základní třídy BaseMenu.
+        """
+        self.mm.config_manager.print_actual_configuration()
         self.mm.exit_menu()
-        pass
-
-
-    # Metoda pro zobrazení menu pro nastavení položek aspektů
-    def show_category_menu(self):
-        self.mm.show_menu("show_category_menu")
-        pass
-

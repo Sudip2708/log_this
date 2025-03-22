@@ -12,7 +12,7 @@ from ._methods_mixins import (
 
 from ._response_manager import ResponseManager
 from ._menu_render import MenuRenderer
-from ._menus_settings import MenuRegistry
+from ._menus_settings import MenuRegister
 
 
 class MenusManager(
@@ -72,7 +72,7 @@ class MenusManager(
     selected_value = None
     selected_key = None
     styler = None
-    continue_with_menu = None
+    continue_with_menu = False
 
     def __init__(self, config_manager):
         """Inicializační metoda singleton instance"""
@@ -90,17 +90,20 @@ class MenusManager(
             self.menu_renderer = MenuRenderer(self)
 
             # Napojení managera spravující jednotlivá menu
-            self.menus = MenuRegistry(self)
+            self.menu_register = MenuRegister(self)
 
             # Potvrzení o proběhlé inicializaci
             self._initialized = True
 
 
-    def show_menu(self, new_menu_name, target_reset=True):
+    def show_menu(self, menu_name, target_reset=True):
         """Přepne na nové menu"""
 
+        # Přiřazení jména menu do atriutu
+        self.menu_name = menu_name
+
         # Načtení menu k zobrazení
-        self.menu = self.menus(new_menu_name)
+        self.menu = self.menu_register(menu_name)
 
         # Nastavení pozice výběru na první položku
         if target_reset:
@@ -128,8 +131,10 @@ class MenusManager(
                 styler.cli_print.intro.title(
                     "VÍTEJTE V INTERAKTIVNÍM REŽIMU!"
                 )
+            # Přiřazení jména menu do atriutu
+            self.menu_name = menu_name
             # Načtení menu k zobrazení
-            self.menu = self.menus(menu_name)
+            self.menu = self.menu_register(menu_name)
             # Spuštění hlavní smyčky
             self.run_loop()
 
@@ -138,3 +143,10 @@ class MenusManager(
         except Exception as e:
             print(f"Došlo k neočekávané chybě: {str(e)}")
             print(traceback.format_exc())
+
+
+    # Metoda pro zobrazení a skrytí nápovědy
+    def toggle_show_instruction(self):
+        self.show_instruction = not self.show_instruction
+
+

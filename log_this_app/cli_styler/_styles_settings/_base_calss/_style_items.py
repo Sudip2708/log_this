@@ -12,3 +12,13 @@ class StyleItems:
     def __call__(self, text: str) -> tuple:
         """Metoda navrací ostylovaný text jako tuple (style, text)"""
         return f"{self.color}{self.style}", f"{self.symbol}{text}{self.end_line}"
+
+    # def __call__(self, *texts: str) -> tuple:
+    #     """Metoda navrací ostylovaný text jako tuple (style, text)"""
+    #
+    #     if not isinstance(texts, tuple):
+    #         texts = tuple(texts)
+    #     outcome = []
+    #     for text in texts:
+    #         outcome.append((f"{self.color}{self.style}", f"{self.symbol}{text}{self.end_line}"))
+    #     return outcome

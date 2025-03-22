@@ -3,61 +3,57 @@ from functools import partial
 from .._base_menu import BaseMenu
 
 class ExportMenu(BaseMenu):
+    """
+    Menu pro možnosti exportování konfigurace do externího souboru.
 
-    # Definice nadpisu
-    title = "VYBERTE ÚKON:"
+    Poskytuje volby pro zpúsob výběru tohoto souboru.
+    """
 
-    # Definice položek
+    # Definice názvu a klíčů menu
+    menu_name = "Menu pro export konfigurace"
+    _menu_key = "export_menu"
+    _previous_menu_key = "import_export_menu"
+
+    # Definice dostupných položek menu
+    _menu_items = {
+        "dialog_export_directory_path": {
+            "label": "Výběr složky skrze souborové okno",
+            "help": "Otevře souborového managera pro výběr cesty "
+                    "ke složky pro uložení aktuální konfigurace.",
+        },
+        "dialog_export_file_path": {
+            "label": "Výběr skrze souborové okno s definicí jména",
+            "help": "Otevře souborového managera pro výběr cesty "
+                    "s možností definovat vlastní jméno souboru "
+                    "pro uložení aktuální konfigurace.",
+        },
+        "input_export_directory_path": {
+            "label": "Ruční zadání cesty k složce",
+            "help": "Nabídne možnost ručního zadání cesty "
+                    "ke složce pro uložení aktuální konfigurace.",
+        },
+        "input_export_file_path": {
+            "label": "Ruční zadání cesty s definicí jména souboru",
+            "help": "Nabídne možnost ručního zadání cesty "
+                    "s možností definovat vlastní jméno souboru "
+                    "pro uložení aktuální konfigurace.",
+        },
+    }
+
     @property
     def items(self):
+        """
+        Vrací seznam položek dostupných v menu pro exposr konfigurace.
 
-        # Nápověda k této sekci
-        items = [
-            (f"Nápověda", self.show_help),
+        :return: Seznam dvojic obsahujících název a metodu spuštění.
+        """
+        return [
+            self.get_help_offer(),
+            self.get_response_offer("dialog_export_directory_path"),
+            self.get_response_offer("dialog_export_file_path"),
+            self.get_response_offer("input_export_directory_path"),
+            self.get_response_offer("input_export_file_path"),
+            self.get_previous_menu(),
+            self.get_close_offer(),
         ]
-
-        # Definice položek
-        items += [
-            ("• Výběr složky skrze souborové okno", self.dialog_export_directory_path),
-            ("• Výběr skrze souborové okno s definicí jména", self.dialog_export_file_path),
-            ("• Ruční zadání cesty k složce", self.input_export_directory_path),
-            ("• Ruční zadání cesty s definicí jména souboru", self.input_export_file_path),
-        ]
-
-        # Přidání doplňujících položek
-        items += [
-            ("Zpět do předchozího menu", self.show_previous_menu),
-            ("Ukončit", self.mm.close_interactive_mode)
-        ]
-
-        return items
-
-
-    # Metoda pro zobrazení nápovědy
-    def show_help(self):
-        pass
-
-    # Metoda pro přepnutí na předchozí menu
-    def show_previous_menu(self):
-        self.mm.show_menu("import_export_menu")
-
-    # Metoda pro zobrazení menu pro nastavení položek aspektů
-    def input_export_file_path(self):
-        self.mm.response = "input_export_file_path"
-        self.mm.exit_menu()
-
-    # Metoda pro zobrazení menu pro nastavení položek aspektů
-    def dialog_export_file_path(self):
-        self.mm.response = "dialog_export_file_path"
-        self.mm.exit_menu()
-
-    # Metoda pro zobrazení menu pro nastavení položek aspektů
-    def input_export_directory_path(self):
-        self.mm.response = "input_export_directory_path"
-        self.mm.exit_menu()
-
-    # Metoda pro zobrazení menu pro nastavení položek modů
-    def dialog_export_directory_path(self):
-        self.mm.response = "dialog_export_directory_path"
-        self.mm.exit_menu()
 

@@ -19,3 +19,10 @@ class HintStyle(StyleBase):
             style=self.NONE,
             end_line=self.END_LINE
         )
+
+        self.text_blank = StyleItems(
+            symbol=symbols["UNSELECTED"],
+            color=colors["MAGENTA"],
+            style=self.NONE,
+            end_line=self.END_LINE
+        )

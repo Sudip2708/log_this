@@ -10,20 +10,20 @@ class InfoStyle(StyleBase):
             symbol=symbols["INFO"],
             color=colors["LIGHT_PURPLE"],
             style=self.BOLD + self.REVERSE,
-            end_line=self.NONE
+            end_line=self.CONTINUE
         )
 
         self.text = StyleItems(
             symbol=symbols["LIST_ITEM"],
             color=colors["PURPLE"],
             style=self.NONE,
-            end_line=self.NONE
+            end_line=self.CONTINUE
         )
 
         self.text_blank = StyleItems(
             symbol=symbols["UNSELECTED"],
             color=colors["PURPLE"],
             style=self.NONE,
-            end_line=self.NONE
+            end_line=self.CONTINUE
         )
 

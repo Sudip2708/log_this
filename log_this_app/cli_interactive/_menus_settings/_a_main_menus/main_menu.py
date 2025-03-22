@@ -1,40 +1,52 @@
-# print("_menus_settings/_menus_intro/main_menu.py")
+from typing import Dict, List, Optional, Tuple
+
 from .._base_menu import BaseMenu
 
+
 class MainMenu(BaseMenu):
+    """
+    Hlavní menu aplikace.
 
-    # Definice nadpisu
-    title = "VYBERTE ÚKON:"
+    Poskytuje přístup k základním nastavením a konfiguraci aplikace.
+    """
 
-    # Definice položek
+    # Definice názvu a klíčů menu
+    menu_name: str = "Hlavní menu"
+    _menu_key: str = "main_menu"
+    _previous_menu_key: Optional[str] = None
+
+    # Definice dostupných položek menu
+    _menu_items: Dict[str, Dict[str, str]] = {
+        "show_configuration_menu": {
+            "label": "Zobrazit konfiguraci",
+            "help": "Přístup k menu pro zobrazení aktuální konfigurace.",
+        },
+        "config_menu": {
+            "label": "Nastavit konfiguraci",
+            "help": "Přístup k menu pro změnu konfigurace.",
+        },
+        "import_export_menu": {
+            "label": "Import/Export konfigurace",
+            "help": "Přístup k menu pro import a export konfigurace.",
+        },
+        "select_key_menu_interactive": {
+            "label": "Nastavení vzhledu interaktivního režimu",
+            "help": "Přístup k menu pro nastavení vzhledu dialogových oken.",
+        }
+    }
+
     @property
-    def items(self):
+    def items(self) -> List[Tuple[str, callable]]:
+        """
+        Vrací seznam položek dostupných v hlavním menu.
+
+        :return: Seznam dvojic obsahujících název a metodu spuštění.
+        """
         return [
-            ("Nápověda", self.toggle_show_instruction),
-            ("• Zobrazit konfiguraci", self.show_actual_configuration),
-            ("• Nastavit konfiguraci", self.show_config_menu),
-            ("• Import/Export konfigurace", self.import_export_menu),
-            ("• Nastavení vzhledu interaktivního režimu", self.show_appearance_menu),
-            ("Ukončit", self.mm.close_interactive_mode),
+            self.get_help_offer(),
+            self.get_menu_offer("show_configuration_menu"),
+            self.get_menu_offer("config_menu"),
+            self.get_menu_offer("import_export_menu"),
+            self.get_menu_offer("select_key_menu_interactive"),
+            self.get_close_offer(),
         ]
-
-    # Metoda pro zobrazení a skrytí nápovědy
-    def toggle_show_instruction(self):
-        self.mm.show_instruction = not self.mm.show_instruction
-
-    # Metoda pro výpis aktuální konfigurace
-    def show_actual_configuration(self):
-        self.mm.show_menu("show_configuration_menu")
-
-    # Metoda pro přepnutí na konfigurační menu
-    def show_config_menu(self):
-        self.mm.show_menu("config_menu")
-
-    # Metoda přepne na menu pro konfiguraci vzhledu
-    def show_appearance_menu(self):
-        self.mm.menus_category = "interactive_cli"
-        self.mm.show_menu("select_key_menu")
-
-    # Metoda přepne na menu pro konfiguraci vzhledu
-    def import_export_menu(self):
-        self.mm.show_menu("import_export_menu")

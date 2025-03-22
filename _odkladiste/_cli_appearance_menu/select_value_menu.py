@@ -5,6 +5,16 @@ from cli_styler import styler
 
 class SelectValueMenu(BaseMenu):
 
+    # Pojmenování menu (klíč pod kterým je volatelné)
+    menu_name = "select_value_menu"
+
+    menu_help = (
+        "Zobrazit konfiguraci - Přístup k menu pro zobrazení aktuální konfigurace",
+        "Nastavit konfiguraci - Přístup k menu pro změnu konfigurace",
+        "Import/Export konfigurace - Přístup k menu pro import a export konfigurace",
+        "Nastavení vzhledu interaktivního režimu - Přístup k menu pro nastavení vzhledu dialogových oken"
+    )
+
     _input = None
     _key = None
     _mode_class = None
@@ -41,8 +51,7 @@ class SelectValueMenu(BaseMenu):
         items += [
             (
                 # Vytvoření labelu s přidáním označení aktuálně vybrané možnosti
-                "• "
-                +label
+                label
                 + (
                     " (default)"
                     if value == self._mode_class.DEFAULT_VALUE

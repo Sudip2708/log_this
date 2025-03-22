@@ -5,36 +5,44 @@ from .._base_menu import BaseMenu
 
 class SelectKeyMenu(BaseMenu):
 
+    menu_name = "Menu pro výběr klíče"
+    _menu_key = "select_key_menu"
+    _previous_menu_key = None
+    _menu_items = {
+        "show_configuration_menu": {
+            "label": "• Zobrazit konfiguraci",
+            "help": "Přístup k menu pro zobrazení aktuální konfigurace.",
+        },
+        "config_menu": {
+            "label": "• Nastavit konfiguraci",
+            "help": "Přístup k menu pro změnu konfigurace.",
+        },
+        "import_export_menu": {
+            "label": "• Import/Export konfigurace",
+            "help": "Přístup k menu pro import a export konfigurace.",
+        },
+        "show_appearance_menu": {
+            "label": "• Nastavení vzhledu interaktivního režimu",
+            "help": "Přístup k menu pro nastavení vzhledu dialogových oken.",
+        }
+    }
+
+
     # Definice nadpisu
     title = "VYBERTE ÚKON:"
 
     # Definice položek
     @property
     def items(self):
-
-        # Nápověda k této sekci
-        items = [
-            ("Nápověda", self.show_help),
+        return [
+            self.get_help_offer(),
+            ((label, partial(self.set_new_value, key))
+            for key, label in self.get_options_dict().items()),
+            self.get_menu_offer("reset_config_menu"),
+            self.get_previous_menu(self._previous_menu_key),
+            self.get_close_offer(),
         ]
 
-        # Dynamická definice položek menu
-        items += [
-            ("• "+label, partial(self.set_new_value, key))
-            for key, label in self.get_options_dict().items()
-        ]
-
-        # Přidání doplňujících položek
-        items += [
-            ("Zpět na předchozí menu", self.show_previous_menu),
-            ("Ukončit", self.mm.close_interactive_mode)
-        ]
-
-        return items
-
-
-    # Metoda pro zobrazení nápovědy
-    def show_help(self):
-        pass
 
     # Metoda pro získání slovníku s položkami pro toto menu
     def get_options_dict(self) -> dict:

@@ -11,6 +11,9 @@ class LoopMethodsMixin(ABC):
     # Atribut pro definici odpovědí
     response = abc_property("response")
 
+    # Atribut pro název menu k zobrazení
+    menu_name = abc_property("menu_name")
+
     # Atribut zprostředkovávající instanci pro vytvoření odpovědi
     response_manager = abc_property("response")
 
@@ -48,9 +51,9 @@ class LoopMethodsMixin(ABC):
             # KOntrola, zda je vyžadováno pokračující menu
             if self.continue_with_menu:
                 # Zobrazení pokračujícího menu
-                self.show_menu(self.continue_with_menu, target_reset=False)
+                self.show_menu(self.menu_name, target_reset=False)
                 # Reset hodnoty
-                self.continue_with_menu = None
+                self.continue_with_menu = False
             else:
                 # Zobrazení menu pro potvrzení ukončení
                 self.show_menu("exit_menu")

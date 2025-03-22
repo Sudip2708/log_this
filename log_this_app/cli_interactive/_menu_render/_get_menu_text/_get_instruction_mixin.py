@@ -18,18 +18,37 @@ class GetInstructionMixin(ABC):
         Metoda pro zobrazení/skrytí nápovědy k používání interaktivního režimu
         """
 
-        # Načtení metody get_style
-        get_style = styler.get_style
-
-        # Text pro nápovědu
-        instruction = [
-            get_style.hint.title("NÁPOVĚDA:"),
-            get_style.hint.text("Použijte šipky ↑↓ pro výběr položky"),
-            get_style.hint.text("Stiskněte Enter pro potvrzení výběru"),
-            get_style.hint.text("Ctrl+C pro ukončení\n"),
-        ]
+        instruction = self._get_base_instruction()
+        menu_instruction = self._get_menu_instruction()
+        instruction.extend(menu_instruction)
 
         # Zobrazení nápovědy (je-li aktivní)
         if self.mm.show_instruction:
             self.lines.extend(instruction)
 
+    def _get_base_instruction(self):
+        menu_name = self.mm.menu_name
+        return [
+            styler.get_style.hint.title(f"NÁPOVĚDA:"),
+            styler.get_style.hint.text("Použijte šipky ↑↓ pro výběr položky"),
+            styler.get_style.hint.text("Stiskněte Enter pro potvrzení výběru"),
+            styler.get_style.hint.text("Ctrl+C pro ukončení\n"),
+        ]
+
+    def _get_menu_instruction(self):
+        menu = self.mm.menu_register(self.mm.menu_name)
+        menu_help = menu.menu_help
+        return (
+
+            # Přidání nadpisu
+            [styler.get_style.hint.title(
+                f"Popis položek pro {menu.menu_name.lower()}:")]
+
+            # Přidání položek
+            + [styler.get_style.hint.text(
+                text if index != len(menu_help) - 1 else text + "\n")
+                for index, text in enumerate(menu_help)]
+
+            # Pokud není nápověda nepřidávat nic
+            if menu_help else []
+        )

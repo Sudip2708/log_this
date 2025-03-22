@@ -47,7 +47,7 @@ def input_import_file_path(menus_manager):
         if selected_path == "":
             cli_print.warning.title("Nebyla zadaná žádná hodnota.")
             cli_print.warning.direction("Návrat do předchozího menu.")
-            menus_manager.continue_with_menu = "import_menu"
+            menus_manager.continue_with_menu = True
             return None
 
         return selected_path

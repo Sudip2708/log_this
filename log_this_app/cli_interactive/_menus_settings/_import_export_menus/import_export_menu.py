@@ -1,49 +1,49 @@
-# print("_menus_settings/_key_and_value_config/config_menu.py")
-from functools import partial
+from typing import Dict, Optional, List, Tuple
+
 from .._base_menu import BaseMenu
 
+
 class ImportExportMenu(BaseMenu):
+    """
+    Menu pro možnosti import a export konfigurace.
 
-    # Definice nadpisu
-    title = "VYBERTE ÚKON:"
+    Poskytuje volby pro importování konfigurace z externího souboru,
+    a pro expostování konfigurace do vlastního souboru.
+    """
 
-    # Definice položek
+    # Definice názvu a klíčů menu
+    menu_name: str  = "Menu pro import a export konfigurace"
+    _menu_key: str  = "import_export_menu"
+    _previous_menu_key: Optional[str] = "main_menu"
+
+    # Definice dostupných položek menu
+    _menu_items = {
+        "import_menu": {
+            "label": "Možnosti pro import konfigurace",
+            "help": "Přístup k menu pro import konfigurace "
+                    "pro knihovnu log_this ze souboru .json.",
+        },
+        "export_menu": {
+            "label": "Možnosti pro export konfigurace",
+            "help": "Přístup k menu pro export aktuální konfigurace "
+                    "do souboru .json.",
+        },
+
+    }
+
     @property
     def items(self):
+        """
+        Vrací seznam položek dostupných v menu pro reset konfigurace.
 
-        # Nápověda k této sekci
-        items = [
-            (f"Nápověda", self.show_help),
+        :return: Seznam dvojic obsahujících název a metodu spuštění.
+        """
+        return [
+            self.get_help_offer(),
+            self.get_menu_offer("import_menu"),
+            self.get_menu_offer("export_menu"),
+            self.get_previous_menu(),
+            self.get_close_offer(),
         ]
 
-        # Definice položek
-        items += [
-            ("• Možnosti pro import konfigurace", self.import_config_from_file),
-            ("• Možnosti pro export konfigurace", self.export_confit_to_file),
 
-        ]
-
-        # Přidání doplňujících položek
-        items += [
-            ("Zpět do předchozího menu", self.show_previous_menu),
-            ("Ukončit", self.mm.close_interactive_mode)
-        ]
-
-        return items
-
-
-    # Metoda pro zobrazení nápovědy
-    def show_help(self):
-        pass
-
-    # Metoda pro přepnutí na konfigurační menu
-    def show_previous_menu(self):
-        self.mm.show_menu("main_menu")
-
-    # Metoda pro zobrazení menu pro nastavení položek aspektů
-    def import_config_from_file(self):
-        self.mm.show_menu("import_menu")
-
-    # Metoda pro zobrazení menu pro nastavení položek aspektů
-    def export_confit_to_file(self):
-        self.mm.show_menu("export_menu")

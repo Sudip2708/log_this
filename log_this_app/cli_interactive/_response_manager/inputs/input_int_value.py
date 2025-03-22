@@ -40,7 +40,7 @@ def input_int_value(menus_manager):
         if selected_value == "":
             cli_print.warning.title("Nebyla zadaná žádná hodnota.")
             cli_print.warning.direction("Návrat do menu pro výběr hodnoty.")
-            menus_manager.continue_with_menu = "select_value_menu"
+            menus_manager.continue_with_menu = True
             return None
 
         return int(selected_value)  # Vrací zadanou hodnotu

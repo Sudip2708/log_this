@@ -10,24 +10,7 @@ class PrintActualConfigurationMixin(ABC):
     items_manager = abc_property("items_manager")
     get_value_meaning = abc_method("get_value_meaning")
 
-
-    # def print_actual_configuration(self):
-    #     """Metoda prostručný výpis aktuálně nastavených hodnot"""
-    #
-    #     # Vytištění nadpisu
-    #     styler.cli_print.info.title("Aktuální konfigurace:")
-    #
-    #     # Vytvoření dalších položek
-    #     items_list = []
-    #     for key, value in self.config.items():
-    #         value_meaning = self.get_value_meaning(key, value)
-    #         items_list.append(f"{key} - {value} - {value_meaning}")
-    #
-    #     # Výpis možností
-    #     styler.cli_print.info.text(*items_list)
-
-
-    def print_actual_configuration2(self):
+    def print_actual_configuration(self):
         """Metoda prostručný výpis aktuálně nastavených hodnot"""
 
         # Vytištění nadpisu
@@ -40,7 +23,7 @@ class PrintActualConfigurationMixin(ABC):
             items_list.append(f"{value.upper()}:")
 
             # Načtení slovníku s položkami dané kategorie
-            category_dict = self.items_manager.get_key_class_for_category(category_key)
+            category_dict = self.items_manager.get_category_dict(category_key)
             for key, key_class in category_dict.items():
                 actual_value = self.config[key]
                 value_meaning = self.get_value_meaning(key, actual_value)
@@ -62,7 +45,7 @@ class PrintActualConfigurationMixin(ABC):
         styler.cli_print.info.title(f"Položky pro {CONFIG_CATEGORY[category].lower()}:")
 
         # Načtení slovníku s položkami dané kategorie
-        category_dict = self.items_manager.get_key_class_for_category(category)
+        category_dict = self.items_manager.get_category_dict(category)
 
         # Vytvoření dalších položek
         items_list = []

@@ -1,7 +1,7 @@
 {
     "indent": 2,
     "blank_lines": true,
-    "docstring_lines": 15,
+    "docstring_lines": 3,
     "max_depth": 100,
     "skip_this": 0,
     "one_line": 1,
@@ -12,6 +12,6 @@
     "false": 0,
     "none": 0,
     "empty": 0,
-    "colors": "dark",
+    "colors": "light",
     "symbols": "ascii"
 }

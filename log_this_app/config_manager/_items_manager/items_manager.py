@@ -107,9 +107,8 @@ class ConfigItemsManager(LoadConfigMixin):
         return outcome
 
 
-    def get_key_class_for_category(self, category: str) -> dict:
+    def get_category_dict(self, category: str) -> dict:
         """Vrátí seznam klíčů pro danou kategorii"""
-        # return [key for key in self.KEYS_DATA.values() if key.CATEGORY == category]
         return {
             key: key_class
             for key, key_class in self.KEYS_DATA.items()

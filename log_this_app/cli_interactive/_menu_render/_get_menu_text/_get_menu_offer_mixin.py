@@ -23,6 +23,7 @@ class GetMenuOfferMixin(ABC):
         get_style = styler.get_style
 
         # Cyklus procházející položky
+        # print("### self.mm.menu.items: ", self.mm.menu.items)
         for i, (text, _) in enumerate(self.mm.menu.items):
 
             # Přidání položky do hlavního seznamu 'lines'
