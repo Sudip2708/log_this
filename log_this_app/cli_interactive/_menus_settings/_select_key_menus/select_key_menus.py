@@ -8,7 +8,6 @@ class SelectKeyMenuInteractive(SelectKeyMenu):
     Umožňuje přístup k možnostem pro změnu vzhledu CLI
     prostřednictvím výběru přednastavených stylů.
     """
-
     menu_name: str = "Menu pro nastavení vzhledu interaktivního režimu"
     _menu_key: str = "select_key_menu_interactive"
     _previous_menu_key: str = "main_menu"

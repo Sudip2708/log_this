@@ -14,7 +14,7 @@ class ChangeValueMixin(ABC):
 
     def change_value(self, key, value, silent=False):
         """Změna konfigurace"""
-
+        
         # Zálohování aktuálního nastavení
         self._history = self.config.copy()
 

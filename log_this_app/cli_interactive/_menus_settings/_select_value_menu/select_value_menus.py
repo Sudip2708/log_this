@@ -13,7 +13,7 @@ class SelectValueMenuInteractive(SelectValueMenu):
     _menu_key: str = "select_value_menu_interactive"
     _previous_menu_key: str = "select_key_menu_interactive"
 
-    def request_processing(self, value: str) -> None:
+    def _request_processing(self, value: str) -> None:
         """
         Zpracuje požadavek na změnu stylu interaktivního režimu.
 
