@@ -1,0 +1,65 @@
+# Validátory pro seznamové (list-like) typy
+==========================================
+
+Tento balíček obsahuje validátory pro všechny typy podobné seznamům,
+které jsou dostupné v modulech `typing` a `collections`.
+
+## Přehled typů a jejich použití:
+------------------------------
+
+### List[T]
+    Základní seznamový typ, kde T je typ prvků seznamu.
+    Nejběžnější a nejpoužívanější seznamový typ.
+    >>> my_list: List[int] = [1, 2, 3, 4, 5]
+
+### Sequence[T]
+    Abstraktní třída reprezentující read-only rozhraní sekvence.
+    Vhodné pro parametry funkcí, kde potřebujeme pouze číst ze sekvence.
+    Akceptuje jakýkoliv objekt, který implementuje rozhraní sekvence (list, tuple, str).
+    >>> def calculate_sum(numbers: Sequence[int]) -> int:
+    >>>     return sum(numbers)
+
+### MutableSequence[T]
+    Rozšíření Sequence o metody pro zápis a modifikaci.
+    Vhodné pro parametry funkcí, kde potřebujeme číst i zapisovat.
+    >>> def reverse_in_place(data: MutableSequence[int]) -> None:
+    >>>     for i in range(len(data) // 2):
+    >>>         data[i], data[len(data) - i - 1] = data[len(data) - i - 1], data[i]
+
+### Deque[T]
+    Oboustranná fronta (double-ended queue) umožňující efektivní přidávání a odebírání prvků na obou koncích.
+    Vhodná pro implementaci front (FIFO), zásobníků (LIFO) nebo pro ukládání omezeného počtu posledních položek.
+    >>> from collections import deque
+    >>> history: Deque[str] = deque(maxlen=10)  # Uchovává maximálně 10 položek
+    >>> history.append("krok 1")
+    >>> history.append("krok 2")
+    >>> history.appendleft("krok 0")  # Přidání na začátek
+
+### UserList
+    Základní třída pro vytváření vlastních implementací seznamů.
+    Užitečná, když potřebujeme upravit chování seznamu.
+    >>> from collections import UserList
+    >>> class SortedList(UserList):
+    >>>     def __init__(self, iterable=None):
+    >>>         super().__init__(iterable)
+    >>>         self.data.sort()
+    >>>     def append(self, item):
+    >>>         super().append(item)
+    >>>         self.data.sort()
+
+## Jak vybrat správný seznamový typ:
+----------------------------------
+
+1. Pro běžné případy použijte List[T]
+2. Pro metody, které pouze čtou ze seznamu, použijte Sequence[T] jako typ parametru
+3. Pro metody upravující seznam použijte MutableSequence[T] jako typ parametru
+4. Pro efektivní operace na obou koncích použijte Deque[T]
+5. Pro vlastní implementaci seznamu dědící z list použijte UserList
+
+## Poznámky:
+---------
+- Sequence a MutableSequence jsou abstrakcemi - v praxi budete pracovat s implementacemi
+  jako list, ale pro parametry funkcí je lepší používat tyto abstraktní typy
+- Sequence reprezentuje více struktur než jen list - zahrnuje také nezměnitelné typy jako tuple a str
+- Deque má oproti běžnému seznamu konstantní časovou složitost O(1) pro operace na obou koncích,
+  zatímco u seznamu jsou operace na začátku O(n)

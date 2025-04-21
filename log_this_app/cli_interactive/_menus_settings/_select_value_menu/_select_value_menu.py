@@ -29,7 +29,7 @@ class SelectValueMenu(BaseMenu):
         return self.menu_name
 
     @property
-    def items(self) -> List[Tuple[str, callable]]:
+    def menu_items(self) -> List[Tuple[str, callable]]:
         """
         Vrací seznam položek dostupných v menu pro výběr hodnoty.
 

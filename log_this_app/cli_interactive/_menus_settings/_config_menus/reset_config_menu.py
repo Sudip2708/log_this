@@ -16,7 +16,7 @@ class ResetConfigMenu(BaseMenu):
     _previous_menu_key: Optional[str] = "config_menu"
 
     # Definice dostupných položek menu
-    _menu_items: Dict[str, Dict[str, str]] = {
+    _item_texts: Dict[str, Dict[str, str]] = {
         "reset_to_previous": {
             "label": "Resetovat na předchozí nastavení",
             "help": "Provede reset konfigurace na předchozí konfiguraci.",
@@ -28,7 +28,7 @@ class ResetConfigMenu(BaseMenu):
     }
 
     @property
-    def items(self) -> List[Tuple[str, callable]]:
+    def menu_items(self) -> List[Tuple[str, callable]]:
         """
         Vrací seznam položek dostupných v menu pro reset konfigurace.
 

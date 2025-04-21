@@ -1,0 +1,88 @@
+# Základní pravidla programovacího jazyka
+
+## 1. Definice objektů
+
+### Syntaxe:
+```
+Vytvoř objekt <"název objektu">:
+    - "parametr" = "hodnota"
+    - Vytvoř funkci <"název funkce">:
+        parametr ("jmeno", defaultně "hodnota")
+        Pokud "podmínka" platí, proveď "akce".
+```
+
+### Příklad:
+```
+Vytvoř objekt "auto":
+    - "barva" = "červená"
+    - "rychlost" = 50
+    - Vytvoř funkci "zrychli":
+        parametr ("o kolik", defaultně 10)
+        Pokud "o kolik" existuje, sečti "rychlost" a "o kolik".
+```
+
+## 2. Definice funkcí
+
+### Syntaxe:
+```
+Vytvoř funkci <"název funkce">:
+    parametr ("parametr1", "parametr2", ...)
+    <logika provedení>
+```
+
+### Příklad:
+```
+Vytvoř funkci "vypis":
+    parametr ("text")
+    Vypiš "text".
+```
+
+## 3. Podmínky
+
+### Syntaxe:
+```
+Pokud <logika podmínky>, <logika při splnění>, jinak <logika při nesplnění>.
+```
+
+### Příklad:
+```
+Pokud "o kolik" existuje, sečti "rychlost" a "o kolik", jinak vypiš "Něco chybí!".
+```
+
+## 4. Kontejnery
+
+### Syntaxe:
+- Seznam: `("a", "b", "c")`
+- Slovník: `("a": "hodnota", "b": "hodnota")`
+- Vnořený výpočet: `("x" > 10)`
+
+### Příklad:
+```
+"barvy" = ("červená", "modrá", "zelená")
+Pokud ("rychlost" > 50), vypiš "Rychlé auto!".
+```
+
+## 5. Smyčky (cykly)
+
+### Syntaxe:
+```
+Opakuj (od "x" = 0 do "x" < 10): Proveď "akce" a zvyš "x" o 1.
+Opakuj dokud ("x" < 10): Proveď "akce" a zvyš "x" o 1.
+Opakuj pro "prvek" v "seznam": Proveď "akce" s "prvek".
+```
+
+### Příklad:
+```
+Opakuj (od "i" = 0 do "i" < 5):
+    Vypiš "Iterace" a zvyš "i" o 1.
+```
+
+## Shrnutí
+- **Objekty** se vytvářejí pomocí `Vytvoř objekt` a jejich vlastnosti se přidávají pomlčkou.
+- **Funkce** se definují pomocí `Vytvoř funkci` a mohou obsahovat parametry.
+- **Podmínky** se zapisují pomocí `Pokud`.
+- **Kontejnery** se zapisují v kulatých závorkách, jejich obsah určuje typ dat.
+- **Smyčky** se vytvářejí pomocí `Opakuj` a podporují různé formy iterace.
+
+Tento přehled poskytuje pevnou základnu pro další rozšiřování jazyka!
+

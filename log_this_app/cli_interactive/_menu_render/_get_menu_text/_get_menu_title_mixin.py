@@ -17,9 +17,9 @@ class GetMenuTitleMixin(ABC):
         """Metoda pro přidání nadpisu menu"""
 
         # Kontrola zde je nadpis uvedem
-        if self.mm.menu.title:
+        if self.mm.current_menu.title:
 
             # Přidání ostylovaného nadpisu
             self.lines.append(
-                styler.get_style.menu.title(self.mm.menu.title)
+                styler.get_style.menu.title(self.mm.current_menu.title)
             )

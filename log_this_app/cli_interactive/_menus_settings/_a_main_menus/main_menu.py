@@ -16,7 +16,7 @@ class MainMenu(BaseMenu):
     _previous_menu_key: Optional[str] = None
 
     # Definice dostupných položek menu
-    _menu_items: Dict[str, Dict[str, str]] = {
+    _item_texts: Dict[str, Dict[str, str]] = {
         "show_configuration_menu": {
             "label": "Zobrazit konfiguraci",
             "help": "Přístup k menu pro zobrazení aktuální konfigurace.",
@@ -36,7 +36,7 @@ class MainMenu(BaseMenu):
     }
 
     @property
-    def items(self) -> List[Tuple[str, callable]]:
+    def menu_items(self) -> List[Tuple[str, callable]]:
         """
         Vrací seznam položek dostupných v hlavním menu.
 

@@ -30,7 +30,7 @@ class SelectValueMenuInteractive(SelectValueMenu):
 
         # Aktualizace výběru v menu
         option_id = self._config_manager.current_id(key)
-        self.mm.current_selection = option_id + 1  # plus 1 kvůli položce nápovědy
+        self.mm.selected_item_id  = option_id + 1  # plus 1 kvůli položce nápovědy
 
         # Obnovení menu bez resetu pozice výběru
         self.mm.show_menu(self._menu_key, target_reset=False)

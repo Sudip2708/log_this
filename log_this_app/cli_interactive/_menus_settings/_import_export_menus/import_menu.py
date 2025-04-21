@@ -16,7 +16,7 @@ class ImportMenu(BaseMenu):
     _previous_menu_key = "import_export_menu"
 
     # Definice dostupných položek menu
-    _menu_items = {
+    _item_texts: Dict[str, Dict[str, str]] = {
         "dialog_import_file_path": {
             "label": "Výběr souboru skrze souborové okno",
             "help": "Otevře souborového managera pro výběr cesty "
@@ -30,7 +30,7 @@ class ImportMenu(BaseMenu):
     }
 
     @property
-    def items(self):
+    def menu_items(self) -> List[Tuple[str, callable]]:
         """
         Vrací seznam položek dostupných v menu pro import konfigurace.
 

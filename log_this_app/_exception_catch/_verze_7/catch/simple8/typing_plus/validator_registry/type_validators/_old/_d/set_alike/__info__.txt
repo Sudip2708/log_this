@@ -1,0 +1,53 @@
+# Validátory pro množinové (set-like) typy
+==========================================
+
+Tento balíček obsahuje validátory pro všechny typy podobné množinám,
+které jsou dostupné v modulech `typing` a `collections`.
+
+## Přehled typů a jejich použití:
+------------------------------
+
+### Set[T]
+    Základní množinový typ, kde T je typ prvků množiny.
+    Nejběžnější a nejpoužívanější množinový typ, ukládá pouze unikátní hodnoty.
+    >>> my_set: Set[int] = {1, 2, 3, 4, 5}
+
+### FrozenSet[T]
+    Neměnná (immutable) varianta množiny.
+    Vhodná pro použití jako klíč ve slovníku nebo prvek jiné množiny.
+    >>> my_frozen: FrozenSet[str] = frozenset(["a", "b", "c"])
+    >>> set_of_sets: Set[FrozenSet[str]] = {frozenset(["a"]), frozenset(["b"])}
+
+### AbstractSet[T]
+    Abstraktní třída reprezentující read-only rozhraní množiny.
+    Vhodné pro parametry funkcí, kde potřebujeme pouze číst z množiny.
+    Akceptuje jakýkoliv objekt, který implementuje rozhraní množiny (set, frozenset).
+    >>> def print_unique_elements(elements: AbstractSet[str]) -> None:
+    >>>     for element in elements:
+    >>>         print(element)
+
+### MutableSet[T]
+    Rozšíření AbstractSet o metody pro zápis a modifikaci.
+    Vhodné pro parametry funkcí, kde potřebujeme číst i zapisovat.
+    >>> def filter_in_place(elements: MutableSet[int], predicate) -> None:
+    >>>     to_remove = {element for element in elements if not predicate(element)}
+    >>>     elements -= to_remove
+
+## Jak vybrat správný množinový typ:
+----------------------------------
+
+1. Pro běžné případy použijte Set[T]
+2. Pro neměnné množiny (např. jako klíče ve slovníku) použijte FrozenSet[T]
+3. Pro metody, které pouze čtou z množiny, použijte AbstractSet[T] jako typ parametru
+4. Pro metody upravující množinu použijte MutableSet[T] jako typ parametru
+
+## Poznámky:
+---------
+- Množiny ukládají pouze unikátní hodnoty - duplicity jsou automaticky odstraněny
+- Prvky množin musí být vždy hashovatelné (tj. neměnné) kromě samotné množiny Set[T]
+- AbstractSet a MutableSet jsou abstrakcemi - v praxi budete pracovat s implementacemi
+  jako set a frozenset, ale pro parametry funkcí je lepší používat tyto abstraktní typy
+- Operace na množinách jako průnik (&), sjednocení (|), rozdíl (-) jsou velmi efektivní
+  ve srovnání s ekvivalentními operacemi na seznamech
+- Časová složitost pro vyhledávání prvku v množině je O(1), což je mnohem efektivnější
+  než O(n) u seznamů

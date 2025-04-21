@@ -1,0 +1,51 @@
+# Validátory pro sjednocení (union-like) typů
+==========================================
+
+Tento balíček obsahuje validátory pro všechny typy reprezentující sjednocení nebo výběr z více možných typů,
+které jsou dostupné v modulu `typing`.
+
+## Přehled typů a jejich použití:
+------------------------------
+
+### Union[T1, T2, ...]
+    Reprezentuje hodnotu, která může být jedním z více specifikovaných typů.
+    Vhodné pro případy, kdy může proměnná nebo parametr nabývat různých typů.
+    >>> result: Union[int, str, bool] = process_data()  # Výsledek může být int, str nebo bool
+    >>> def handle_input(data: Union[dict, list, str]) -> None:
+    >>>     # Funkce, která přijímá různé typy vstupů
+
+### Optional[T]
+    Speciální případ Union, konkrétně Union[T, None].
+    Vhodné pro označení hodnot, které mohou být None.
+    >>> name: Optional[str] = get_name()  # Jméno může být řetězec nebo None
+    >>> def find_user(user_id: Optional[int] = None) -> Optional[User]:
+    >>>     # Vrací uživatele nebo None, pokud není nalezen
+
+### Literal[values...]
+    Omezuje hodnoty na konkrétní literály, nikoliv na typy.
+    Vhodné pro hodnoty, které mohou nabývat pouze určitých specifických hodnot.
+    >>> mode: Literal["r", "w", "a"] = "r"  # Může být pouze "r", "w" nebo "a"
+    >>> def set_log_level(level: Literal["DEBUG", "INFO", "WARNING", "ERROR"]) -> None:
+    >>>     # Nastavení úrovně logování pouze na povolené hodnoty
+
+## Jak vybrat správný union typ:
+----------------------------------
+
+1. Pro proměnnou, která může nabývat hodnot různých typů, použijte Union[T1, T2, ...]
+2. Pro proměnnou, která může být None, použijte Optional[T] místo Union[T, None]
+3. Pro omezení hodnot na konkrétní konstanty použijte Literal[value1, value2, ...]
+
+## Poznámky:
+---------
+- Union nepředstavuje nový typ dat, pouze indikuje, že hodnota může být jedním z uvedených typů
+- Optional[T] je syntaktický cukr pro Union[T, None] a je preferovaný způsob zápisu
+- Od Python 3.10 můžete použít zjednodušenou syntaxi pro Union: `int | str | bool` místo `Union[int, str, bool]`
+- Literal je užitečný pro striktní kontrolu hodnot, nejen typů, což pomáhá odhalit chyby v kódu
+- Každá hodnota v Literal musí být konstantní literál (číslo, řetězec, True, False, None)
+- Kombinace Union a Literal může vytvářet komplexní typové definice:
+  ```python
+  # Funkce přijímající buď literál "auto", nebo celé číslo mezi 1-10
+  def set_speed(speed: Union[Literal["auto"], int]) -> None:
+      pass
+  ```
+- Validace Union typů vyžaduje kontrolu proti každému možnému typu v unii, dokud není nalezena shoda

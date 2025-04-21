@@ -10,10 +10,10 @@ class NavigationMethodsMixin(ABC):
     menu_renderer = abc_property("menu_renderer")
 
     # Atribut pro data aktuálního menu
-    menu = abc_property("menu")
+    current_menu = abc_property("current_menu")
 
     # Atribut pro hodnotu aktuálně vybrané nabídky
-    current_selection = abc_property("current_selection")
+    selected_item_id  = abc_property("selected_item_id ")
 
 
     def go_up(self):
@@ -21,32 +21,32 @@ class NavigationMethodsMixin(ABC):
 
         # Příprava hodnot
         first_item_id = 0
-        previous_item_id = self.current_selection - 1
+        previous_item_id = self.selected_item_id  - 1
 
         # Přiřazení vyšší hodnoty do atributu pro vybranou nabídku
-        self.current_selection = max(first_item_id, previous_item_id)
+        self.selected_item_id  = max(first_item_id, previous_item_id)
 
         # Aktualizace zobrazení
-        self.menu_renderer.refresh()
+        self.current_menu.refresh()
 
 
     def go_down(self):
         """Posune výběr dolů"""
 
         # Příprava hodnot
-        items_count = len(self.menu.items)
+        items_count = len(self.current_menu.menu_items)
         last_item_id = items_count - 1
-        next_item_id = self.current_selection + 1
+        next_item_id = self.selected_item_id  + 1
 
         # Přiřazení nižší hodnoty do atributu pro vybranou nabídku
-        self.current_selection = min(last_item_id, next_item_id)
+        self.selected_item_id  = min(last_item_id, next_item_id)
 
         # Aktualizace zobrazení
-        self.menu_renderer.refresh()
+        self.current_menu.refresh()
 
 
-    def run_current_selection(self):
+    def run_selected_item_id (self):
         """Spustí metodu navázanou na vybraný úkon"""
 
         # Spustí akci definovanou v aktuální položce
-        self.menu.items[self.current_selection][1]()
+        self.current_menu.menu_items[self.selected_item_id ][1]()

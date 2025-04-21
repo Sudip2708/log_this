@@ -17,7 +17,7 @@ class ExitMenu(BaseMenu):
     _previous_menu_key: Optional[str] = None
 
     # Definice dostupných položek menu
-    _menu_items: Dict[str, Dict[str, str]] = {
+    _item_texts: Dict[str, Dict[str, str]] = {
         "main_menu": {
             "label": "Pokračovat v interaktivním režimu",
             "help": "Návrat do hlavního menu interaktivního režimu.",
@@ -28,7 +28,7 @@ class ExitMenu(BaseMenu):
     title: Optional[str] = None
 
     @property
-    def items(self) -> List[Tuple[str, callable]]:
+    def menu_items(self) -> List[Tuple[str, callable]]:
         """
         Vrací seznam položek dostupných v ukončovacím menu.
 
@@ -49,6 +49,6 @@ class ExitMenu(BaseMenu):
         :return: Dvojice obsahující text a metodu pro přepnutí na zvolené menu.
         """
         return (
-            self._menu_items[item_key]["label"],
+            self._item_texts[item_key]["label"],
             partial(self.mm.show_menu, item_key)
         )

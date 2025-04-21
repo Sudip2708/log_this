@@ -19,7 +19,7 @@ class SelectKeyMenu(BaseMenu):
     _next_menu: Optional[str] = None
 
     @property
-    def _menu_items(self) -> Dict[str, Dict[str, str]]:
+    def _item_texts(self) -> Dict[str, Dict[str, str]]:
         """
         Dynamicky vytváří položky menu na základě dostupných klíčů v dané kategorii.
 
@@ -32,7 +32,7 @@ class SelectKeyMenu(BaseMenu):
         }
 
     @property
-    def items(self) -> List[Tuple[str, callable]]:
+    def menu_items(self) -> List[Tuple[str, callable]]:
         """
         Vrací seznam položek dostupných v menu pro výběr klíče.
 
@@ -53,7 +53,7 @@ class SelectKeyMenu(BaseMenu):
         """
         return tuple(
             (f"• {item['label']}", partial(self._set_new_value, key))
-            for key, item in self._menu_items.items()
+            for key, item in self._item_texts.items()
         )
 
     def _set_new_value(self, key: str) -> None:

@@ -16,7 +16,7 @@ class ShowCategoryMenu(BaseMenu):
     _previous_menu_key: Optional[str] = "show_configuration_menu"
 
     # Definice dostupných položek menu
-    _menu_items: Dict[str, Dict[str, str]] = {
+    _item_texts: Dict[str, Dict[str, str]] = {
         "log_this_modes": {
             "label": "Výpis pro mody @log_this",
             "help": "Vypíše aktuální konfiguraci s podrobnostmi "
@@ -35,7 +35,7 @@ class ShowCategoryMenu(BaseMenu):
     }
 
     @property
-    def items(self) -> List[Tuple[str, callable]]:
+    def menu_items(self) -> List[Tuple[str, callable]]:
         """
         Vrací seznam položek dostupných v menu pro výpis konfigurace dle kategorií.
 

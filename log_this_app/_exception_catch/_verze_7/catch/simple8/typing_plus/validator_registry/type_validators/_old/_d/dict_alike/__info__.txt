@@ -1,0 +1,103 @@
+"""
+Validátory pro slovníkové (dict-like) typy
+==========================================
+
+Tento balíček obsahuje validátory pro všechny typy podobné slovníkům,
+které jsou dostupné v modulech `typing` a `collections`.
+
+Přehled typů a jejich použití:
+------------------------------
+
+Dict[K, V]
+    Základní slovníkový typ, kde K je typ klíčů a V je typ hodnot.
+    Nejběžnější a nejpoužívanější slovníkový typ.
+    >>> my_dict: Dict[str, int] = {"a": 1, "b": 2}
+
+DefaultDict[K, V]
+    Slovník, který automaticky vytváří výchozí hodnoty pro neexistující klíče
+    pomocí zadané tovární funkce.
+    Užitečný pro eliminaci kontrol existence klíče a pro skupinování dat.
+    >>> from collections import defaultdict
+    >>> counts: DefaultDict[str, int] = defaultdict(int)
+    >>> counts["apple"] += 1  # Automaticky vytvoří klíč s výchozí hodnotou 0
+
+OrderedDict[K, V]
+    Slovník, který si pamatuje pořadí vkládaných položek.
+    Užitečný, když záleží na pořadí vkládání prvků.
+    Poznámka: V Pythonu 3.7+ si běžný dict také pamatuje pořadí,
+    ale OrderedDict poskytuje dodatečné metody move_to_end() a popitem().
+    >>> from collections import OrderedDict
+    >>> od: OrderedDict[str, int] = OrderedDict([("first", 1), ("second", 2)])
+
+Mapping[K, V]
+    Abstraktní třída reprezentující read-only rozhraní slovníku.
+    Vhodné pro parametry funkcí, kde potřebujeme pouze číst ze slovníku.
+    Akceptuje jakýkoliv objekt, který implementuje rozhraní slovníku.
+    >>> def process_data(data: Mapping[str, int]) -> int:
+    >>>     return sum(data.values())
+
+MutableMapping[K, V]
+    Rozšíření Mapping o metody pro zápis a modifikaci.
+    Vhodné pro parametry funkcí, kde potřebujeme číst i zapisovat.
+    >>> def add_prefix(data: MutableMapping[str, str], prefix: str) -> None:
+    >>>     for key in list(data.keys()):
+    >>>         data[prefix + key] = data.pop(key)
+
+Counter[T]
+    Speciální slovník pro počítání výskytů prvků.
+    Defaultně vrací 0 pro neexistující klíče a poskytuje metody jako most_common().
+    >>> from collections import Counter
+    >>> word_counts: Counter[str] = Counter(["apple", "banana", "apple"])
+    >>> word_counts["apple"]  # Vrátí 2
+
+ChainMap[K, V]
+    Strukturu, která poskytuje pohled na několik slovníků jako na jeden.
+    Klíče se hledají postupně v každém ze slovníků v řetězu.
+    Vhodný pro implementaci lokálních a globálních proměnných nebo kontextů.
+    >>> from collections import ChainMap
+    >>> defaults = {"theme": "dark", "language": "en"}
+    >>> user_prefs = {"language": "cs"}
+    >>> settings: ChainMap[str, str] = ChainMap(user_prefs, defaults)
+    >>> settings["language"]  # Vrátí "cs"
+    >>> settings["theme"]     # Vrátí "dark" z defaults
+
+TypedDict
+    Definuje slovník s konkrétními klíči a jejich specifickými typy.
+    Na rozdíl od Dict[K, V] umožňuje mít různé typy pro různé klíče.
+    >>> from typing import TypedDict
+    >>> class Movie(TypedDict):
+    >>>     title: str
+    >>>     year: int
+    >>>     rating: float
+    >>> movie: Movie = {"title": "Metropolis", "year": 1927, "rating": 8.3}
+
+UserDict
+    Základní třída pro vytváření vlastních implementací slovníků.
+    Užitečná, když potřebujeme upravit chování slovníku.
+    >>> from collections import UserDict
+    >>> class CaseInsensitiveDict(UserDict):
+    >>>     def __getitem__(self, key):
+    >>>         return self.data[key.lower() if isinstance(key, str) else key]
+    >>>     def __setitem__(self, key, value):
+    >>>         self.data[key.lower() if isinstance(key, str) else key] = value
+
+Jak vybrat správný slovníkový typ:
+----------------------------------
+
+1. Pro běžné případy použijte Dict[K, V]
+2. Pokud potřebujete defaultní hodnoty pro neexistující klíče, použijte DefaultDict[K, V]
+3. Pokud záleží na pořadí vkládání a potřebujete speciální metody, použijte OrderedDict[K, V]
+4. Pro metody, které pouze čtou ze slovníku, použijte Mapping[K, V] jako typ parametru
+5. Pro metody upravující slovník použijte MutableMapping[K, V] jako typ parametru
+6. Pro počítání výskytů použijte Counter[T]
+7. Pro vrstvení kontextů použijte ChainMap[K, V]
+8. Pro slovník s přesně definovanou strukturou použijte TypedDict
+9. Pro vlastní implementaci slovníku dědící z dict použijte UserDict
+
+Poznámky:
+---------
+- V moderním Pythonu (3.7+) si běžný dict pamatuje pořadí vkládání,
+  takže OrderedDict není vždy nutný
+- Mapping a MutableMapping jsou abstrakcemi - v praxi budete pracovat s implementacemi
+  jako dict, ale pro parametry funkcí je lepší používat tyto abstraktní typy
+"""

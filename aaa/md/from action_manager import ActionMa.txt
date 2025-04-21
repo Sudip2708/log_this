@@ -1,0 +1,23 @@
+from action_manager import ActionManager
+
+class NaturalLanguageAssembler:
+    """
+    Základní třída jazyku
+    """
+
+    def __init__(self):
+
+        # Vytvoření slovníku pro definovaání vlastních objetů
+        self.objects = {}
+        self.action_manager = ActionManager()
+        self.action_manager.set_objects(self.objects)
+        self.actions = self.action_manager.get_actions_dict()
+
+
+    def parse_text(self, text):
+    def process_sentences(self, sentences):
+    def split_into_clauses(self, sentence):
+    def split_into_words(self, clause):
+    def process_words(self, words):
+    def compile(self, text):
+    def generate_python(self):

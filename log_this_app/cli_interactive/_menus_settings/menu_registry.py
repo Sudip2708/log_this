@@ -1,7 +1,6 @@
-from typing import Dict, Type
+from typing import Dict, Type, TYPE_CHECKING
 
-# Import pro typovou analýzu
-from typing import TYPE_CHECKING
+# Importy pro typovou kontrolu:
 if TYPE_CHECKING:
     from ..menus_manager import MenusManager
     from ._base_menu import BaseMenu

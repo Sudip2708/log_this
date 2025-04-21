@@ -7,7 +7,7 @@ __all__ = [
 
     "NavigationMethodsMixin",
     # Mixin přidávající metody pro ovládání kláves
-    # Přidává metody: go_up(), go_down(), run_current_selection()
+    # Přidává metody: go_up(), go_down(), run_selected_item_id ()
     # Používá atributy: 'menu_renderer', 'menu'
 
     "RunMethodsMixin",

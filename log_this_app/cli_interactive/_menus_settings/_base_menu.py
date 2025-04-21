@@ -17,7 +17,7 @@ class BaseMenu:
     # Definice povinných atributů menu
     _menu_key: Optional[str] = None
     _previous_menu_key: Optional[str] = None
-    _menu_items: Optional[Dict[str, Dict[str, str]]] = None
+    _item_texts: Optional[Dict[str, Dict[str, str]]] = None
 
     # Výchozí nadpis menu
     title: str = "VYBERTE ÚKON:"
@@ -41,8 +41,8 @@ class BaseMenu:
         """
         return tuple(
             f"{item['label']}: {item['help']}"
-            for item in self._menu_items.values()
-        ) if self._menu_items else ()
+            for item in self._item_texts.values()
+        ) if self._item_texts else ()
 
     """
     Následuje definice jedotlivých nabídek.
@@ -91,7 +91,7 @@ class BaseMenu:
         :return: Dvojice obsahující text a metodu pro přepnutí na zvolené menu.
         """
         return (
-            f"• {self._menu_items[item_key]['label']}",
+            f"• {self._item_texts[item_key]['label']}",
             partial(self.mm.show_menu, item_key)
         )
 
@@ -103,7 +103,7 @@ class BaseMenu:
         :return: Dvojice obsahující text a metodu pro spuštění akce.
         """
         return (
-            f"• {self._menu_items[item_key]['label']}",
+            f"• {self._item_texts[item_key]['label']}",
             partial(self._response_action, item_key)
         )
 

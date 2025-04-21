@@ -1,0 +1,102 @@
+# Projekt TypeValidator - Pokračování vývoje
+
+## Kontext projektu
+Pracujeme na knihovně pro validaci typů v Pythonu, která umožňuje ověřovat, zda hodnoty odpovídají typovým anotacím z modulu `typing`. Knihovna je vytvářena jako samostatný balíček, který může být používán v různých projektech pro typovou kontrolu za běhu (runtime type checking).
+
+## Aktuální stav
+Dosud jsme implementovali:
+
+1. Základní třídu `TypeValidator`, která slouží jako předek pro všechny specifické validátory.
+2. Několik konkrétních validátorů pro základní typové anotace:
+   - `ListValidator` pro `typing.List`
+   - `TupleValidator` pro `typing.Tuple`
+   - `SetValidator` pro `typing.Set`
+   - `FrozenSetValidator` pro `typing.FrozenSet`
+   - `DictValidator` pro `typing.Dict`
+   - `UnionValidator` pro `typing.Union` a `typing.Optional`
+   - `LiteralValidator` pro `typing.Literal`
+   - `AnyValidator` pro `typing.Any`
+   - `MappingValidator` pro `typing.Mapping`
+   - `MutableMappingValidator` pro `typing.MutableMapping`
+   - `IterableValidator` pro `typing.Iterable`
+   - `IteratorValidator` pro `typing.Iterator`
+   - `GenericValidator` pro `typing.Generic`
+   - `ClassVarValidator` pro `typing.ClassVar`
+   - `FinalValidator` pro `typing.Final`
+   - `TypeTypeValidator` pro `typing.Type`
+   - `CounterValidator` pro `typing.Counter`
+   - `DefaultDictValidator` pro `typing.DefaultDict`
+
+## Architektura systému
+
+### Základní třída `TypeValidator`
+Základní třída `TypeValidator` poskytuje společnou funkcionalitu pro všechny validátory:
+- Metodu `validate`, která ověřuje, zda hodnota odpovídá danému typovému objektu.
+- Pomocné metody pro získávání vnitřních typů z generických typů.
+- Metody pro omezení hloubky ověřování (depth_check).
+- Registrační mechanismus pro dynamické vyhledávání validátorů podle typu.
+
+### Struktura validátorů
+Každý validátor má:
+1. Atribut `VALIDATOR_TYPE`, který definuje, pro jaký typ je validátor určen.
+2. Metodu `validate(value, annotation, depth_check, custom_types, bool_only)`, která provádí samotnou validaci.
+3. Dokumentaci s:
+   - Popisem, co daný typ představuje.
+   - Příkladem použití ("Hint").
+
+### Typy validací
+Validace může být:
+1. **Mělká** - ověřuje pouze, zda je hodnota instancí požadovaného typu, bez kontroly vnitřních typů.
+2. **Hluboká** - ověřuje i vnitřní typy (např. pro `List[int]` kontroluje, zda jsou všechny prvky typu `int`).
+
+### Parametry validace
+- `value` - hodnota k ověření
+- `annotation` - typová anotace pro ověření
+- `depth_check` - úroveň zanoření pro kontrolu vnitřních typů
+- `custom_types` - slovník vlastních typů
+- `bool_only` - zda má validace vracet pouze bool hodnotu nebo vyvolávat výjimky
+
+## Další kroky pro implementaci
+1. **Implementace registračního mechanismu** - vytvoření globálního registru validátorů
+2. **Implementace hlavního rozhraní** - funkce pro snadné použití validátorů
+3. **Vytvoření dalších validátorů** pro zbývající typové anotace:
+   - `Callable`, `Awaitable`, `AsyncIterable`, `AsyncIterator`, `ContextManager`, `AsyncContextManager`
+   - `TypedDict`, `Protocol`, `NamedTuple`, `ChainMap`, `Deque`
+   - `NewType`, `cast`, `TypeVar`
+4. **Testování** - vytvoření jednotkových testů pro všechny implementované validátory
+5. **Dokumentace** - rozšíření dokumentace s příklady použití
+6. **Optimalizace** - vylepšení výkonu pro časté použití
+
+## Příklady použití knihovny
+```python
+from type_validator import validate_type
+
+# Základní validace
+value = [1, 2, 3]
+validate_type(value, List[int])  # True
+validate_type(value, List[str])  # Vyvolá TypeError
+
+# Složitější validace
+data = {'users': [{'name': 'John', 'age': 30}, {'name': 'Alice', 'age': 25}]}
+validate_type(data, Dict[str, List[Dict[str, Union[str, int]]]])  # True
+
+# Vlastní typy
+class User:
+    def __init__(self, name: str, age: int):
+        self.name = name
+        self.age = age
+
+users = [User('John', 30), User('Alice', 25)]
+validate_type(users, List[User])  # True
+```
+
+## Speciální poznatky
+1. Validace rekurzivních typů vyžaduje omezení hloubky, aby se předešlo nekonečným smyčkám.
+2. Při validaci `Iterator` je třeba mít na paměti, že kontrola prvků by spotřebovala iterátor.
+3. `Generic`, `ClassVar` a `Final` jsou speciální případy, kde typová anotace primárně nese informace pro statickou typovou kontrolu.
+4. Validace některých typů může být složitá za běhu, protože Python používá "type erasure".
+
+## Technické detaily
+- Využívá se modul `typing` pro práci s typovými anotacemi.
+- Pro získávání informací o typech se používají metody `get_origin()` a `get_args()`.
+- Pro kompatibilitu s různými verzemi Pythonu je potřeba ošetřit rozdíly v implementaci modulu `typing`.

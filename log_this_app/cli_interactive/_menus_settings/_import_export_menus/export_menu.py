@@ -1,5 +1,6 @@
 # print("_menus_settings/_key_and_value_config/config_menu.py")
 from functools import partial
+from typing import Dict, Optional, List, Tuple
 from .._base_menu import BaseMenu
 
 class ExportMenu(BaseMenu):
@@ -15,7 +16,7 @@ class ExportMenu(BaseMenu):
     _previous_menu_key = "import_export_menu"
 
     # Definice dostupných položek menu
-    _menu_items = {
+    _item_texts: Dict[str, Dict[str, str]] = {
         "dialog_export_directory_path": {
             "label": "Výběr složky skrze souborové okno",
             "help": "Otevře souborového managera pro výběr cesty "
@@ -41,7 +42,7 @@ class ExportMenu(BaseMenu):
     }
 
     @property
-    def items(self):
+    def menu_items(self) -> List[Tuple[str, callable]]:
         """
         Vrací seznam položek dostupných v menu pro exposr konfigurace.
 

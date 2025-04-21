@@ -1,5 +1,5 @@
 from typing import Dict, Optional, List, Tuple
-
+from typing import Dict, Optional, List, Tuple
 from .._base_menu import BaseMenu
 
 
@@ -17,7 +17,7 @@ class ImportExportMenu(BaseMenu):
     _previous_menu_key: Optional[str] = "main_menu"
 
     # Definice dostupných položek menu
-    _menu_items = {
+    _item_texts: Dict[str, Dict[str, str]] = {
         "import_menu": {
             "label": "Možnosti pro import konfigurace",
             "help": "Přístup k menu pro import konfigurace "
@@ -32,7 +32,7 @@ class ImportExportMenu(BaseMenu):
     }
 
     @property
-    def items(self):
+    def menu_items(self) -> List[Tuple[str, callable]]:
         """
         Vrací seznam položek dostupných v menu pro reset konfigurace.
 

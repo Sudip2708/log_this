@@ -1,29 +1,34 @@
-# print("abc_helper/abc_property.py")
-from abc import abstractmethod
-from typing import Any, Callable
+import abc
+from typing import Any, TypeVar
 
 
-def abc_property(name: str) -> property:
+def abc_property(
+        name: str,
+        prop_type: type = Any
+) -> property:
     """
-    Vytvoří abstraktní property s getterem a setterem.
+    Vytvoří abstraktní property s flexibilním typováním.
 
     Args:
         name: Název property
+        prop_type: Typ property
 
     Returns:
-        property: Abstraktní property
+        Abstraktní property
     """
 
     def getter(self) -> Any:
-        pass
+        raise NotImplementedError(
+            f"Abstract property {name} musí být implementována")
 
     def setter(self, value: Any) -> None:
-        pass
+        raise NotImplementedError(
+            f"Abstract property {name} musí být implementována")
 
     getter.__name__ = f"get_{name}"
     setter.__name__ = f"set_{name}"
 
     return property(
-        abstractmethod(getter),
-        abstractmethod(setter)
+        abc.abstractmethod(getter),
+        abc.abstractmethod(setter)
     )

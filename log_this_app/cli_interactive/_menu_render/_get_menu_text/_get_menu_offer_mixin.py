@@ -2,37 +2,32 @@
 from abc import ABC
 
 from abc_helper import abc_property
-from cli_styler import styler
+from cli_styler import styler, cli_print
 
 class GetMenuOfferMixin(ABC):
     """Mixin přidávající metodu pro přidání naformátované nabídky menu"""
 
     # Atribut pro instanci MenuRenderer
     mm = abc_property("mm")
-    get_style = abc_property("get_style")
-    lines = abc_property("lines")
-
 
     def _get_menu_offer(self):
-        """Metoda pro přidání položek menu"""
+        """
+        Generuje nabídku menu včetně nadpisu a zvýraznění vybrané položky.
 
-        # Načtení id aktuálně vybrané nabýdky
-        selected_line_id = self.mm.current_selection
+        Returns:
+            List[Tuple[str, str]]: Formátované položky menu
+        """
 
-        # Načtení metody get_style
-        get_style = styler.get_style
+        # Nadpis
+        menu_title = self.mm.current_menu.title
+        title = styler.get_style.menu.title(menu_title) if menu_title else ""
 
-        # Cyklus procházející položky
-        # print("### self.mm.menu.items: ", self.mm.menu.items)
-        for i, (text, _) in enumerate(self.mm.menu.items):
+        # Položky
+        selected_line_id = self.mm.selected_item_id 
+        items = [
+            styler.get_style.menu.selected(text)
+            if i == selected_line_id else styler.get_style.menu.offer(text)
+            for i, (text, _) in enumerate(self.mm.current_menu.menu_items)
+        ]
 
-            # Přidání položky do hlavního seznamu 'lines'
-            self.lines.append(
-
-                # Styl pro aktuálně vybranou položku
-                get_style.menu.selected(text)
-                if i == selected_line_id
-
-                # Styl pro ostatní položky
-                else get_style.menu.offer(text)
-            )
+        return [title, *items]

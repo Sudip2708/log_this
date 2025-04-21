@@ -1,0 +1,116 @@
+'x' = ...
+'y' = ...
+'z' = ...
+'w' = ...
+'a' = ...
+'b' = ...
+Pokud platí: 'x' > 'y' a 'z' < 'w', pak proveď 'a', jinak proveď 'b'.
+
+Pokud platí: "x" > "y", pak: Pokud platí: "z" < "w", pak proveď "a", jinak proveď "b".  
+
+Pokud platí: "x" > "y", pak: 
+   Pokud platí: "z" < "w", 
+       pak proveď "a", 
+       jinak proveď "b".  
+
+Pokud platí: ("x" > "y" a "z" < "w") nebo ("a" == "b"), pak proveď "c".  
+Pokud platí: "x" > "y", pak proveď ["a", "b", "c"].  
+Pokud platí: "x" > "y", pak proveď {"akce": "a", "hodnota": 10}.  
+
+Pokud platí: ("x" > "y" a "z" < "w") nebo ("a" == "b"), pak proveď "c".  
+Pokud platí: "x" > "y", pak proveď ("a", "b", "c").  
+Pokud platí: "x" > "y", pak proveď ("akce": "a", "hodnota": 10).  
+
+Pokud platí: ("x" > "y" a ("z" < "w" nebo "a" == "b")), pak:  
+    Pokud platí: "c" > "d", pak proveď ("e", "f"),  
+    jinak proveď ("chyba": "Hodnota neplatná", "kód": 404).  
+
+Od "x" = 0 dokud "x" < 10: Zvyš "x" o 1, proveď "akce".
+
+Opakuj od "x" = 0 do "x" < 10: Proveď "akce" a zvyš "x" o 1.
+(Od "x" = 0 do "x" < 10) opakuj: Proveď "akce", a zvyš "x" o 1.
+
+
+Opakuj (od "x" = 0 do "x" < 10): Proveď "akce" a zvyš "x" o 1.
+
+
+
+Opakuj (od "x" = 0 do "x" < 10): Proveď "akce" a zvyš "x" o 1.
+Opakuj od ("x" = 0) do ("x" < 10): Proveď "akce" a zvyš "x" o 1.
+Opakuj dokud ("x" < 10): Proveď "akce" a zvyš "x" o 1.
+Opakuj pro "prvek" v "seznam": Proveď "akce" s "prvek".
+Opakuj pro (index, "prvek") v "seznam": Proveď "akce" s "prvek".
+Opakuj: Proveď "akce" a pokud "x" > 10, ukonči.
+
+Opakuj od ("x" = 0) do ("x" < 10): (
+    Opakuj od ("y" = 0) do ("y" < 5): Proveď "akce" s "x" a "y" a zvyš "y" o 1
+) a zvyš "x" o 1  
+
+
+
+Vytvoř objekt "granátové jablko" z objektu "jablko".
+"x" = parametr "barva" z objektu "granátové jablko".
+"y" = funkce "zrychli" z objektu "moje auto".
+
+Nastav v objektu "granátové jablko" parametr "barva" na "modrá".
+V objektu "granátové jablko" nastav parametr "barva" na hodnotu "modrá".
+V objektu "granátové jablko" nastav "barva" na "modrá".
+
+Proveď "zrychli" v objektu "moje auto" s parametrem 10.
+Vypočti funkci "zrychli" v objektu "moje auto", parametr "o kolik" nastav 10.
+Vypočti funkci "zrychli" v objektu "moje auto", parametr "o kolik" = 10.
+Z objektu "moje auto" použij funkci "zrychli", parametr "o kolik" = 10.
+
+
+Vytvoř objekt "Auto":
+- Nastav "barva" nastav na "červená". (případně zkrácený zápis: "barva" = "červená")
+- Nastav "rychlost" na 0. (případně zkrácený zápis: "rychlost" = 0)
+
+- Vytvoř funkci "zrychli" s parametr "o kolik": (
+    Pokud je zadaný parametr "o kolik", 
+        nastav parametr "zrychli" na hodnotu "o kolik", 
+    jinak vrať oznam (
+        Není uveden parametr "o kolik"!
+    )
+).
+
+Vytvoř objekt "moje auto" z objektu "Auto".
+nebo
+Z objektu "Auto" vytvoř objekt "moje auto"
+případně:
+"moje auto" = objekt "Auto" s parametry: "barva" je "modrá", "rychlost" je 10
+
+"aktuální rychlost" = Z objektu "moje auto" použij funkci "zrychli", parametr "o kolik" nastav na 10.
+
+
+
+Vytvoř objekt "Auto":  
+- "barva" = "červená".  
+- "rychlost" = 0.  
+- Funkce "zrychli" ("o kolik"):  ( 
+    Pokud "o kolik" existuje → "rychlost" += "o kolik",  
+    jinak → Oznam "Není uveden parametr 'o kolik'!".  
+)
+
+Vytvoř objekt "Auto":  
+- Nastav "barva" je "červená".  
+- Nastav "rychlost" je 0.  
+- Vytvoř funkce "zrychli", parametr "o kolik":  ( 
+    Pokud "o kolik" existuje: 
+        Sečti ("rychlost", "o kolik"),  případně Sečti "rychlost" a "o kolik"
+    jinak vypiš "Není uveden parametr 'o kolik'!".  
+)
+případně:
+Vytvoř objekt "Auto":  
+- Nastav "barva" je "červená".  
+- Nastav "rychlost" je 0.  
+- Vytvoř funkce "zrychli", parametr "o kolik":  
+    Pokud "o kolik" existuje, 
+        sečti "rychlost" a "o kolik", 
+    jinak vypiš "Není uveden parametr 'o kolik'!".  
+
+
+tak aby byla více zachovaná větní struktura, to znamená že se dá toto zapsat v jedné větě:
+Pokud "o kolik" existuje, sečti "rychlost" a "o kolik", jinak vypiš "Není uveden parametr 'o kolik'!".  
+
+

@@ -16,7 +16,7 @@ class ConfigMenu(BaseMenu):
     _previous_menu_key: Optional[str] = "main_menu"
 
     # Definice dostupných položek menu
-    _menu_items: Dict[str, Dict[str, str]] = {
+    _item_texts: Dict[str, Dict[str, str]] = {
         "select_key_menu_modes": {
             "label": "Nastavit chování módů",
             "help": "Přístup k menu pro nastavení módů knihovny log_this.",
@@ -32,7 +32,7 @@ class ConfigMenu(BaseMenu):
     }
 
     @property
-    def items(self) -> List[Tuple[str, callable]]:
+    def menu_items(self) -> List[Tuple[str, callable]]:
         """
         Vrací seznam položek dostupných v konfiguračním menu.
 

@@ -19,8 +19,8 @@ class MenusManager(
 
     NavigationMethodsMixin,
     # Mixin přidávající atribut a metody navigaci v interaktivním menu
-    # Přidává atributy: 'current_selection'
-    # Přidává metody: go_up(), go_down(), run_current_selection()
+    # Přidává atributy: 'selected_item_id '
+    # Přidává metody: go_up(), go_down(), run_selected_item_id ()
     # Používá atributy: 'menu_renderer', 'menu'
 
     RunMethodsMixin,
@@ -47,13 +47,13 @@ class MenusManager(
         menus_manager: Instance třídy 'MenusManager' starající se o správu jednotlivých menu
         menu_name: Zaznamenává název pro aktuálně zobrazené menu
         menu: Přístup k aktuálně vytvořenému menu třídou 'MenusManager'
-        current_selection: Zaznameníví id zaměřené položky
+        selected_item_id : Zaznameníví id zaměřené položky
         response: Zaznamenává požadavek na vytvoření odpovědi
 
     Metody třídy:
         go_up(): Definice akce pro klávesu 'šipka nahoru'
         go_down(): Definice akce pro klávesu 'šipka dolu'
-        run_current_selection(): Definice akce pro klávesu 'enter'
+        run_selected_item_id (): Definice akce pro klávesu 'enter'
         run_menu(): Spouští aktuálně vytvořené menu
         exit_menu(): Ukončuje aktuálně vytvořené menu
         refresh_menu(): Obnovuje aktuálně vytvořené menu
@@ -63,10 +63,10 @@ class MenusManager(
     # Atributy použité v mixinech
     menu_name = None
     menus = None
-    menu = None
+    current_menu = None
     menu_renderer = None
     response_manager = None
-    current_selection = 0  # Výchozí vybraná položka v menu
+    selected_item_id  = 0  # Výchozí vybraná položka v menu
     response = None  # Odezva na akci
     show_instruction = False
     selected_value = None
@@ -82,6 +82,9 @@ class MenusManager(
 
             # Napojení na hlavní třídu LogThisManager
             self.config_manager = config_manager
+
+            # Napojení managera pro zprávu klávesových zkratek
+            # self.key_bindings = KeyBindingsManager(self)
 
             # Napojení manažera pro správu odpovědí
             self.response_manager = ResponseManager(self)
@@ -103,11 +106,11 @@ class MenusManager(
         self.menu_name = menu_name
 
         # Načtení menu k zobrazení
-        self.menu = self.menu_register(menu_name)
+        self.current_menu = self.menu_register(menu_name)
 
         # Nastavení pozice výběru na první položku
         if target_reset:
-            self.current_selection = 0
+            self.selected_item_id  = 0
 
         # Obnovení zobrazení
         self.refresh_menu()
@@ -134,7 +137,7 @@ class MenusManager(
             # Přiřazení jména menu do atriutu
             self.menu_name = menu_name
             # Načtení menu k zobrazení
-            self.menu = self.menu_register(menu_name)
+            self.current_menu = self.menu_register(menu_name)
             # Spuštění hlavní smyčky
             self.run_loop()
 
@@ -148,5 +151,10 @@ class MenusManager(
     # Metoda pro zobrazení a skrytí nápovědy
     def toggle_show_instruction(self):
         self.show_instruction = not self.show_instruction
+
+    # Metoda vrátí třídu aktuálního menu
+    def get_actual_menu_class(self):
+        return self.menu_register(self.menu_name)
+
 
 
