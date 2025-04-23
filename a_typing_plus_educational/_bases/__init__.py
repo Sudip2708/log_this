@@ -7,10 +7,11 @@ from .base_hasattr_validator import BaseHasAttrValidator
 
 __all__ = [
     "BaseTypeValidator",
-    "BaseGenericValidator",
-    "BaseIterableValidator",
-    "BaseMappingValidator",
+    "BaseIsInstanceValidator",
     "BaseHasAttrValidator",
+    "BaseListLikebleValidator",
+    "BaseDictLikeValidator",
+
     "T",
     "T1",
     "T2",

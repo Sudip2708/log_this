@@ -1,3 +1,25 @@
+"""
+
+Přepsat na collections:
+
+from typing import Iterator
+from collections.abc import Iterator as IteratorOrigin
+
+from .._base_iterable_validator import BaseIterableValidator
+from .._base_type_variables import T
+
+
+class IteratorValidator(BaseIterableValidator):
+    VALIDATOR_KEY = "iterator"
+    ANNOTATION = Iterator[T]
+    INFO = "Definuje jakýkoli objekt, který implementuje metody iterace."
+    GET_ORIGIN = IteratorOrigin
+
+
+"""
+
+
+
 from typing import Iterator
 
 from ..._bases import BaseHasAttrValidator
