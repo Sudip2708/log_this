@@ -1,8 +1,8 @@
-from .._base_type_validator import BaseTypeValidator
+from ..._bases import IsInstanceValidatorBase
 import os
 
 
-class PathLikeValidator(BaseTypeValidator):
+class PathLikeValidator(IsInstanceValidatorBase):
     """
     Validátor pro os.PathLike
 

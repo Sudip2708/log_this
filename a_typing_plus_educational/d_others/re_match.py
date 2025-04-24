@@ -1,8 +1,8 @@
-from .._base_type_validator import BaseTypeValidator
+from ..._bases import IsInstanceValidatorBase
 import re
 
 
-class MatchValidator(BaseTypeValidator):
+class MatchValidator(IsInstanceValidatorBase):
     """
     Validátor pro re.Match
 

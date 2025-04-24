@@ -1,27 +1,20 @@
-from ._verify_error import VerifyError
-from .internals import (
-    VerifyInternalNotImplementedError,
-    VerifyInternalUnexpectedError
-)
-from .type import (
-    VerifyTypeError,
-    VerifyValueTypeError,
-    VerifyExpectedTypeError,
-    VerifyCallableTypeError,
-    VerifyLiteralTypeError,
-    VerifyTypeTypeError
-)
-
+from ._bases import VerifyError
+from ._internals import InternalUnexpectedError
+from .isinstance import IsInstanceValueError, IsInstanceExpectedError
+from .hasattr import HasAttributeValueError, HasAttributeExpectedError
+from .iterable import AnnotationGetArgsError, AnnotationDictArgsError
 __all__ = [
+
     "VerifyError",
+    "InternalUnexpectedError",
 
-    "VerifyInternalUnexpectedError",
-    "VerifyInternalNotImplementedError",
+    "IsInstanceValueError",
+    "IsInstanceExpectedError",
 
-    "VerifyTypeError",
-    "VerifyValueTypeError",
-    "VerifyExpectedTypeError",
-    "VerifyCallableTypeError",
-    "VerifyLiteralTypeError",
-    "VerifyTypeTypeError"
+    "HasAttributeValueError",
+    "HasAttributeExpectedError",
+
+    "AnnotationGetArgsError",
+    "AnnotationDictArgsError"
+
 ]

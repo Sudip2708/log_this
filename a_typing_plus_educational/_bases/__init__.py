@@ -1,21 +1,15 @@
-from ._base_type_variables import T, T1, T2, T3, K, V
-from .base_type_validator import BaseTypeValidator
-from .base_generic_validator import BaseGenericValidator
-from .base_iterable_validator import BaseIterableValidator
-from .base_mapping_validator import BaseMappingValidator
-from .base_hasattr_validator import BaseHasAttrValidator
+from .isinstance_verifier_base import IsInstanceValidatorBase
+from .hasattr_verifier_base import HasAttributeValidatorBase
+from .iterable_verifier_base import IterableValidatorBase
+from .dictionary_verifier_base import DictionaryValidatorBase
+from .generic_verifier_base import GenericValidatorBase
+from ._base_type_variables import T, T1, T2, T3, K, V, Y, S, R
 
 __all__ = [
-    "BaseTypeValidator",
-    "BaseIsInstanceValidator",
-    "BaseHasAttrValidator",
-    "BaseListLikebleValidator",
-    "BaseDictLikeValidator",
-
-    "T",
-    "T1",
-    "T2",
-    "T3",
-    "K",
-    "V",
+    "IsInstanceValidatorBase",
+    "HasAttributeValidatorBase",
+    "IterableValidatorBase",
+    "DictionaryValidatorBase",
+    "GenericValidatorBase",
+    "T", "T1", "T2", "T3", "K", "V", "Y", "S", "R"
 ]

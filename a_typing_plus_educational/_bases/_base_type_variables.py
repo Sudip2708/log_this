@@ -6,3 +6,6 @@ T2 = TypeVar("T2")  # Typ 2
 T3 = TypeVar("T3")  # Typ 3
 K = TypeVar("K")  # Klíč
 V = TypeVar("V")  # Hodnota
+Y = TypeVar("Y")  # Yieldovaný typ
+S = TypeVar("S")  # send
+R = TypeVar("R")  # Návratová hodnota

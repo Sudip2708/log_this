@@ -1,7 +1,7 @@
-from .._base_type_validator import BaseTypeValidator
+from ..._bases import IsInstanceValidatorBase
 
 
-class RangeValidator(BaseTypeValidator):
+class RangeValidator(IsInstanceValidatorBase):
     """
     Validátor pro range
 

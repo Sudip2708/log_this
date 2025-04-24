@@ -1,8 +1,8 @@
-from .._base_type_validator import BaseTypeValidator
+from ..._bases import IsInstanceValidatorBase
 import uuid
 
 
-class UUIDValidator(BaseTypeValidator):
+class UUIDValidator(IsInstanceValidatorBase):
     """
     Validátor pro uuid.UUID
 

@@ -1,8 +1,8 @@
-from .._base_type_validator import BaseTypeValidator
+from ..._bases import IsInstanceValidatorBase
 import pandas as pd
 
 
-class SeriesValidator(BaseTypeValidator):
+class SeriesValidator(IsInstanceValidatorBase):
     """
     Validátor pro pandas.Series
 

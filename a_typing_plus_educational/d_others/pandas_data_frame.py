@@ -1,8 +1,8 @@
-from .._base_type_validator import BaseTypeValidator
+from ..._bases import IsInstanceValidatorBase
 import pandas as pd
 
 
-class DataFrameValidator(BaseTypeValidator):
+class DataFrameValidator(IsInstanceValidatorBase):
     """
     Validátor pro pandas.DataFrame
 

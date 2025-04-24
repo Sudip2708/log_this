@@ -1,8 +1,8 @@
-from .._base_type_validator import BaseTypeValidator
+from ..._bases import IsInstanceValidatorBase
 import enum
 
 
-class EnumValidator(BaseTypeValidator):
+class EnumValidator(IsInstanceValidatorBase):
     """
     Validátor pro Enum
 

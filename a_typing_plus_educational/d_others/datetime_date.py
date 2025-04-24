@@ -1,8 +1,8 @@
-from .._base_type_validator import BaseTypeValidator
+from ..._bases import IsInstanceValidatorBase
 import datetime
 
 
-class DateValidator(BaseTypeValidator):
+class DateValidator(IsInstanceValidatorBase):
     """
     Validátor pro datetime.date
 
