@@ -1,7 +1,7 @@
 from typing import get_args, Any, Tuple, Union
 
 from ._base_validator import BaseValidator
-from ..._validators import validate_typing
+from ...validators import validate_typing
 
 
 class BaseGenericValidator(BaseValidator):
@@ -21,7 +21,7 @@ class BaseGenericValidator(BaseValidator):
         value: Any,
         annotation: Any,
         inner_check: Union[bool, int],
-        custom_types: Tuple[Any, ...],
+        custom_types: dict = None,
         bool_only: bool
     ) -> Union[bool, Any]:
         """

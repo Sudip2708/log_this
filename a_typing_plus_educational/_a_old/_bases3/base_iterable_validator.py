@@ -1,7 +1,7 @@
 from typing import Any, Tuple, Union, get_args
 
 from ._base_validator import BaseValidator
-from ..._validators import validate_native_type, validate_typing
+from ...validators import validate_native_type, validate_typing
 from .._tools import reduce_depth_check
 
 class BaseIterableValidator(BaseValidator):
@@ -23,7 +23,7 @@ class BaseIterableValidator(BaseValidator):
         value: Any,
         annotation: Any,
         depth_check: Union[bool, int],
-        custom_types: Tuple[Any, ...],
+        custom_types: dict = None,
         bool_only: bool
     ) -> bool:
         """

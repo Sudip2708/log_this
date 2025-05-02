@@ -24,7 +24,7 @@ class BaseMappingValidator(BaseValidator):
         value: Any,
         annotation: Any,
         depth_check: Union[bool, int],
-        custom_types: Tuple[Any, ...],
+        custom_types: dict = None,
         bool_only: bool
     ) -> bool:
         """

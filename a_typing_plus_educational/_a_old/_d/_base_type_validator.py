@@ -1,6 +1,6 @@
 from typing import Any, Type, Union, get_origin, get_args
 
-from ..._validators import (
+from ...validators import (
     validate_native_type,
     validate_typing,
     validate_condition

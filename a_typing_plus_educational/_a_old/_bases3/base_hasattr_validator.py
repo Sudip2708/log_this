@@ -16,7 +16,7 @@ class BaseHasAttrValidator(BaseValidator):
         value: Any,
         annotation: Any,
         inner_check: Union[bool, int],
-        custom_types: Tuple[Any, ...],
+        custom_types: dict = None,
         bool_only: bool
     ) -> Union[bool, Any]:
 

@@ -1,7 +1,7 @@
 from typing import Any, Tuple, Union
 
 from ._base_validator import BaseValidator
-from ..._validators import validate_native_type
+from ...validators import validate_native_type
 
 
 class BaseTypeValidator(BaseValidator):
@@ -24,7 +24,7 @@ class BaseTypeValidator(BaseValidator):
         value: Any,
         annotation: Any,
         inner_check: Union[bool, int],
-        custom_types: Tuple[Any, ...],
+        custom_types: dict = None,
         bool_only: bool
     ) -> Union[bool, Any]:
         """

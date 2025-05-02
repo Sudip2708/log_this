@@ -9,3 +9,4 @@ V = TypeVar("V")  # Hodnota
 Y = TypeVar("Y")  # Yieldovaný typ
 S = TypeVar("S")  # send
 R = TypeVar("R")  # Návratová hodnota
+P = TypeVar("P")  # ParamSpec
