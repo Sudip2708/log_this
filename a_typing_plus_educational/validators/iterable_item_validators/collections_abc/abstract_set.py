@@ -1,10 +1,10 @@
 from typing import AbstractSet
 from collections.abc import Set
 
-from ..._bases3 import BaseIterableValidator, T
+from ...._bases import BaseIterableItemValidator, T
 
 
-class AbstractSetValidator(BaseIterableValidator):
+class AbstractSetValidator(BaseIterableItemValidator):
     """
     Validátor pro typovou anotaci AbstractSet[T]
 
@@ -56,8 +56,9 @@ class AbstractSetValidator(BaseIterableValidator):
     ANNOTATION = AbstractSet[T]
 
     IS_INSTANCE = Set
-    HAS_ATTRS = "__contains__", "__iter__", "__len__"
-    CALLABLE_ATTRS = None
+    DUCK_TYPING = {
+        "has_attr": ("__contains__", "__iter__", "__len__"),
+    }
 
     DESCRIPTION = "Abstraktní množinový typ"
     LONG_DESCRIPTION = (

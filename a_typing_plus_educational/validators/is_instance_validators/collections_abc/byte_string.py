@@ -65,8 +65,9 @@ class ByteStringValidator(BaseIsInstanceValidator):
     ANNOTATION = ByteString
 
     IS_INSTANCE = ByteStringOrigin
-    HAS_ATTRS = "__getitem__", "__len__", "__iter__"
-    CALLABLE_ATTRS = None
+    DUCK_TYPING = {
+        "has_attr": ("__getitem__", "__len__", "__iter__"),
+    }
 
     DESCRIPTION = "Abstraktní sekvence bajtů"
     LONG_DESCRIPTION = (

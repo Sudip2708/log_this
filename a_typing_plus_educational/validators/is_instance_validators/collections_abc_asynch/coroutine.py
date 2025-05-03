@@ -68,8 +68,9 @@ class CoroutineValidator(BaseIsInstanceValidator):
     ANNOTATION = Coroutine
 
     IS_INSTANCE = CoroutineOrigin
-    HAS_ATTRS = "__await__", "send", "throw", "close"
-    CALLABLE_ATTRS = "__await__", "send", "throw", "close"
+    DUCK_TYPING = {
+        "has_callable_attr": ("__await__", "send", "throw", "close"),
+    }
 
     DESCRIPTION = "Korutina s podporou await"
     LONG_DESCRIPTION = (

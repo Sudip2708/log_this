@@ -9,6 +9,7 @@ from .end_verifiers import (
 from .iterable_verifiers import (
     iterable_item_verifier,
     iterable_item_verifier_for_container,
+    iterable_item_verifier_for_tuple,
     iterable_key_value_verifier,
     iterable_key_value_verifier_for_chainmap,
     iterable_key_value_verifier_for_counter,
@@ -50,6 +51,7 @@ __all__ = [
 
     "iterable_item_verifier",
     "iterable_item_verifier_for_container",
+    "iterable_item_verifier_for_tuple",
     "iterable_key_value_verifier",
     "iterable_key_value_verifier_for_chainmap",
     "iterable_key_value_verifier_for_counter",

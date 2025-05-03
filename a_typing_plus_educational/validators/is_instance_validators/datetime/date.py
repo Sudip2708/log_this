@@ -1,6 +1,6 @@
 from datetime import date
 
-from ..._bases import BaseIsInstanceValidator
+from ...._bases import BaseIsInstanceValidator
 
 
 class DateValidator(BaseIsInstanceValidator):
@@ -54,8 +54,10 @@ class DateValidator(BaseIsInstanceValidator):
     ANNOTATION = date
 
     IS_INSTANCE = date
-    HAS_ATTRS = "isoformat", "weekday", "__str__", "year", "month", "day"
-    CALLABLE_ATTRS = "year", "month", "day"
+    DUCK_TYPING = {
+        "has_attr": ("__str__", "isoformat", "weekday"),
+        "has_int_attr": ("year", "month", "day")
+    }
 
     DESCRIPTION = "Reprezentace data"
     LONG_DESCRIPTION = (
@@ -63,8 +65,3 @@ class DateValidator(BaseIsInstanceValidator):
             "tedy reprezentuje kalendářní datum (rok, měsíc, den) "
             "bez časové složky a časového pásma."
         )
-
-
-    LAMBDA = lambda obj: all(
-        isinstance(getattr(obj, attr, None), int) for attr in
-        ("year", "month", "day"))

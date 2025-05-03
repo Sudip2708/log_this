@@ -1,6 +1,6 @@
 from enum import Enum
 
-from ..._bases import BaseIsInstanceValidator
+from ...._bases import BaseIsInstanceValidator
 
 
 class EnumValidator(BaseIsInstanceValidator):
@@ -63,8 +63,9 @@ class EnumValidator(BaseIsInstanceValidator):
     ANNOTATION = Enum
 
     IS_INSTANCE = Enum
-    HAS_ATTRS = "name", "value"
-    CALLABLE_ATTRS = None
+    DUCK_TYPING = {
+        "has_attr": ("name", "value"),
+    }
 
     DESCRIPTION = "Výčtový typ"
     LONG_DESCRIPTION = (

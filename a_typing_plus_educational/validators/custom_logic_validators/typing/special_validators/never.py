@@ -71,8 +71,7 @@ class NeverValidator(BaseCustomLogicValidator):
     ANNOTATION = Never
 
     IS_INSTANCE = Never
-    HAS_ATTRS = None  # Nepodporuje validaci přes Duck Typing.
-    CALLABLE_ATTRS = None  # Nepodporuje validaci přes Duck Typing.
+    DUCK_TYPING = None
 
     DESCRIPTION = "Typ, který nikdy nenastane"
     LONG_DESCRIPTION = (

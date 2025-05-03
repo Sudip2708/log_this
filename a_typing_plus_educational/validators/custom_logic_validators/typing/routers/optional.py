@@ -70,8 +70,7 @@ class OptionalValidator(BaseCustomLogicValidator):
     ANNOTATION = Optional[T]
 
     IS_INSTANCE = Optional
-    HAS_ATTRS = None  # Nepodporuje validaci přes Duck Typing.
-    CALLABLE_ATTRS = None  # Nepodporuje validaci přes Duck Typing.
+    DUCK_TYPING = None
 
     DESCRIPTION = "Volitelný typ"
     LONG_DESCRIPTION = (

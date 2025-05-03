@@ -12,7 +12,7 @@ from ..._exceptions import (
 )
 
 
-def iterable_key_value_verifier_for_nametuple(
+def iterable_key_value_verifier_for_namedtuple(
     value: Any,
     annotation: Any = None,
     depth_check: Union[bool, int] = True,

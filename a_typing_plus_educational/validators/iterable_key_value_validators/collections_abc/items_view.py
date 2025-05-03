@@ -1,11 +1,11 @@
 from typing import ItemsView, get_args
 from collections.abc import ItemsView as ItemsViewOrigin
 
-from ...._bases import DictionaryValidatorBase, K, V
-from ....validators import dictionary_validator_for_itemsview
+from ...._bases import BaseIterableKeyValueValidator, K, V
+from ...._verifiers import iterable_key_value_verifier_for_itemsview
 
 
-class ItemsViewValidator(DictionaryValidatorBase):
+class ItemsViewValidator(BaseIterableKeyValueValidator):
     """
     Validátor pro typovou anotaci ItemsView[K, V]
 
@@ -69,8 +69,9 @@ class ItemsViewValidator(DictionaryValidatorBase):
     ANNOTATION = ItemsView[K, V]
 
     IS_INSTANCE = ItemsViewOrigin
-    HAS_ATTRS =  "__iter__", "__len__"
-    CALLABLE_ATTRS = None
+    DUCK_TYPING = {
+        "has_attr": ("__iter__", "__len__"),
+    }
 
     DESCRIPTION = "Pohled na dvojice klíč-hodnota ve slovníku"
     LONG_DESCRIPTION = (
@@ -84,6 +85,6 @@ class ItemsViewValidator(DictionaryValidatorBase):
         """Přetížení metody __call__ pro validaci slovníkových struktur."""
 
         # Navrácení výstupu funkce pro validaci slovníkových objektů upravené pro ChainMap
-        return dictionary_validator_for_itemsview(
+        return iterable_key_value_verifier_for_itemsview(
             value, self.ORIGIN, annotation, depth_check, custom_types, bool_only
         )

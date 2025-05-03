@@ -1,6 +1,6 @@
 from enum import Flag
 
-from ..._bases import BaseIsInstanceValidator
+from ...._bases import BaseIsInstanceValidator
 
 
 class FlagValidator(BaseIsInstanceValidator):
@@ -64,8 +64,12 @@ class FlagValidator(BaseIsInstanceValidator):
     ANNOTATION = Flag
 
     IS_INSTANCE = Flag
-    HAS_ATTRS = "name", "value", "__or__", "__and__", "__xor__", "__invert__"
-    CALLABLE_ATTRS = None
+    DUCK_TYPING = {
+        "has_attr": (
+            "__or__", "__and__", "__xor__", "__invert__",
+            "name", "value"
+        ),
+    }
 
     DESCRIPTION = "Výčtový typ podporující bitové operace"
     LONG_DESCRIPTION = (

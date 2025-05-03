@@ -1,6 +1,6 @@
 from enum import IntEnum
 
-from ..._bases import BaseIsInstanceValidator
+from ...._bases import BaseIsInstanceValidator
 
 
 class IntEnumValidator(BaseIsInstanceValidator):
@@ -62,8 +62,9 @@ class IntEnumValidator(BaseIsInstanceValidator):
     ANNOTATION = IntEnum
 
     IS_INSTANCE = IntEnum
-    HAS_ATTRS = "name", "__int__"
-    CALLABLE_ATTRS = None
+    DUCK_TYPING = {
+        "has_attr": ("__int__", "name", "value"),
+    }
 
     DESCRIPTION = "Celočíselný výčtový typ"
     LONG_DESCRIPTION = (

@@ -84,3 +84,6 @@ else:
 
 Chceš, že ti ještě sepíšu **úplný mini-seznam fallback typů**, co by stálo za to podporovat v takové knihovně jako tvoříš? 🚀 (byl by to super "checklist" třeba před releasem)  
 Stačí říct! 🎯
+
+
+

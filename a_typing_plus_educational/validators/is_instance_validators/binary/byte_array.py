@@ -1,4 +1,4 @@
-from ..._bases import BaseIsInstanceValidator
+from ...._bases import BaseIsInstanceValidator
 
 
 class ByteArrayValidator(BaseIsInstanceValidator):
@@ -61,8 +61,12 @@ class ByteArrayValidator(BaseIsInstanceValidator):
     ANNOTATION = bytearray
 
     IS_INSTANCE = bytearray
-    HAS_ATTRS = "__getitem__", "__len__", "decode", "append", "extend"
-    CALLABLE_ATTRS = None
+    DUCK_TYPING = {
+        "has_attr": (
+            "__getitem__", "__setitem__", "__len__",
+            "decode", "append", "extend"
+        ),
+    }
 
     DESCRIPTION = "Změnitelné pole bajtů"
     LONG_DESCRIPTION = (

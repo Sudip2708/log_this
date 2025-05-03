@@ -66,8 +66,7 @@ class UnionValidator(BaseCustomLogicValidator):
     ANNOTATION = Union[T1,T2,...]
 
     IS_INSTANCE = Union
-    HAS_ATTRS = None  # Nepodporuje validaci přes Duck Typing.
-    CALLABLE_ATTRS = None  # Nepodporuje validaci přes Duck Typing.
+    DUCK_TYPING = None
 
     DESCRIPTION = "Sjednocení více typů"
     LONG_DESCRIPTION = (

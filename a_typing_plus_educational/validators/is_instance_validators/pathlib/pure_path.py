@@ -1,6 +1,6 @@
 from pathlib import PurePath
 
-from ..._bases import BaseIsInstanceValidator
+from ...._bases import BaseIsInstanceValidator
 
 
 class PurePathValidator(BaseIsInstanceValidator):
@@ -76,8 +76,10 @@ class PurePathValidator(BaseIsInstanceValidator):
     ANNOTATION = PurePath
 
     IS_INSTANCE = PurePath
-    HAS_ATTRS = "parts", "joinpath", "as_posix", "name"
-    CALLABLE_ATTRS = None
+    DUCK_TYPING = {
+        "has_attr": ("parts", "name"),
+        "has_callable_attr": ("joinpath", "as_posix")
+    }
 
     DESCRIPTION = "Čistá cesta bez přístupu k souborovému systému"
     LONG_DESCRIPTION = (

@@ -1,10 +1,10 @@
 from typing import KeysView
 from collections.abc import KeysView as KeysViewOrigin
 
-from ..._bases3 import BaseIterableValidator, K
+from ...._bases import BaseIterableItemValidator, K
 
 
-class KeysViewValidator(BaseIterableValidator):
+class KeysViewValidator(BaseIterableItemValidator):
     """
     Validátor pro typovou anotaci KeysView[K]
 
@@ -58,8 +58,9 @@ class KeysViewValidator(BaseIterableValidator):
     ANNOTATION = KeysView[K]
 
     IS_INSTANCE = KeysViewOrigin
-    HAS_ATTRS = "mapping", "__iter__", "__len__"
-    CALLABLE_ATTRS = None
+    DUCK_TYPING = {
+        "has_attr": ("__iter__", "__len__", "mapping"),
+    }
 
     DESCRIPTION = "Pohled na klíče ve slovníku"
     LONG_DESCRIPTION = (

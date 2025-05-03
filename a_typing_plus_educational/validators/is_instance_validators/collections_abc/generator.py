@@ -85,8 +85,9 @@ class GeneratorValidator(BaseIsInstanceValidator):
     ANNOTATION = Generator[Y, S, R]  # yield, send, return typy (mohou se lišit)
 
     IS_INSTANCE = GeneratorOrigin
-    HAS_ATTRS = "__iter__", "__next__", "send", "throw", "close"
-    CALLABLE_ATTRS = HAS_ATTRS
+    DUCK_TYPING = {
+        "has_callable_attr": ("__iter__", "__next__", "send", "throw", "close")
+    }
 
     DESCRIPTION =  "Generátor s podporou yield a send"
     LONG_DESCRIPTION = (

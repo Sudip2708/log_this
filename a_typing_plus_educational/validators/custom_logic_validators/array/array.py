@@ -73,8 +73,12 @@ class ArrayValidator(BaseCustomLogicValidator):
     ANNOTATION = array
 
     IS_INSTANCE = array
-    HAS_ATTRS = "append", "extend", "insert", "__getitem__", "__setitem__", "__delitem__", "__len__"
-    CALLABLE_ATTRS = HAS_ATTRS
+    DUCK_TYPING = {
+        "has_callable_attr": (
+            "__getitem__", "__setitem__", "__delitem__", "__len__",
+            "append", "extend", "insert"
+        )
+    }
 
     DESCRIPTION = "Pole s typem prvků"
     LONG_DESCRIPTION = (

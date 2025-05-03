@@ -88,8 +88,7 @@ class TypeVarValidator(BaseCustomLogicValidator):
     ANNOTATION = TypeVar  # T = TypeVar('T')
 
     IS_INSTANCE = TypeVar
-    HAS_ATTRS = None  # Nepodporuje validaci přes Duck Typing.
-    CALLABLE_ATTRS = None  # Nepodporuje validaci přes Duck Typing.
+    DUCK_TYPING = None
 
     DESCRIPTION = "Typový parametr"
     LONG_DESCRIPTION = (

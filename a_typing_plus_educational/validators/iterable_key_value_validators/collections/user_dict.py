@@ -1,9 +1,9 @@
 from collections import UserDict
 
-from ...._bases import DictionaryValidatorBase, K, V
+from ...._bases import BaseIterableKeyValueValidator, K, V
 
 
-class UserDictValidator(DictionaryValidatorBase):
+class UserDictValidator(BaseIterableKeyValueValidator):
     """
     Validátor pro typovou anotaci UserDict[K, V]
 
@@ -68,8 +68,11 @@ class UserDictValidator(DictionaryValidatorBase):
     ANNOTATION = UserDict[K, V]
 
     IS_INSTANCE = UserDict
-    HAS_ATTRS = "__getitem__", "__setitem__", "__delitem__", "__iter__", "__len__"
-    CALLABLE_ATTRS = None
+    DUCK_TYPING = {
+        "has_attr": (
+            "__getitem__", "__setitem__", "__delitem__", "__iter__", "__len__"
+        ),
+    }
 
     DESCRIPTION = "Zabalitelný slovník"
     LONG_DESCRIPTION = (

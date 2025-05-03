@@ -1,4 +1,4 @@
-from typing import Any, Tuple, Union, NoReturn
+from typing import NoReturn
 
 from ....._bases import BaseCustomLogicValidator
 from ....._verifiers import no_return_verifier
@@ -58,8 +58,7 @@ class NoReturnValidator(BaseCustomLogicValidator):
     ANNOTATION = NoReturn
 
     IS_INSTANCE = NoReturn
-    HAS_ATTRS = None  # Nepodporuje validaci přes Duck Typing.
-    CALLABLE_ATTRS = None  # Nepodporuje validaci přes Duck Typing.
+    DUCK_TYPING = None
 
     DESCRIPTION = "Funkce, která nikdy nevrací"
     LONG_DESCRIPTION = (

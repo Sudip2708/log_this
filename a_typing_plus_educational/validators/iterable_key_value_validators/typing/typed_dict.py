@@ -1,10 +1,10 @@
 from typing import TypedDict
 
-from ...._bases import DictionaryValidatorBase
-from ....validators import dictionary_validator_for_typeddict
+from ...._bases import BaseIterableKeyValueValidator
+from ...._verifiers import iterable_key_value_verifier_for_typeddict
 
 
-class TypedDictValidator(DictionaryValidatorBase):
+class TypedDictValidator(BaseIterableKeyValueValidator):
     """
     Validátor pro typovou anotaci TypedDict
 
@@ -98,8 +98,7 @@ class TypedDictValidator(DictionaryValidatorBase):
     ANNOTATION = TypedDict
 
     IS_INSTANCE = dict  # runtime je TypedDict instancí dict
-    HAS_ATTRS = None  # Nepodporuje validaci přes Duck Typing.
-    CALLABLE_ATTRS = None  # Nepodporuje validaci přes Duck Typing.
+    DUCK_TYPING = None
 
     DESCRIPTION = "Slovník s definovanou strukturou klíčů a typů"
     LONG_DESCRIPTION = (
@@ -112,6 +111,6 @@ class TypedDictValidator(DictionaryValidatorBase):
         """Přetížení metody __call__ pro validaci slovníkových struktur."""
 
         # Navrácení výstupu funkce pro validaci slovníkových objektů upravené pro TypedDict
-        return dictionary_validator_for_typeddict(
+        return iterable_key_value_verifier_for_typeddict(
             value, self.ORIGIN, annotation, depth_check, custom_types, bool_only
         )

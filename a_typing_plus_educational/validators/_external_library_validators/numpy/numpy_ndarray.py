@@ -1,5 +1,5 @@
 import numpy as np
-from typing import Annotated, Any, Dict, Optional, Tuple, Union
+from typing import Any, Union
 
 from ...._bases import BaseCustomLogicValidator
 from ...._verifiers import numpy_array_verifier
@@ -18,8 +18,8 @@ class NumpyArrayValidator(BaseCustomLogicValidator):
         - np.ndarray                # Základní reference na typ ndarray
         - numpy.ndarray             # Plně kvalifikovaný zápis
         - Annotated[np.ndarray, {   # S metadaty pro dtype a tvar (experimentální)
-              'dtype': np.float64,
-              'shape': (3, 4)
+              dtype: np.float64,
+              shape: (3, 4)
           }]
 
     Datové typy (dtype):
@@ -48,7 +48,7 @@ class NumpyArrayValidator(BaseCustomLogicValidator):
         - np.array([1, 2, 3])                      # 1D pole
         - np.zeros((3, 4))                         # 2D pole nul
         - np.arange(10).reshape(2, 5)              # 2D pole z rozsahu 0-9
-        - Annotated[np.ndarray, {'dtype': np.int32}]  # Anotace pro pole celých čísel
+        - Annotated[np.ndarray, {dtype: np.int32}]  # Anotace pro pole celých čísel
 
     Validační proces:
         1. Validátor ověří, zda hodnota je instance typu numpy.ndarray.
@@ -61,7 +61,7 @@ class NumpyArrayValidator(BaseCustomLogicValidator):
           def process_array(data: np.ndarray) -> None: ...
 
         - S kontrolou dtype a tvaru:
-          IntMatrix = Annotated[np.ndarray, {'dtype': np.int32, 'shape': (None, 3)}]
+          IntMatrix = Annotated[np.ndarray, {dtype: np.int32, shape: (None, 3)}]
           def process_matrix(data: IntMatrix) -> None: ...
 
     Výhody oproti standardním strukturám:
@@ -96,8 +96,23 @@ class NumpyArrayValidator(BaseCustomLogicValidator):
 
     VALIDATOR_KEY = "numpy_ndarray"
     ANNOTATION = np.ndarray
-    INFO = "Definuje objekt typu numpy.ndarray"
-    ORIGIN = np.ndarray
+
+    IS_INSTANCE = np.ndarray
+    DUCK_TYPING = {
+        "has_attr": ("shape", "dtype", "ndim", "size"),
+        "has_callable_attr": ("reshape", "astype"),
+        "lambda": lambda obj: (
+                isinstance(getattr(obj, "ndim"), int)
+                and isinstance(getattr(obj, "size"), int)
+                and isinstance(getattr(obj, "shape"), tuple)
+        )
+    }
+
+    DESCRIPTION = "N-dimenzionální pole (NumPy)"
+    LONG_DESCRIPTION = (
+            "Validuje, že objekt je instancí numpy.ndarray, tedy vícerozměrného pole s homogenními daty. "
+            "Poskytuje efektivní operace s velkými soubory dat a matematické funkce nad celými poli."
+        )
 
     def __call__(
             self,
@@ -105,7 +120,7 @@ class NumpyArrayValidator(BaseCustomLogicValidator):
             annotation: Any,
             depth_check: Union[bool, int],
             custom_types: dict = None,
-            bool_only: bool
+            bool_only: bool = False
     ) -> Union[bool, Any]:
         """
         Provádí validaci hodnoty proti typu numpy.ndarray s možností kontroly dtype a tvaru.
@@ -116,7 +131,7 @@ class NumpyArrayValidator(BaseCustomLogicValidator):
         Args:
             value (Any): Vstupní hodnota k validaci.
             annotation (Any): Typová anotace, např. `np.ndarray`, 
-                             `Annotated[np.ndarray, {'dtype': np.float64, 'shape': (3, 4)}]`.
+                             `Annotated[np.ndarray, {dtype: np.float64, shape: (3, 4)}]`.
             depth_check (Union[bool, int]): Hloubka kontroly nebo True/False.
             custom_types (Tuple[Any, ...]): N-tice uživatelsky definovaných typů.
             bool_only (bool): Pokud je True, výstup je pouze True/False; jinak se vrací výjimka při chybě.

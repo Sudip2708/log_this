@@ -1,10 +1,10 @@
 from typing import DefaultDict
 from collections import defaultdict
 
-from ...._bases import DictionaryValidatorBase, K, V
+from ...._bases import BaseIterableKeyValueValidator, K, V
 
 
-class DefaultDictValidator(DictionaryValidatorBase):
+class DefaultDictValidator(BaseIterableKeyValueValidator):
     """
     Validátor pro typovou anotaci DefaultDict[K, V]
 
@@ -65,8 +65,12 @@ class DefaultDictValidator(DictionaryValidatorBase):
     ANNOTATION = DefaultDict[K,V]
 
     IS_INSTANCE = defaultdict
-    HAS_ATTRS = "__getitem__", "__setitem__", "__delitem__", "__iter__", "__len__", "default_factory"
-    CALLABLE_ATTRS = None
+    DUCK_TYPING = {
+        "has_attr": (
+            "__getitem__", "__setitem__", "__delitem__", "__iter__", "__len__",
+            "default_factory"
+        ),
+    }
 
     DESCRIPTION = "Slovník s výchozí hodnotou"
     LONG_DESCRIPTION = (

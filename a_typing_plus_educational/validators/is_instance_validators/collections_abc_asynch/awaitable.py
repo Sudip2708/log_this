@@ -80,8 +80,9 @@ class AwaitableValidator(BaseIsInstanceValidator):
     ANNOTATION = Awaitable[T]
 
     IS_INSTANCE = AwaitableOrigin
-    HAS_ATTRS = "__await__"
-    CALLABLE_ATTRS = "__await__"
+    DUCK_TYPING = {
+        "has_callable_attr": "__await__",
+    }
 
     DESCRIPTION = "Objekt podporující await"
     LONG_DESCRIPTION = (

@@ -1,5 +1,5 @@
 import pandas as pd
-from typing import Any, Tuple, Union
+from typing import Any, Union
 
 from ...._bases import BaseCustomLogicValidator
 from ...._verifiers import pandas_dataframe_verifier
@@ -91,8 +91,24 @@ class DataFrameValidator(BaseCustomLogicValidator):
 
     VALIDATOR_KEY = "DataFrame"
     ANNOTATION = pd.DataFrame
-    INFO = "Definuje pandas DataFrame objekt"
-    ORIGIN = pd.DataFrame
+
+    IS_INSTANCE = pd.DataFrame
+    DUCK_TYPING = {
+        "has_attr": ("index", "columns", "shape", "dtypes", "loc", "iloc"),
+        "has_callable_attr": ("groupby", "head"),
+        "lambda": lambda obj: (
+                isinstance(getattr(obj, "shape"), tuple)
+                and len(getattr(obj, "shape")) == 2
+        )
+    }
+
+    DESCRIPTION = "Dvourozměrná tabulková struktura (Pandas)"
+    LONG_DESCRIPTION = (
+            "Validuje, že objekt je instancí pandas.DataFrame, "
+            "tedy dvourozměrné tabulky s označenými osami. "
+            "Umožňuje manipulaci s heterogenními daty v řádcích "
+            "a sloupcích s podporou operací jako spojování nebo filtrování."
+        )
 
     def __call__(
             self,

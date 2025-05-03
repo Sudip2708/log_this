@@ -72,8 +72,7 @@ class AnnotatedValidator(BaseCustomLogicValidator):
     ANNOTATION = Annotated[T, Any]
 
     IS_INSTANCE = Annotated
-    HAS_ATTRS = None  # Nepodporuje validaci přes Duck Typing.
-    CALLABLE_ATTRS = None  # Nepodporuje validaci přes Duck Typing.
+    DUCK_TYPING = None
 
     DESCRIPTION = "Typ s dodatečnými metadaty"
     LONG_DESCRIPTION = (

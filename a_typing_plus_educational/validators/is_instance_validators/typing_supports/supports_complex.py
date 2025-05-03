@@ -84,8 +84,9 @@ class SupportsComplexValidator(BaseIsInstanceValidator):
     ANNOTATION = SupportsComplex
 
     IS_INSTANCE = SupportsComplex
-    HAS_ATTRS = "__complex__"
-    CALLABLE_ATTRS = None
+    DUCK_TYPING = {
+        "has_attr": "__complex__",
+    }
 
     DESCRIPTION = "Objekt podporující konverzi na komplexní číslo"
     LONG_DESCRIPTION = (

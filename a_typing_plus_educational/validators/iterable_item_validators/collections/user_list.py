@@ -1,9 +1,9 @@
 from collections import UserList
 
-from ..._bases3 import BaseIterableValidator, T
+from ...._bases import BaseIterableItemValidator, T
 
 
-class UserListValidator(BaseIterableValidator):
+class UserListValidator(BaseIterableItemValidator):
     """
     Validátor pro typovou anotaci UserList[T]
 
@@ -63,8 +63,9 @@ class UserListValidator(BaseIterableValidator):
     ANNOTATION = UserList[T]
 
     IS_INSTANCE = UserList
-    HAS_ATTRS = "__getitem__", "__setitem__", "__len__", "append"
-    CALLABLE_ATTRS = None
+    DUCK_TYPING = {
+        "has_attr": ("__getitem__", "__setitem__", "__len__", "append"),
+    }
 
     DESCRIPTION = "Zabalitelný seznam"
     LONG_DESCRIPTION = (

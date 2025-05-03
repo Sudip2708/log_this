@@ -1,6 +1,6 @@
 from datetime import timedelta
 
-from ..._bases import BaseIsInstanceValidator
+from ...._bases import BaseIsInstanceValidator
 
 
 class TimedeltaValidator(BaseIsInstanceValidator):
@@ -56,17 +56,14 @@ class TimedeltaValidator(BaseIsInstanceValidator):
     ANNOTATION = timedelta
 
     IS_INSTANCE = timedelta
-    HAS_ATTRS = "total_seconds", "__add__", "__sub__", "__str__", "days", "seconds", "microseconds"
-    CALLABLE_ATTRS = "days", "seconds", "microseconds"
+    DUCK_TYPING = {
+        "has_attr": ("__add__", "__sub__", "__str__", "total_seconds"),
+        "has_int_attr": ("days", "seconds", "microseconds")
+    }
+
 
     DESCRIPTION = "Časový rozdíl mezi dvěma časy"
     LONG_DESCRIPTION = (
             "Validuje, že objekt je instancí datetime.timedelta, tedy reprezentuje rozdíl mezi dvěma časy nebo daty "
             "jako dobu v dnech, sekundách a mikrosekundách."
         )
-
-
-    LAMBDA = lambda obj: all(
-        isinstance(getattr(obj, attr, None), (int, float))
-        for attr in ("days", "seconds", "microseconds")
-    )

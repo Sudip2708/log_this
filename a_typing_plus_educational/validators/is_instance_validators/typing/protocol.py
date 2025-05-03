@@ -80,8 +80,7 @@ class ProtocolValidator(BaseIsInstanceValidator):
     ANNOTATION = Protocol
 
     IS_INSTANCE = Protocol
-    HAS_ATTRS = None  # Nepodporuje validaci přes Duck Typing.
-    CALLABLE_ATTRS = None  # Nepodporuje validaci přes Duck Typing.
+    DUCK_TYPING = None
 
     DESCRIPTION = "Definice strukturálního typu"
     LONG_DESCRIPTION = (

@@ -1,11 +1,11 @@
 from typing import Container
 from collections.abc import Container as ContainerOrigin
 
-from ...._bases import IterableValidatorBase, T
-from ....validators import iterable_validator_for_container
+from ...._bases import BaseIterableItemValidator, T
+from ...._verifiers import iterable_item_verifier_for_container
 
 
-class ContainerValidator(IterableValidatorBase):
+class ContainerValidator(BaseIterableItemValidator):
     """
     Validátor pro typovou anotaci Container[T]
 
@@ -69,8 +69,9 @@ class ContainerValidator(IterableValidatorBase):
     ANNOTATION = Container[T]
 
     IS_INSTANCE = ContainerOrigin
-    HAS_ATTRS = "__contains__"
-    CALLABLE_ATTRS = None
+    DUCK_TYPING = {
+        "has_attr": "__contains__",
+    }
 
     DESCRIPTION = "Objekt podporující operátor 'in'"
     LONG_DESCRIPTION = (
@@ -82,6 +83,6 @@ class ContainerValidator(IterableValidatorBase):
     def __call__(self, value, annotation, depth_check, custom_types, bool_only):
         """Přetížení metody __call__."""
 
-        return iterable_validator_for_container(
+        return iterable_item_verifier_for_container(
             value, self.ORIGIN, annotation, depth_check, custom_types, bool_only
         )

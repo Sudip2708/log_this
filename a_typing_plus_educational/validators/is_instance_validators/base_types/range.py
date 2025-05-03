@@ -1,4 +1,4 @@
-from ..._bases import BaseIsInstanceValidator
+from ...._bases import BaseIsInstanceValidator
 
 
 class RangeValidator(BaseIsInstanceValidator):
@@ -55,8 +55,10 @@ class RangeValidator(BaseIsInstanceValidator):
     ANNOTATION = range
 
     IS_INSTANCE = range
-    HAS_ATTRS = "__getitem__", "__len__", "__iter__", "start", "stop", "step"
-    CALLABLE_ATTRS = "start", "stop", "step"
+    DUCK_TYPING = {
+        "has_attr": ("__getitem__", "__len__", "__iter__"),
+        "has_callable_attr": ("start", "stop", "step")
+    }
 
     DESCRIPTION = "Sekvence čísel v rozsahu"
     LONG_DESCRIPTION = (

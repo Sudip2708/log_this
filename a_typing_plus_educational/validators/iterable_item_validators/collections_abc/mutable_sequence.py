@@ -1,10 +1,10 @@
 from typing import MutableSequence
 from collections.abc import MutableSequence as MutableSequenceOrigin
 
-from ..._bases3 import BaseIterableValidator, T
+from ...._bases import BaseIterableItemValidator, T
 
 
-class MutableSequenceValidator(BaseIterableValidator):
+class MutableSequenceValidator(BaseIterableItemValidator):
     """
     Validátor pro typovou anotaci MutableSequence[T]
 
@@ -75,8 +75,12 @@ class MutableSequenceValidator(BaseIterableValidator):
     ANNOTATION = MutableSequence[T]
 
     IS_INSTANCE = MutableSequenceOrigin
-    HAS_ATTRS = "__getitem__", "__setitem__", "__delitem__", "__len__", "__iter__", "insert"
-    CALLABLE_ATTRS = None
+    DUCK_TYPING = {
+        "has_attr": (
+            "__getitem__", "__setitem__", "__delitem__",
+            "__len__", "__iter__", "insert"
+        ),
+    }
 
     DESCRIPTION = "Změnitelná sekvence prvků"
     LONG_DESCRIPTION = (

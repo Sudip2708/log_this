@@ -94,8 +94,9 @@ class SupportsFloatValidator(BaseIsInstanceValidator):
     ANNOTATION = SupportsFloat
 
     IS_INSTANCE = SupportsFloat
-    HAS_ATTRS = "__float__"
-    CALLABLE_ATTRS = None
+    DUCK_TYPING = {
+        "has_attr": "__float__",
+    }
 
     DESCRIPTION = "Objekt podporující konverzi na float"
     LONG_DESCRIPTION = (

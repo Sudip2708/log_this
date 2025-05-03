@@ -1,7 +1,7 @@
 from typing import AsyncContextManager, Any, Union
 
 from ...._bases import BaseIsInstanceValidator
-from ...._verifiers import has_attribute_verifier, is_coroutine_function_verifier
+from ...._verifiers import is_coroutine_function_verifier
 
 
 class AsyncContextManagerValidator(BaseIsInstanceValidator):
@@ -61,8 +61,9 @@ class AsyncContextManagerValidator(BaseIsInstanceValidator):
     ANNOTATION = AsyncContextManager
 
     IS_INSTANCE = AsyncContextManager
-    HAS_ATTRS = "__aenter__", "__aexit__"
-    CALLABLE_ATTRS = None
+    DUCK_TYPING = {
+        "has_coroutine_attr": ("__aenter__", "__aexit__"),
+    }
 
     DESCRIPTION = "Asynchronní správce kontextu"
     LONG_DESCRIPTION = (
@@ -71,5 +72,3 @@ class AsyncContextManagerValidator(BaseIsInstanceValidator):
             "Používá se s příkazem 'async with' pro asynchronní práci se zdroji."
         )
 
-
-    LAMBDA = lambda obj: is_coroutine_function_verifier(obj, HAS_ATTRS, ANNOTATION)

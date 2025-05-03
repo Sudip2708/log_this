@@ -97,8 +97,9 @@ class ContextManagerValidator(BaseIsInstanceValidator):
     ANNOTATION = ContextManager[T]
 
     IS_INSTANCE = AbstractContextManager
-    HAS_ATTRS = "__enter__", "__exit__"
-    CALLABLE_ATTRS = HAS_ATTRS
+    DUCK_TYPING = {
+        "has_callable_attr": ("__enter__", "__exit__"),
+    }
 
     DESCRIPTION = "Správce kontextu"
     LONG_DESCRIPTION = (

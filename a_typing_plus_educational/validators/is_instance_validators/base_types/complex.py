@@ -1,4 +1,4 @@
-from ..._bases import BaseIsInstanceValidator
+from ...._bases import BaseIsInstanceValidator
 
 
 class ComplexValidator(BaseIsInstanceValidator):
@@ -55,8 +55,10 @@ class ComplexValidator(BaseIsInstanceValidator):
     ANNOTATION = complex
 
     IS_INSTANCE = complex
-    HAS_ATTRS = "__add__", "__sub__", "__mul__", "__truediv__", "real", "imag"
-    CALLABLE_ATTRS = "real", "imag"
+    DUCK_TYPING = {
+        "has_attr": ("__add__", "__sub__", "__mul__", "__truediv__"),
+        "has_callable_attr": ("real", "imag")
+    }
 
     DESCRIPTION = "Komplexní číslo"
     LONG_DESCRIPTION = (

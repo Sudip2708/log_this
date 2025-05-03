@@ -1,6 +1,6 @@
 from re import Match
 
-from ..._bases import BaseIsInstanceValidator
+from ...._bases import BaseIsInstanceValidator
 
 
 class MatchValidator(BaseIsInstanceValidator):
@@ -58,8 +58,9 @@ class MatchValidator(BaseIsInstanceValidator):
     ANNOTATION = Match
 
     IS_INSTANCE = Match
-    HAS_ATTRS = "group", "groups", "groupdict"
-    CALLABLE_ATTRS = "group", "groups", "groupdict"
+    DUCK_TYPING = {
+        "has_callable_attr": ("group", "groups", "groupdict"),
+    }
 
     DESCRIPTION = "Výsledek shody regulárního výrazu"
     LONG_DESCRIPTION = (

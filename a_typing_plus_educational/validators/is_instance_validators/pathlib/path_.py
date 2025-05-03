@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from ..._bases import BaseIsInstanceValidator
+from ...._bases import BaseIsInstanceValidator
 
 
 class PathValidator(BaseIsInstanceValidator):
@@ -81,8 +81,10 @@ class PathValidator(BaseIsInstanceValidator):
     ANNOTATION = Path
 
     IS_INSTANCE = Path
-    HAS_ATTRS = "open", "exists", "is_file"
-    CALLABLE_ATTRS = None
+    DUCK_TYPING = {
+        "has_attr": "__fspath__",
+        "has_callable_attr": ("open", "exists", "is_file")
+    }
 
     DESCRIPTION = "Objektová reprezentace cesty k souboru"
     LONG_DESCRIPTION = (

@@ -1,10 +1,10 @@
 from typing import Deque
 from collections import deque
 
-from ..._bases3 import BaseIterableValidator, T
+from ...._bases import BaseIterableItemValidator, T
 
 
-class DequeValidator(BaseIterableValidator):
+class DequeValidator(BaseIterableItemValidator):
     """
     Validátor pro typovou anotaci Deque[T]
 
@@ -71,8 +71,12 @@ class DequeValidator(BaseIterableValidator):
     ANNOTATION = Deque[T]
 
     IS_INSTANCE = deque
-    HAS_ATTRS = "__iter__", "__len__", "append", "appendleft", "pop", "popleft"
-    CALLABLE_ATTRS = None
+    DUCK_TYPING = {
+        "has_attr": (
+            "__iter__", "__len__",
+            "append", "appendleft", "pop", "popleft"
+        ),
+    }
 
     DESCRIPTION = "Obousměrná fronta"
     LONG_DESCRIPTION = (

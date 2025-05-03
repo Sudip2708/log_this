@@ -13,8 +13,9 @@ class SupportsBytesValidator(BaseIsInstanceValidator):
     ANNOTATION = SupportsBytes
 
     IS_INSTANCE = SupportsBytes
-    HAS_ATTRS = "__bytes__"
-    CALLABLE_ATTRS = None
+    DUCK_TYPING = {
+        "has_attr": "__bytes__",
+    }
 
     DESCRIPTION = "Objekt podporující konverzi na bytes"
     LONG_DESCRIPTION = (

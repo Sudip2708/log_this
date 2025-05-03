@@ -1,10 +1,10 @@
 from typing import OrderedDict
 from collections import OrderedDict as OrderedDictOrigin
 
-from ...._bases import DictionaryValidatorBase, K, V
+from ...._bases import BaseIterableKeyValueValidator, K, V
 
 
-class OrderedDictValidator(DictionaryValidatorBase):
+class OrderedDictValidator(BaseIterableKeyValueValidator):
     """
     Validátor pro typovou anotaci OrderedDict[K, V]
 
@@ -59,8 +59,12 @@ class OrderedDictValidator(DictionaryValidatorBase):
     ANNOTATION = OrderedDict[K, V]
 
     IS_INSTANCE = OrderedDictOrigin
-    HAS_ATTRS = "__getitem__", "__setitem__", "__delitem__", "__iter__", "__len__", "move_to_end"
-    CALLABLE_ATTRS = None
+    DUCK_TYPING = {
+        "has_attr": (
+            "__getitem__", "__setitem__", "__delitem__", "__iter__", "__len__",
+            "move_to_end"
+        ),
+    }
 
     DESCRIPTION = "Slovník s udržením pořadí vložení"
     LONG_DESCRIPTION = (

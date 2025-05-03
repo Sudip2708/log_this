@@ -59,8 +59,7 @@ class AnyValidator(BaseCustomLogicValidator):
     ANNOTATION = Any
 
     IS_INSTANCE = Any
-    HAS_ATTRS = None  # Nepodporuje validaci přes Duck Typing.
-    CALLABLE_ATTRS = None  # Nepodporuje validaci přes Duck Typing.
+    DUCK_TYPING = None
 
     DESCRIPTION = "Libovolný typ"
     LONG_DESCRIPTION = (

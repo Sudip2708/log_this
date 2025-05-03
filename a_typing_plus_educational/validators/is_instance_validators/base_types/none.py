@@ -1,4 +1,4 @@
-from ..._bases import BaseIsInstanceValidator
+from ...._bases import BaseIsInstanceValidator
 
 
 class NoneValidator(BaseIsInstanceValidator):
@@ -52,8 +52,7 @@ class NoneValidator(BaseIsInstanceValidator):
     ANNOTATION = None  # Typ None v Pythonu (typ(None))
 
     IS_INSTANCE = None
-    HAS_ATTRS = None  # Nepodporuje validaci přes Duck Typing.
-    CALLABLE_ATTRS = None  # Nepodporuje validaci přes Duck Typing.
+    DUCK_TYPING = None
 
     DESCRIPTION = "Prázdná hodnota"
     LONG_DESCRIPTION = (

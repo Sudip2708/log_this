@@ -65,9 +65,8 @@ class LiteralValidator(BaseCustomLogicValidator):
     VALIDATOR_KEY = "literal"
     ANNOTATION = Literal["a", "b", "c"]
 
-    IS_INSTANCE = None
-    HAS_ATTRS = None  # Nepodporuje validaci přes Duck Typing.
-    CALLABLE_ATTRS = None  # Nepodporuje validaci přes Duck Typing.
+    IS_INSTANCE = Literal
+    DUCK_TYPING = None
 
     DESCRIPTION = "Doslovná hodnota jako typ"
     LONG_DESCRIPTION = (

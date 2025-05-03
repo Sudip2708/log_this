@@ -1,9 +1,9 @@
 from typing import List
 
-from ..._bases3 import BaseIterableValidator, T
+from ...._bases import BaseIterableItemValidator, T
 
 
-class ListValidator(BaseIterableValidator):
+class ListValidator(BaseIterableItemValidator):
     """
     Validátor pro typovou anotaci List[T]
 
@@ -54,8 +54,11 @@ class ListValidator(BaseIterableValidator):
     ANNOTATION = List[T], list[T], list
 
     IS_INSTANCE = list
-    HAS_ATTRS = "__getitem__", "__setitem__", "__len__", "append", "extend"
-    CALLABLE_ATTRS = None
+    DUCK_TYPING = {
+        "has_attr": (
+            "__getitem__", "__setitem__", "__len__", "append", "extend"
+        ),
+    }
 
     DESCRIPTION = "Vestavěný seznam"
     LONG_DESCRIPTION = (

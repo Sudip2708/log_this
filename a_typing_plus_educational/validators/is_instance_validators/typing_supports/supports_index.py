@@ -83,8 +83,9 @@ class SupportsIndexValidator(BaseIsInstanceValidator):
     ANNOTATION = SupportsIndex
 
     IS_INSTANCE = SupportsIndex
-    HAS_ATTRS = "__index__"
-    CALLABLE_ATTRS = None
+    DUCK_TYPING = {
+        "has_attr": "__index__",
+    }
 
     DESCRIPTION = "Objekt použitelný jako index"
     LONG_DESCRIPTION = (

@@ -1,6 +1,6 @@
 from collections import UserString
 
-from ..._bases import BaseIsInstanceValidator
+from ...._bases import BaseIsInstanceValidator
 
 
 class UserStringValidator(BaseIsInstanceValidator):
@@ -59,8 +59,9 @@ class UserStringValidator(BaseIsInstanceValidator):
     ANNOTATION = UserString
 
     IS_INSTANCE = UserString
-    HAS_ATTRS = "__getitem__", "__len__", "__str__", "lower", "upper"
-    CALLABLE_ATTRS = None
+    DUCK_TYPING = {
+        "has_attr": ("__getitem__", "__len__", "__str__", "lower", "upper"),
+    }
 
     DESCRIPTION = "Zabalitelný řetězec"
     LONG_DESCRIPTION = (

@@ -71,8 +71,9 @@ class IterableValidator(BaseIsInstanceValidator):
     ANNOTATION = Iterable[T]
 
     IS_INSTANCE = IterableOrigin
-    HAS_ATTRS = "__hash__"
-    CALLABLE_ATTRS = "__hash__"
+    DUCK_TYPING = {
+        "has_callable_attr": "__iter__"
+    }
 
     DESCRIPTION = "Objekt podporující iteraci"
     LONG_DESCRIPTION = (

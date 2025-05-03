@@ -1,11 +1,11 @@
 from typing import ChainMap
 from collections import ChainMap as ChainMapOrigin
 
-from ...._bases import DictionaryValidatorBase, K, V
-from ....validators import dictionary_validator_for_chainmap
+from ...._bases import BaseIterableKeyValueValidator, K, V
+from ...._verifiers import iterable_key_value_verifier_for_chainmap
 
 
-class ChainMapValidator(DictionaryValidatorBase):
+class ChainMapValidator(BaseIterableKeyValueValidator):
     """
     Validátor pro typovou anotaci ChainMap[K, V]
 
@@ -71,8 +71,9 @@ class ChainMapValidator(DictionaryValidatorBase):
     ANNOTATION = ChainMap[K, V]
 
     IS_INSTANCE = ChainMapOrigin
-    HAS_ATTRS = "__getitem__", "__iter__", "__len__"
-    CALLABLE_ATTRS = None
+    DUCK_TYPING = {
+        "has_attr": ("__getitem__", "__iter__", "__len__"),
+    }
 
     DESCRIPTION = "Sloučené zobrazení více slovníků"
     LONG_DESCRIPTION = (
@@ -85,6 +86,6 @@ class ChainMapValidator(DictionaryValidatorBase):
         """Přetížení metody __call__ pro validaci slovníkových struktur."""
 
         # Navrácení výstupu funkce pro validaci slovníkových objektů upravené pro ChainMap
-        return dictionary_validator_for_chainmap(
+        return iterable_key_value_verifier_for_chainmap(
             value, self.ORIGIN, annotation, depth_check, custom_types, bool_only
         )

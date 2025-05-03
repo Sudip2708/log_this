@@ -1,9 +1,9 @@
 from typing import Dict
 
-from ...._bases import DictionaryValidatorBase, K, V
+from ...._bases import BaseIterableKeyValueValidator, K, V
 
 
-class DictValidator(DictionaryValidatorBase):
+class DictValidator(BaseIterableKeyValueValidator):
     """
     Validátor pro typovou anotaci Dict[K, V]
 
@@ -71,8 +71,11 @@ class DictValidator(DictionaryValidatorBase):
     ANNOTATION = Dict[K, V], dict[K, V], dict
 
     IS_INSTANCE = dict
-    HAS_ATTRS = "__getitem__", "__setitem__", "__len__", "keys", "values", "items"
-    CALLABLE_ATTRS = None
+    DUCK_TYPING = {
+        "has_attr": (
+            "__getitem__", "__setitem__", "__len__", "keys", "values", "items"
+        ),
+    }
 
     DESCRIPTION = "Vestavěný slovník"
     LONG_DESCRIPTION = (

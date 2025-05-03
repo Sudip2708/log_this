@@ -63,8 +63,7 @@ class ClassVarValidator(BaseCustomLogicValidator):
     ANNOTATION = ClassVar[T]
 
     IS_INSTANCE = ClassVar
-    HAS_ATTRS = None  # Nepodporuje validaci přes Duck Typing
-    CALLABLE_ATTRS = None  # Nepodporuje validaci přes Duck Typing
+    DUCK_TYPING = None
 
     DESCRIPTION = "Proměnná třídy (ne instance)"
     LONG_DESCRIPTION = (

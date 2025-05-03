@@ -1,6 +1,6 @@
 from enum import IntFlag
 
-from ..._bases import BaseIsInstanceValidator
+from ...._bases import BaseIsInstanceValidator
 
 
 class IntFlagValidator(BaseIsInstanceValidator):
@@ -67,8 +67,12 @@ class IntFlagValidator(BaseIsInstanceValidator):
     ANNOTATION = IntFlag
 
     IS_INSTANCE = IntFlag
-    HAS_ATTRS = "name", "__or__", "__and__", "__xor__", "__invert__", "__int__"
-    CALLABLE_ATTRS = None
+    DUCK_TYPING = {
+        "has_attr": (
+            "__or__", "__and__", "__xor__", "__invert__", "__int__",
+            "name", "value"
+        ),
+    }
 
     DESCRIPTION = "Celočíselný výčtový typ s podporou bitových operací"
     LONG_DESCRIPTION = (

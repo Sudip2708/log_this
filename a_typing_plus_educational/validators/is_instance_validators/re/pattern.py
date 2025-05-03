@@ -1,6 +1,6 @@
 from re import Pattern
 
-from ..._bases import BaseIsInstanceValidator
+from ...._bases import BaseIsInstanceValidator
 
 
 class PatternValidator(BaseIsInstanceValidator):
@@ -69,8 +69,9 @@ class PatternValidator(BaseIsInstanceValidator):
     ANNOTATION = Pattern
 
     IS_INSTANCE = Pattern
-    HAS_ATTRS = "search", "match", "sub"
-    CALLABLE_ATTRS = "search", "match", "sub"
+    DUCK_TYPING = {
+        "has_callable_attr": ("search", "match", "sub"),
+    }
 
     DESCRIPTION = "Zkompilovaný regulární výraz"
     LONG_DESCRIPTION = (

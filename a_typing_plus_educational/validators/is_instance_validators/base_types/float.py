@@ -1,4 +1,4 @@
-from ..._bases import BaseIsInstanceValidator
+from ...._bases import BaseIsInstanceValidator
 
 
 class FloatValidator(BaseIsInstanceValidator):
@@ -55,8 +55,7 @@ class FloatValidator(BaseIsInstanceValidator):
     ANNOTATION = float
 
     IS_INSTANCE = float
-    HAS_ATTRS = None  # Nepodporuje validaci přes Duck Typing.
-    CALLABLE_ATTRS = None  # Nepodporuje validaci přes Duck Typing.
+    DUCK_TYPING = None
 
     DESCRIPTION = "Desetinné číslo"
     LONG_DESCRIPTION = (

@@ -71,8 +71,7 @@ class GenericValidator(BaseIsInstanceValidator):
     ANNOTATION = Generic[T]
 
     IS_INSTANCE = Generic
-    HAS_ATTRS = None  # Nepodporuje validaci přes Duck Typing.
-    CALLABLE_ATTRS = None  # Nepodporuje validaci přes Duck Typing.
+    DUCK_TYPING = None
 
     DESCRIPTION = "Základní třída pro generické typy"
     LONG_DESCRIPTION = (

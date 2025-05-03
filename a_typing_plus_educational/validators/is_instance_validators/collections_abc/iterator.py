@@ -96,8 +96,9 @@ class IteratorValidator(BaseIsInstanceValidator):
     ANNOTATION = Iterator[T]
 
     IS_INSTANCE = IteratorOrigin
-    HAS_ATTRS = "__iter__", "__next__"
-    CALLABLE_ATTRS = "__iter__", "__next__"
+    DUCK_TYPING = {
+        "has_callable_attr": ("__iter__", "__next__")
+    }
 
     DESCRIPTION = "Iterátor s metodami __iter__ a __next__"
     LONG_DESCRIPTION = (

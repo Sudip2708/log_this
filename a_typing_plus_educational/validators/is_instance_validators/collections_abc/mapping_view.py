@@ -1,6 +1,6 @@
 from collections.abc import MappingView
 
-from ..._bases import BaseIsInstanceValidator
+from ...._bases import BaseIsInstanceValidator
 
 
 class MappingViewValidator(BaseIsInstanceValidator):
@@ -54,8 +54,9 @@ class MappingViewValidator(BaseIsInstanceValidator):
     ANNOTATION = MappingView
 
     IS_INSTANCE = MappingView
-    HAS_ATTRS = "mapping", "__len__", "__iter__"
-    CALLABLE_ATTRS = None
+    DUCK_TYPING = {
+        "has_attr": ("mapping", "__len__", "__iter__"),
+    }
 
     DESCRIPTION = "Pohled na obsah mapování (slovníku)"
     LONG_DESCRIPTION = (

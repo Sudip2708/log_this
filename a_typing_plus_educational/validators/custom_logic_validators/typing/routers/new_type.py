@@ -1,7 +1,7 @@
 from typing import NewType
 
-from ...._bases import BaseCustomLogicValidator
-from ...._verifiers import inner_args_transmitter_for_newtype
+from ....._bases import BaseCustomLogicValidator
+from ....._verifiers import inner_args_transmitter_for_newtype
 
 
 class NewTypeValidator(BaseCustomLogicValidator):
@@ -66,8 +66,7 @@ class NewTypeValidator(BaseCustomLogicValidator):
     ANNOTATION = NewType
 
     IS_INSTANCE = NewType
-    HAS_ATTRS = None  # Nepodporuje validaci přes Duck Typing.
-    CALLABLE_ATTRS = None  # Nepodporuje validaci přes Duck Typing.
+    DUCK_TYPING = None
 
     DESCRIPTION = "Alias pro nový typ založený na existujícím"
     LONG_DESCRIPTION = (

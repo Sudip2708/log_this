@@ -1,6 +1,6 @@
 from uuid import UUID
 
-from ..._bases import BaseIsInstanceValidator
+from ...._bases import BaseIsInstanceValidator
 
 
 class UUIDValidator(BaseIsInstanceValidator):
@@ -59,8 +59,9 @@ class UUIDValidator(BaseIsInstanceValidator):
     ANNOTATION = UUID
 
     IS_INSTANCE = UUID
-    HAS_ATTRS = "hex", "int", "urn", "bytes"
-    CALLABLE_ATTRS = "hex", "int", "urn", "bytes"
+    DUCK_TYPING = {
+        "has_attr": ("hex", "int", "urn", "bytes"),
+    }
 
     DESCRIPTION = "Univerzální unikátní identifikátor"
     LONG_DESCRIPTION = (

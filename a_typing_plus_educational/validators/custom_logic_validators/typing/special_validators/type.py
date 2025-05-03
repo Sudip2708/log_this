@@ -74,8 +74,7 @@ class TypeValidator(BaseCustomLogicValidator):
     ANNOTATION = Type[T]
 
     IS_INSTANCE = type
-    HAS_ATTRS = None  # Nepodporuje validaci přes Duck Typing.
-    CALLABLE_ATTRS = None  # Nepodporuje validaci přes Duck Typing.
+    DUCK_TYPING = None
 
     DESCRIPTION = "Typ objektu jako hodnota"
     LONG_DESCRIPTION = (

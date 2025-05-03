@@ -68,8 +68,7 @@ class ForwardRefValidator(BaseIsInstanceValidator):
     ANNOTATION = ForwardRef  # ForwardRef('MyType')
 
     IS_INSTANCE = ForwardRef
-    HAS_ATTRS = None  # Nepodporuje validaci přes Duck Typing.
-    CALLABLE_ATTRS = None  # Nepodporuje validaci přes Duck Typing.
+    DUCK_TYPING = None
 
     DESCRIPTION = "Dopředná reference na typ"
     LONG_DESCRIPTION = (

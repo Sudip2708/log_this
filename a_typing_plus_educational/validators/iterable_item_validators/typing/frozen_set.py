@@ -1,9 +1,9 @@
 from typing import FrozenSet
 
-from ..._bases3 import BaseIterableValidator, T
+from ...._bases import BaseIterableItemValidator, T
 
 
-class FrozenSetValidator(BaseIterableValidator):
+class FrozenSetValidator(BaseIterableItemValidator):
     """
     Validátor pro typovou anotaci FrozenSet[T]
 
@@ -63,8 +63,9 @@ class FrozenSetValidator(BaseIterableValidator):
     ANNOTATION = FrozenSet[T]
 
     IS_INSTANCE = frozenset
-    HAS_ATTRS = "__contains__", "__iter__", "__len__"
-    CALLABLE_ATTRS = None
+    DUCK_TYPING = {
+        "has_attr": ("__contains__", "__iter__", "__len__"),
+    }
 
     DESCRIPTION = "Neměnná množina"
     LONG_DESCRIPTION = (

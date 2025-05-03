@@ -1,10 +1,10 @@
 from typing import MutableMapping
 from collections.abc import MutableMapping as MutableMappingOrigin
 
-from ...._bases import DictionaryValidatorBase, K, V
+from ...._bases import BaseIterableKeyValueValidator, K, V
 
 
-class MutableMappingValidator(DictionaryValidatorBase):
+class MutableMappingValidator(BaseIterableKeyValueValidator):
     """
     Validátor pro typovou anotaci MutableMapping[K, V]
 
@@ -67,8 +67,11 @@ class MutableMappingValidator(DictionaryValidatorBase):
     ANNOTATION = MutableMapping[K, V]
 
     IS_INSTANCE = MutableMappingOrigin
-    HAS_ATTRS =  "__getitem__", "__setitem__", "__delitem__", "__iter__", "__len__"
-    CALLABLE_ATTRS = None
+    DUCK_TYPING = {
+        "has_attr": (
+            "__getitem__", "__setitem__", "__delitem__", "__iter__", "__len__"
+        ),
+    }
 
     DESCRIPTION = "Změnitelná mapa (slovník)"
     LONG_DESCRIPTION = (

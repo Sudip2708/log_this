@@ -96,8 +96,9 @@ class SupportsIntValidator(BaseIsInstanceValidator):
     ANNOTATION = SupportsInt
 
     IS_INSTANCE = SupportsInt
-    HAS_ATTRS = "__int__"
-    CALLABLE_ATTRS = None
+    DUCK_TYPING = {
+        "has_attr": "__int__",
+    }
 
     DESCRIPTION = "Objekt podporující konverzi na int"
     LONG_DESCRIPTION = (

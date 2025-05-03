@@ -99,8 +99,9 @@ class AsyncIterableValidator(BaseIsInstanceValidator):
     ANNOTATION = AsyncIterable[T]
 
     IS_INSTANCE = AsyncIterableOrigin
-    HAS_ATTRS = "__aiter__"
-    CALLABLE_ATTRS = "__aiter__"
+    DUCK_TYPING = {
+        "has_callable_attr": "__aiter__",
+    }
 
     DESCRIPTION = "Objekt podporující asynchronní iteraci"
     LONG_DESCRIPTION = (

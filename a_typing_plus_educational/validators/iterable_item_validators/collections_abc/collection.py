@@ -1,10 +1,10 @@
 from typing import Collection
 from collections.abc import Collection as CollectionOrigin
 
-from ..._bases3 import BaseIterableValidator, T
+from ...._bases import BaseIterableItemValidator, T
 
 
-class CollectionValidator(BaseIterableValidator):
+class CollectionValidator(BaseIterableItemValidator):
     """
     Validátor pro typovou anotaci Collection[T]
 
@@ -67,8 +67,9 @@ class CollectionValidator(BaseIterableValidator):
     ANNOTATION = Collection[T]
 
     IS_INSTANCE = CollectionOrigin
-    HAS_ATTRS = "__contains__", "__iter__", "__len__"
-    CALLABLE_ATTRS = None
+    DUCK_TYPING = {
+        "has_attr": ("__contains__", "__iter__", "__len__"),
+    }
 
     DESCRIPTION = "Sekvence s __len__, __iter__ a __contains__"
     LONG_DESCRIPTION = (

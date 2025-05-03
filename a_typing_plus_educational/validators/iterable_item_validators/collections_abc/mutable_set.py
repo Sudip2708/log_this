@@ -1,10 +1,10 @@
 from typing import MutableSet
 from collections.abc import MutableSet as MutableSetOrigin
 
-from ..._bases3 import BaseIterableValidator, T
+from ...._bases import BaseIterableItemValidator, T
 
 
-class MutableSetValidator(BaseIterableValidator):
+class MutableSetValidator(BaseIterableItemValidator):
     """
     Validátor pro typovou anotaci MutableSet[T]
 
@@ -74,8 +74,9 @@ class MutableSetValidator(BaseIterableValidator):
     ANNOTATION = MutableSet[T]
 
     IS_INSTANCE = MutableSetOrigin
-    HAS_ATTRS = "__contains__", "__iter__", "__len__", "add", "discard"
-    CALLABLE_ATTRS = None
+    DUCK_TYPING = {
+        "has_attr": ("__contains__", "__iter__", "__len__", "add", "discard"),
+    }
 
     DESCRIPTION = "Změnitelná množina"
     LONG_DESCRIPTION = (

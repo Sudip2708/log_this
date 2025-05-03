@@ -76,8 +76,7 @@ class SelfValidator(BaseIsInstanceValidator):
     ANNOTATION = Self
 
     IS_INSTANCE = Self
-    HAS_ATTRS = None  # Nepodporuje validaci přes Duck Typing.
-    CALLABLE_ATTRS = None  # Nepodporuje validaci přes Duck Typing.
+    DUCK_TYPING = None
 
     DESCRIPTION = "Odkaz na typ aktuální třídy"
     LONG_DESCRIPTION = (

@@ -1,11 +1,11 @@
 from typing import Counter, get_args
 from collections import Counter as CounterOrigin
 
-from ...._bases import DictionaryValidatorBase, K
-from ....validators import dictionary_validator_for_counter
+from ...._bases import BaseIterableKeyValueValidator, K
+from ...._verifiers import iterable_key_value_verifier_for_counter
 
 
-class CounterValidator(DictionaryValidatorBase):
+class CounterValidator(BaseIterableKeyValueValidator):
     """
     Validátor pro typovou anotaci Counter[K]
 
@@ -66,8 +66,12 @@ class CounterValidator(DictionaryValidatorBase):
     ANNOTATION = Counter[K]
 
     IS_INSTANCE = CounterOrigin
-    HAS_ATTRS = "__getitem__", "__setitem__", "__delitem__", "__iter__", "__len__", "most_common", "update"
-    CALLABLE_ATTRS = None
+    DUCK_TYPING = {
+        "has_attr": (
+            "__getitem__", "__setitem__", "__delitem__", "__iter__", "__len__",
+            "most_common", "update"
+        ),
+    }
 
     DESCRIPTION = "Počítadlo výskytů prvků"
     LONG_DESCRIPTION = (
@@ -80,6 +84,6 @@ class CounterValidator(DictionaryValidatorBase):
         """Přetížení metody __call__ pro validaci slovníkových struktur."""
 
         # Navrácení výstupu funkce pro validaci slovníkových objektů upravené pro Counter
-        return dictionary_validator_for_counter(
+        return iterable_key_value_verifier_for_counter(
             value, self.ORIGIN, annotation, depth_check, custom_types, bool_only
         )

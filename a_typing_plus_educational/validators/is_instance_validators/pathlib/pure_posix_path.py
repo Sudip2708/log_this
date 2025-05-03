@@ -1,6 +1,6 @@
 from pathlib import PurePosixPath
 
-from ..._bases import BaseIsInstanceValidator
+from ...._bases import BaseIsInstanceValidator
 
 
 class PurePosixPathValidator(BaseIsInstanceValidator):
@@ -66,8 +66,7 @@ class PurePosixPathValidator(BaseIsInstanceValidator):
     ANNOTATION = PurePosixPath
 
     IS_INSTANCE = PurePosixPath
-    HAS_ATTRS = None  # Nepodporuje validaci přes Duck Typing.
-    CALLABLE_ATTRS = None  # Nepodporuje validaci přes Duck Typing.
+    DUCK_TYPING = None
 
     DESCRIPTION = "Čistá cesta pro POSIXové systémy"
     LONG_DESCRIPTION = (

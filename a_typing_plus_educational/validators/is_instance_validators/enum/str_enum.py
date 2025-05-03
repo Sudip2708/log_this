@@ -1,6 +1,6 @@
 from enum import StrEnum
 
-from ..._bases import BaseIsInstanceValidator
+from ...._bases import BaseIsInstanceValidator
 
 
 class StrEnumValidator(BaseIsInstanceValidator):
@@ -63,8 +63,9 @@ class StrEnumValidator(BaseIsInstanceValidator):
     ANNOTATION = StrEnum
 
     IS_INSTANCE = StrEnum
-    HAS_ATTRS =  "name", "__str__"
-    CALLABLE_ATTRS = None
+    DUCK_TYPING = {
+        "has_attr": ("__str__", "name", "value"),
+    }
 
     DESCRIPTION = "Řetězcový výčtový typ"
     LONG_DESCRIPTION = (

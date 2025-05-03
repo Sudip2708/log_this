@@ -1,6 +1,6 @@
 from datetime import timezone
 
-from ..._bases import BaseIsInstanceValidator
+from ...._bases import BaseIsInstanceValidator
 
 
 class TimezoneValidator(BaseIsInstanceValidator):
@@ -51,8 +51,10 @@ class TimezoneValidator(BaseIsInstanceValidator):
     ANNOTATION = timezone
 
     IS_INSTANCE = timezone
-    HAS_ATTRS = "utcoffset", "tzname", "__str__"
-    CALLABLE_ATTRS = "utcoffset", "tzname"
+    DUCK_TYPING = {
+        "has_attr": ("__str__", "utcoffset", "tzname"),
+        "has_callable_attr": ("utcoffset", "tzname")
+    }
 
     DESCRIPTION = "Časové pásmo s pevným posunem"
     LONG_DESCRIPTION = (
@@ -61,8 +63,3 @@ class TimezoneValidator(BaseIsInstanceValidator):
             "od UTC (Coordinated Universal Time)."
         )
 
-
-    LAMBDA = lambda obj: (
-            callable(getattr(obj, "utcoffset", None))
-            and callable(getattr(obj, "tzname", None))
-    )

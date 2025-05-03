@@ -1,5 +1,5 @@
 import pandas as pd
-from typing import Any, Tuple, Union
+from typing import Any, Union
 
 from ...._bases import BaseCustomLogicValidator
 from ...._verifiers import pandas_series_verifier
@@ -92,8 +92,25 @@ class SeriesValidator(BaseCustomLogicValidator):
 
     VALIDATOR_KEY = "Series"
     ANNOTATION = pd.Series
-    INFO = "Definuje pandas Series objekt"
-    ORIGIN = pd.Series
+
+    IS_INSTANCE = pd.Series
+    DUCK_TYPING = {
+        "has_attr": ("index", "dtype", "shape", "size", "loc", "iloc"),
+        "has_callable_attr": ("head", "value_counts"),
+        "lambda": lambda obj: (
+                isinstance(getattr(obj, "shape"), tuple)
+                and len(getattr(obj, "shape")) == 1
+                and isinstance(getattr(obj, "size"), int)
+        )
+    }
+
+    DESCRIPTION = "Jednorozměrné označené pole (Pandas)"
+    LONG_DESCRIPTION = (
+            "Validuje, že objekt je instancí pandas.Series, "
+            "tedy jednorozměrné kolekce dat s označenými indexy. "
+            "Kombinuje vlastnosti NumPy polí s výhodami "
+            "označených indexů a operací nad daty."
+        )
 
     def __call__(
             self,

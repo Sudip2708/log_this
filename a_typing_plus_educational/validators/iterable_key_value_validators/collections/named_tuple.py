@@ -1,11 +1,11 @@
 from typing import NamedTuple
 from collections import namedtuple
 
-from ...._bases import DictionaryValidatorBase
-from ....validators import dictionary_validator_for_nametuple
+from ...._bases import BaseIterableKeyValueValidator
+from ...._verifiers import iterable_key_value_verifier_for_namedtuple
 
 
-class NamedTupleValidator(DictionaryValidatorBase):
+class NamedTupleValidator(BaseIterableKeyValueValidator):
     """
     Validátor pro typovou anotaci NamedTuple
 
@@ -84,8 +84,7 @@ class NamedTupleValidator(DictionaryValidatorBase):
     ANNOTATION = NamedTuple  # Symbolický zápis, není konkrétní typ jako Tuple[int, str]
 
     IS_INSTANCE = namedtuple  # Nedá se použít na ověření typu - jedná se o funkci pro vytváření jednoduchých tříd podobných strukturám nebo záznamům - ověření typu je prováděno dle vlastní funkce _is_named_tuple()
-    HAS_ATTRS = None  # Nepodporuje validaci přes Duck Typing.
-    CALLABLE_ATTRS =  None  # Nepodporuje validaci přes Duck Typing.
+    DUCK_TYPING = None
 
     DESCRIPTION = "Pojmenovaná n-tice"
     LONG_DESCRIPTION = (
@@ -98,6 +97,6 @@ class NamedTupleValidator(DictionaryValidatorBase):
         """Přetížení metody __call__ pro validaci slovníkových struktur."""
 
         # Navrácení výstupu funkce pro validaci slovníkových objektů upravené pro namedtuple
-        return dictionary_validator_for_nametuple(
+        return iterable_key_value_verifier_for_namedtuple(
             value, annotation, depth_check, custom_types, bool_only
         )

@@ -1,6 +1,6 @@
 from pathlib import PosixPath
 
-from ..._bases import BaseIsInstanceValidator
+from ...._bases import BaseIsInstanceValidator
 
 
 class PosixPathValidator(BaseIsInstanceValidator):
@@ -75,8 +75,7 @@ class PosixPathValidator(BaseIsInstanceValidator):
     ANNOTATION = PosixPath
 
     IS_INSTANCE = PosixPath
-    HAS_ATTRS = None  # Nepodporuje validaci přes Duck Typing.
-    CALLABLE_ATTRS = None  # Nepodporuje validaci přes Duck Typing.
+    DUCK_TYPING = None
 
     DESCRIPTION = "Objektová reprezentace cesty v POSIXových systémech"
     LONG_DESCRIPTION = (

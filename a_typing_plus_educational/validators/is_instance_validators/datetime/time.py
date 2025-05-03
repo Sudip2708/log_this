@@ -1,6 +1,6 @@
 from datetime import time
 
-from ..._bases import BaseIsInstanceValidator
+from ...._bases import BaseIsInstanceValidator
 
 
 class TimeValidator(BaseIsInstanceValidator):
@@ -56,8 +56,10 @@ class TimeValidator(BaseIsInstanceValidator):
     ANNOTATION = time
 
     IS_INSTANCE = time
-    HAS_ATTRS = "isoformat", "__str__", "hour", "minute", "second", "microsecond"
-    CALLABLE_ATTRS = "hour", "minute", "second", "microsecond"
+    DUCK_TYPING = {
+        "has_attr": ("__str__", "isoformat"),
+        "has_int_attr": ("hour", "minute", "second", "microsecond")
+    }
 
     DESCRIPTION = "Reprezentace času"
     LONG_DESCRIPTION = (
@@ -65,9 +67,3 @@ class TimeValidator(BaseIsInstanceValidator):
             "tedy reprezentuje denní čas (hodina, minuta, sekunda, mikrosekunda) "
             "bez datové složky a s volitelným časovým pásmem."
         )
-
-
-    LAMBDA = lambda obj: all(
-        isinstance(getattr(obj, attr, None), int)
-        for attr in ("hour", "minute", "second", "microsecond")
-    )

@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from ..._bases import BaseIsInstanceValidator
+from ...._bases import BaseIsInstanceValidator
 
 
 class DatetimeValidator(BaseIsInstanceValidator):
@@ -54,8 +54,12 @@ class DatetimeValidator(BaseIsInstanceValidator):
     ANNOTATION = datetime
 
     IS_INSTANCE = datetime
-    HAS_ATTRS = "isoformat", "timestamp", "__str__", "year", "month", "day", "hour", "minute", "second", "microsecond"
-    CALLABLE_ATTRS = "year", "month", "day", "hour", "minute", "second", "microsecond"
+    DUCK_TYPING = {
+        "has_attr": ("__str__", "isoformat", "timestamp"),
+        "has_int_attr": (
+            "year", "month", "day", "hour", "minute", "second", "microsecond"
+        )
+    }
 
     DESCRIPTION = "Reprezentace data a času"
     LONG_DESCRIPTION = (
@@ -65,8 +69,3 @@ class DatetimeValidator(BaseIsInstanceValidator):
         )
 
 
-    LAMBDA = lambda obj: all(
-        isinstance(getattr(obj, attr, None), int)
-        for attr in
-        ("year", "month", "day", "hour", "minute", "second", "microsecond")
-    )

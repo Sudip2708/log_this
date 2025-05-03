@@ -1,9 +1,9 @@
 from typing import Set
 
-from ..._bases3 import BaseIterableValidator, T
+from ...._bases import BaseIterableItemValidator, T
 
 
-class SetValidator(BaseIterableValidator):
+class SetValidator(BaseIterableItemValidator):
     """
     Validátor pro typovou anotaci Set[T]
 
@@ -59,8 +59,9 @@ class SetValidator(BaseIterableValidator):
     ANNOTATION = Set[T]
 
     IS_INSTANCE = set
-    HAS_ATTRS = "__contains__", "__iter__", "__len__", "add", "discard"
-    CALLABLE_ATTRS = None
+    DUCK_TYPING = {
+        "has_attr": ("__contains__", "__iter__", "__len__", "add", "discard"),
+    }
 
     DESCRIPTION = "Vestavěná množina"
     LONG_DESCRIPTION = (

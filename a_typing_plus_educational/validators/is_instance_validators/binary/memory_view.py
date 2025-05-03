@@ -1,4 +1,4 @@
-from ..._bases import BaseIsInstanceValidator
+from ...._bases import BaseIsInstanceValidator
 
 
 class MemoryViewValidator(BaseIsInstanceValidator):
@@ -64,8 +64,9 @@ class MemoryViewValidator(BaseIsInstanceValidator):
     ANNOTATION = memoryview
 
     IS_INSTANCE = memoryview
-    HAS_ATTRS = "tobytes", "obj", "nbytes"
-    CALLABLE_ATTRS = None
+    DUCK_TYPING = {
+        "has_attr": ("tobytes", "obj", "nbytes"),
+    }
 
     DESCRIPTION = "Pohled na paměť objektu"
     LONG_DESCRIPTION = (

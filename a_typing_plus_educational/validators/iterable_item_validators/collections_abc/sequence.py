@@ -1,10 +1,10 @@
 from typing import Sequence
 from collections.abc import Sequence as SequenceOrigin
 
-from ..._bases3 import BaseIterableValidator, T
+from ...._bases import BaseIterableItemValidator, T
 
 
-class SequenceValidator(BaseIterableValidator):
+class SequenceValidator(BaseIterableItemValidator):
     """
     Validátor pro typovou anotaci Sequence[T]
 
@@ -71,8 +71,9 @@ class SequenceValidator(BaseIterableValidator):
     ANNOTATION = Sequence[T]
 
     IS_INSTANCE = SequenceOrigin
-    HAS_ATTRS = "__getitem__", "__len__"
-    CALLABLE_ATTRS = None
+    DUCK_TYPING = {
+        "has_attr": ("__getitem__", "__len__"),
+    }
 
     DESCRIPTION = "Sekvence s přístupem podle indexu"
     LONG_DESCRIPTION = (

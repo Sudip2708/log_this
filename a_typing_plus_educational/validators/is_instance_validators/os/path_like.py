@@ -1,6 +1,6 @@
 from os import PathLike
 
-from ..._bases import BaseIsInstanceValidator
+from ...._bases import BaseIsInstanceValidator
 
 
 class PathLikeValidator(BaseIsInstanceValidator):
@@ -71,8 +71,9 @@ class PathLikeValidator(BaseIsInstanceValidator):
     ANNOTATION = PathLike
 
     IS_INSTANCE = PathLike
-    HAS_ATTRS = "__fspath__"
-    CALLABLE_ATTRS = None
+    DUCK_TYPING = {
+        "has_attr": "__fspath__",
+    }
 
     DESCRIPTION = "Objekt reprezentující cestu k souboru"
     LONG_DESCRIPTION = (

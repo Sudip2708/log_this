@@ -1,6 +1,6 @@
 from decimal import Decimal
 
-from ..._bases import BaseIsInstanceValidator
+from ...._bases import BaseIsInstanceValidator
 
 
 class DecimalValidator(BaseIsInstanceValidator):
@@ -54,8 +54,13 @@ class DecimalValidator(BaseIsInstanceValidator):
     ANNOTATION = Decimal
 
     IS_INSTANCE = Decimal
-    HAS_ATTRS = "__add__", "__sub__", "__mul__", "__truediv__", "__neg__", "__pos__", "__abs__", "adjusted", "as_tuple"
-    CALLABLE_ATTRS = "adjusted", "as_tuple"
+    DUCK_TYPING = {
+        "has_attr": (
+            "__add__", "__sub__", "__mul__", "__truediv__", "__neg__",
+            "__pos__", "__abs__", "adjusted", "as_tuple"
+        ),
+        "has_callable_attr": ("adjusted", "as_tuple")
+    }
 
     DESCRIPTION = "Desetinné číslo s přesnou aritmetikou"
     LONG_DESCRIPTION = (

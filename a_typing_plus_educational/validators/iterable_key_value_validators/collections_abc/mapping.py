@@ -1,10 +1,10 @@
 from typing import Mapping
 from collections.abc import Mapping as MappingOrigin
 
-from ...._bases import DictionaryValidatorBase, K, V
+from ...._bases import BaseIterableKeyValueValidator, K, V
 
 
-class MappingValidator(DictionaryValidatorBase):
+class MappingValidator(BaseIterableKeyValueValidator):
     """
     Validátor pro typovou anotaci Mapping[K, V]
 
@@ -66,8 +66,9 @@ class MappingValidator(DictionaryValidatorBase):
     ANNOTATION = Mapping[K, V]
 
     IS_INSTANCE = MappingOrigin
-    HAS_ATTRS =  "__getitem__", "__iter__", "__len__"
-    CALLABLE_ATTRS = None
+    DUCK_TYPING = {
+        "has_attr": ("__getitem__", "__iter__", "__len__"),
+    }
 
     DESCRIPTION = "Mapovací rozhraní (slovník)"
     LONG_DESCRIPTION = (

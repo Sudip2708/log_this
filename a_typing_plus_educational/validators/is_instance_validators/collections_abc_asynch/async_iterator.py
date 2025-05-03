@@ -87,8 +87,9 @@ class AsyncIteratorValidator(BaseIsInstanceValidator):
     ANNOTATION = AsyncIterator[T]
 
     IS_INSTANCE = AsyncIteratorOrigin
-    HAS_ATTRS = "__aiter__", "__anext__"
-    CALLABLE_ATTRS = "__aiter__", "__anext__"
+    DUCK_TYPING = {
+        "has_callable_attr": ("__aiter__", "__anext__"),
+    }
 
     DESCRIPTION = "Asynchronní iterátor"
     LONG_DESCRIPTION = (

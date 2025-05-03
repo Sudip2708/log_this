@@ -95,8 +95,9 @@ class HashableValidator(BaseIsInstanceValidator):
     ANNOTATION = Hashable
 
     IS_INSTANCE = HashableOrigin
-    HAS_ATTRS = "__hash__"
-    CALLABLE_ATTRS = "__hash__"
+    DUCK_TYPING = {
+        "has_callable_attr": "__hash__"
+    }
 
     DESCRIPTION = "Objekt s podporou hashování"
     LONG_DESCRIPTION = (

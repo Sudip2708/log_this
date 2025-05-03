@@ -5,13 +5,14 @@ from ....._verifiers import callable_verifier
 
 class CallableValidator(BaseCustomLogicValidator):
 
+    # DOPSAT DOCSTRING
+
     # Definice klíče pro registr
     VALIDATOR_KEY = "callable"
     ANNOTATION = Callable
 
     IS_INSTANCE = callable
-    HAS_ATTRS = "__call__"
-    CALLABLE_ATTRS = None
+    DUCK_TYPING = None
 
     DESCRIPTION = "Volatelný objekt (funkce, metoda)"
     LONG_DESCRIPTION = (

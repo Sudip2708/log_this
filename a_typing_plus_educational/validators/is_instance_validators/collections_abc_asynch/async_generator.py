@@ -81,11 +81,13 @@ class AsyncGeneratorValidator(BaseIsInstanceValidator):
 
     VALIDATOR_KEY = "asyncgenerator"
     ANNOTATION = AsyncGenerator[Y, R]  # yield type a return type default stejný
-    INFO = "Definuje, že objekt musí být asynchronní generátor"
 
     IS_INSTANCE = AsyncGeneratorOrigin
-    HAS_ATTRS = "__aiter__", "__anext__", "asend", "athrow", "aclose"
-    CALLABLE_ATTRS = "__aiter__", "__anext__", "asend", "athrow", "aclose"
+    DUCK_TYPING = {
+        "has_callable_attr": (
+            "__aiter__", "__anext__", "asend", "athrow", "aclose"
+        ),
+    }
 
     DESCRIPTION = "Asynchronní generátor"
     LONG_DESCRIPTION = (

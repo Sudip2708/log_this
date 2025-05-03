@@ -81,8 +81,9 @@ class SizedValidator(BaseIsInstanceValidator):
     ANNOTATION = Sized
 
     IS_INSTANCE = SizedOrigin
-    HAS_ATTRS = "__len__"
-    CALLABLE_ATTRS = "__len__"
+    DUCK_TYPING = {
+        "has_callable_attr": "__len__"
+    }
 
     DESCRIPTION = "Objekt s definovanou velikostí"
     LONG_DESCRIPTION = (

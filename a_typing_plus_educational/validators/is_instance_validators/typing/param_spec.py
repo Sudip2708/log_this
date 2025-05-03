@@ -76,8 +76,9 @@ class ParamSpecValidator(BaseIsInstanceValidator):
     ANNOTATION = ParamSpec  # P = ParamSpec('P')
 
     IS_INSTANCE = ParamSpec
-    HAS_ATTRS = "__name__", "__args__"
-    CALLABLE_ATTRS = "__name__", "__args__"
+    DUCK_TYPING = {
+        "has_attr": ("__name__", "__args__"),
+    }
 
     DESCRIPTION = "Specifikace parametrů funkce"
     LONG_DESCRIPTION = (

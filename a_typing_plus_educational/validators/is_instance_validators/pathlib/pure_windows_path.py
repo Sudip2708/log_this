@@ -1,6 +1,6 @@
 from pathlib import PureWindowsPath
 
-from ..._bases import BaseIsInstanceValidator
+from ...._bases import BaseIsInstanceValidator
 
 
 class PureWindowsPathValidator(BaseIsInstanceValidator):
@@ -71,8 +71,7 @@ class PureWindowsPathValidator(BaseIsInstanceValidator):
     ANNOTATION = PureWindowsPath
 
     IS_INSTANCE = PureWindowsPath
-    HAS_ATTRS = None  # Nepodporuje validaci přes Duck Typing.
-    CALLABLE_ATTRS = None  # Nepodporuje validaci přes Duck Typing.
+    DUCK_TYPING = None
 
     DESCRIPTION = "Čistá cesta pro systémy Windows"
     LONG_DESCRIPTION = (

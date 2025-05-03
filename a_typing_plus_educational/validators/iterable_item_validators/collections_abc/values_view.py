@@ -1,10 +1,10 @@
 from typing import ValuesView
 from collections.abc import ValuesView as ValuesViewOrigin
 
-from ..._bases3 import BaseIterableValidator, V
+from ...._bases import BaseIterableItemValidator, V
 
 
-class ValuesViewValidator(BaseIterableValidator):
+class ValuesViewValidator(BaseIterableItemValidator):
     """
     Validátor pro typovou anotaci ValuesView[V]
 
@@ -55,8 +55,9 @@ class ValuesViewValidator(BaseIterableValidator):
     ANNOTATION = ValuesView[V]
 
     IS_INSTANCE = ValuesViewOrigin
-    HAS_ATTRS = "__iter__", "__len__", "mapping"
-    CALLABLE_ATTRS = None
+    DUCK_TYPING = {
+        "has_attr": ("__iter__", "__len__", "mapping"),
+    }
 
     DESCRIPTION = "Pohled na hodnoty ve slovníku"
     LONG_DESCRIPTION = (

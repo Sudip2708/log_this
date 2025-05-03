@@ -93,11 +93,10 @@ class ReversibleValidator(BaseIsInstanceValidator):
     VALIDATOR_KEY = "reversible"
     ANNOTATION = Reversible[T]
 
-    LAMBDA = lambda obj: callable(obj.__reversed__)
-
     IS_INSTANCE = ReversibleOrigin
-    HAS_ATTRS = "__reversed__"
-    CALLABLE_ATTRS = "__reversed__"
+    DUCK_TYPING = {
+        "has_callable_attr": "__reversed__"
+    }
 
     DESCRIPTION = "Objekt umožňující iteraci v opačném pořadí"
     LONG_DESCRIPTION = (
