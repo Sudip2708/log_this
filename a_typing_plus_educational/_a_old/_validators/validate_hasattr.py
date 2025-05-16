@@ -3,7 +3,7 @@ from typing import Any, Tuple, Union
 from .exceptions import (
     VerifyValueHasAttributeError,
     VerifyExpectedHasAttributeError,
-    VerifyInternalUnexpectedError,
+    VerifyUnexpectedInternalError,
     VerifyError
 )
 
@@ -34,7 +34,7 @@ class ValidateHasAttribute:
         Raises:
             VerifyValueTypeError: Pokud objekt nemá požadovaný atribut (a `bool_only` je False).
             VerifyExpectedTypeError: Pokud `expected` není string nebo tuple stringů.
-            VerifyInternalUnexpectedError: Pokud dojde k neočekávané chybě.
+            VerifyUnexpectedInternalError: Pokud dojde k neočekávané chybě.
         """
 
         try:
@@ -60,7 +60,7 @@ class ValidateHasAttribute:
             raise VerifyExpectedHasAttributeError(expected) from e
 
         except Exception as e:
-            raise VerifyInternalUnexpectedError(
+            raise VerifyUnexpectedInternalError(
                 info="Chyba nastala při validaci přítomnosti atributů.",
                 modul="Zachyceno v metodě __call__ třídy ValidateHasAttribute.",
                 original_exception=e

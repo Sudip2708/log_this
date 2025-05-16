@@ -5,7 +5,7 @@ from ..typing_validator import validate_typing
 from .._tools import reduce_depth_check, get_args_safe
 from ..._exceptions import (
     VerifyError,
-    InternalUnexpectedError
+    VerifyUnexpectedInternalError
 )
 
 
@@ -38,7 +38,7 @@ def iterable_validator(
 
     Raises:
         VerifyError: Pokud validace typu nebo vnitřního typu selže.
-        InternalUnexpectedError: Pokud dojde k nečekané interní chybě během validace.
+        VerifyUnexpectedInternalError: Pokud dojde k nečekané interní chybě během validace.
 
     Example:
         >>> iterable_validator([1, 2, 3], list, list[int])
@@ -85,4 +85,4 @@ def iterable_validator(
 
     # Zachycení všech ostatních neočekávaných výjimek
     except Exception as e:
-        raise InternalUnexpectedError(e) from e
+        raise VerifyUnexpectedInternalError(e) from e

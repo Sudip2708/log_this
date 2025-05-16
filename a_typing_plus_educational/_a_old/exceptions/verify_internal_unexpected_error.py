@@ -1,7 +1,7 @@
 from ._verify_error import VerifyError
 
 
-class VerifyInternalUnexpectedError(VerifyError):
+class VerifyUnexpectedInternalError(VerifyError):
     """Výjimka vyvolaná při nneočekávané události."""
 
     title = "\n⚠ PŘI OVĚŘOVÁNÍ DOŠLO K NEOČEKÁVANÉ INTERNÍ CHYBĚ!\n"

@@ -4,7 +4,7 @@ import site
 import traceback as tb
 from typing import List
 
-from .verify_internal_unexpected_error import VerifyInternalUnexpectedError
+from .verify_internal_unexpected_error import VerifyUnexpectedInternalError
 
 
 class GetSimplifiedTraceback:
@@ -49,7 +49,7 @@ class GetSimplifiedTraceback:
             return [self._title] + traces + [self._get_end_line(is_empty)]
 
         except Exception as e:
-            raise VerifyInternalUnexpectedError(
+            raise VerifyUnexpectedInternalError(
                 info = f"Chyba nastala při generování zjednodušeného tracebacku.",
                 modul = "Zachyceno v metodě __call__ třídy GetSimplifiedTraceback",
                 original_exception = e

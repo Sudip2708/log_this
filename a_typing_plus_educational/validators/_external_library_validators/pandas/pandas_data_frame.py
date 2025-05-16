@@ -1,7 +1,7 @@
 import pandas as pd
 from typing import Any, Union
 
-from ...._bases import BaseCustomLogicValidator
+from ..._bases import BaseCustomLogicValidator
 from ...._verifiers import pandas_dataframe_verifier
 
 
@@ -116,7 +116,7 @@ class DataFrameValidator(BaseCustomLogicValidator):
             annotation: Any,
             depth_check: Union[bool, int],
             custom_types: dict = None,
-            bool_only: bool
+            bool_only: bool = False
     ) -> Union[bool, Any]:
 
         return pandas_dataframe_verifier(

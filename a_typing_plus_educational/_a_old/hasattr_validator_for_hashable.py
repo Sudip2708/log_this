@@ -3,7 +3,7 @@ from typing import Any, Tuple, Union, Optional
 from ..._exceptions import (
     HasHashableAttributeError,
     HasAttributeExpectedError,
-    InternalUnexpectedError,
+    VerifyUnexpectedInternalError,
 )
 
 
@@ -32,7 +32,7 @@ def has_attribute_validator_for_hashable(
 
     # Zachycení všech ostatních neočekávaných výjimek
     except Exception as e:
-        raise InternalUnexpectedError(e) from e
+        raise VerifyUnexpectedInternalError(e) from e
 
 
 

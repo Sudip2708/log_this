@@ -9,7 +9,7 @@ from .._tools import (
 )
 from ..._exceptions import (
     VerifyError,
-    InternalUnexpectedError
+    VerifyUnexpectedInternalError
 )
 
 
@@ -42,7 +42,7 @@ def dictionary_validator(
     Raises:
         VerifyError: Pokud hodnota nebo její vnitřní prvky neodpovídají očekávaným typům.
         AnnotationDictArgsError: Pokud anotace neobsahuje přesně dva argumenty (klíč a hodnota).
-        InternalUnexpectedError: Pokud dojde k nečekané interní chybě.
+        VerifyUnexpectedInternalError: Pokud dojde k nečekané interní chybě.
 
     Example:
         >>> dictionary_validator({"a": 1, "b": 2}, dict, dict[str, int])
@@ -97,4 +97,4 @@ def dictionary_validator(
 
     # Zachycení všech ostatních neočekávaných výjimek
     except Exception as e:
-        raise InternalUnexpectedError(e) from e
+        raise VerifyUnexpectedInternalError(e) from e

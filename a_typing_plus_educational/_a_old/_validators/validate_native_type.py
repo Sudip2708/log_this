@@ -3,7 +3,7 @@ from typing import Any, Tuple, Union
 from .exceptions import (
     VerifyValueTypeError,
     VerifyExpectedTypeError,
-    VerifyInternalUnexpectedError,
+    VerifyUnexpectedInternalError,
     VerifyError
 )
 
@@ -32,7 +32,7 @@ class ValidateNativeType:
         Raises:
             VerifyValueTypeError: Pokud `value` není instancí očekávaného typu.
             VerifyExpectedTypeError: Pokud `expected` není platný typ nebo tuple typů.
-            VerifyInternalUnexpectedError: Pokud během validace dojde k neočekávané vnitřní chybě.
+            VerifyUnexpectedInternalError: Pokud během validace dojde k neočekávané vnitřní chybě.
         """
 
         try:
@@ -57,7 +57,7 @@ class ValidateNativeType:
 
         # Zachycení neočekávaných výjimek
         except Exception as e:
-            raise VerifyInternalUnexpectedError(
+            raise VerifyUnexpectedInternalError(
                 info="Nastala chyba při validaci typu hodnoty.",
                 modul="Zachyceno v třídě ValidateNativeType",
                 original_exception=e

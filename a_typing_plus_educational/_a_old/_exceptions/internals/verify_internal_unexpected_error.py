@@ -2,7 +2,7 @@ from .._verify_error import VerifyError
 from .._get_module_trace_info import get_module_trace_info
 
 
-class VerifyInternalUnexpectedError(VerifyError):
+class VerifyUnexpectedInternalError(VerifyError):
     """Výjimka vyvolaná při nneočekávané události."""
 
     title = "\n⚠ DOŠLO K NEOČEKÁVANÉ INTERNÍ CHYBĚ!\n"
@@ -35,7 +35,7 @@ class VerifyInternalUnexpectedError(VerifyError):
 """
 Ukázkový zápis:
         except Exception as e:
-            raise VerifyInternalUnexpectedError(
+            raise VerifyUnexpectedInternalError(
                 info = f"Chyba nastala při generování zjednodušeného tracebacku.",
                 modul = "Zachyceno v metodě __call__ třídy GetSimplifiedTraceback",
                 original_exception = e
