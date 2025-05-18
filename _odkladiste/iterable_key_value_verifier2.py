@@ -1,6 +1,6 @@
 from typing import Any, Tuple, Union
 
-from ..end_verifiers import is_instance_validator
+from ..value_verifiers import is_instance_verifier
 from ..typing_validator import validate_typing
 from .._tools import (
     reduce_depth_check,
@@ -13,7 +13,7 @@ from ..._exceptions import (
 )
 
 
-def dictionary_validator(
+def iterable_key_value_verifier(
     value: Any,
     expected: Union[type, Tuple[type, ...]],
     annotation: Any = None,
@@ -45,14 +45,14 @@ def dictionary_validator(
         VerifyUnexpectedInternalError: Pokud dojde k nečekané interní chybě.
 
     Example:
-        >>> dictionary_validator({"a": 1, "b": 2}, dict, dict[str, int])
+        >>> iterable_key_value_verifier({"a": 1, "b": 2}, dict, dict[str, int])
         True
     """
 
     try:
 
         # Validace základního typu (např. dict)
-        is_instance_validator(value, expected)
+        is_instance_verifier(value, expected)
 
         # Pokud není požadována vnitřní validace, návrat
         if not depth_check:

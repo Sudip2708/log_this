@@ -1,13 +1,10 @@
 from typing import Any, Dict, Optional, Tuple, Union
 
-from ...special_verifiers import duck_typing_verifier
-from ...value_verifiers import is_instance_verifier
-from ...typing_verifiers import typing_verifier
 from ..._exceptions_base import (
     VerifyError,
     VerifyUnexpectedInternalError
 )
-from .._tools import reduce_depth_check, get_args_safe
+from .._tools import get_args_safe, verify_base_type, verify_iterable_items
 from .._exceptions import VerifyInnerCheckError
 
 
@@ -70,21 +67,14 @@ def iterable_item_verifier(
 
     try:
 
-        # Pokud je požadována kontrola přes duck typing a anotace ji podporuje
-        if duck_typing and duck_typing_instructions:
-            base_type_result  = duck_typing_verifier(
-                value,
-                duck_typing_instructions,
-                bool_only=bool_only
-            )
-
-        # Jinak proveď ověření na základě validace základního typu (např. list, set)
-        else:
-            base_type_result = is_instance_verifier(
-                value,
-                expected_type,
-                bool_only=bool_only
-            )
+        # Kontrola základního typu
+        base_type_result = verify_base_type(
+            value,
+            expected_type,
+            duck_typing_instructions,
+            duck_typing,
+            bool_only
+        )
 
         # Kontrola zda je výsledek negativní
         # V tomto bodě, base_type_result musí být buď True nebo False (nebo je vyvolaná výjimka)
@@ -102,36 +92,15 @@ def iterable_item_verifier(
         if not inner_args:
             return True
 
-        # Vytvoření kopie parametru definující hloubkovou kontrolu
-        current_check = inner_check
-
-        # Validace jednotlivých položek uvnitř struktury
-        for item in value:
-
-            # Snížení hloubky kontroly
-            current_check = reduce_depth_check(current_check)
-
-            # Rekurzivní validace hodnoty na základě vnitřního typu
-            # Pokud je parametr bool_only=True, pak při negativním výsledku ukončení iterace
-            if not typing_verifier(
-                item,
-                inner_args[0],
-                custom_types,
-                current_check,
-                duck_typing,
-                bool_only
-            ):
-                return False
-
-            # Přerušení cyklu, pokud se dosáhne maximální hloubky
-            # Tato poslední iterace s current_check == 0 ještě proběhne,
-            # ale dále již nebude následovat žádná hlubší kontrola.
-            # Proto po této iteraci přerušíme cyklus.
-            if not current_check:
-                break
-
-        # Pokud vše projde navrácení úspěšné validace
-        return True
+        # Ověření všech položek pomocí pomocné funkce
+        return verify_iterable_items(
+            value,
+            inner_args[0],
+            custom_types,
+            inner_check,
+            duck_typing,
+            bool_only
+        )
 
     # Ošetření vnitřních výjimek
     except VerifyError as e:

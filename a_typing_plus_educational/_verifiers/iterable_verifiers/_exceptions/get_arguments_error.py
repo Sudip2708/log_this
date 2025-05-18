@@ -7,6 +7,7 @@ class VerifyGetArgumentsError(VerifyParameterError):
     title = "\n⚠ NELZE ZÍSKAT VNITŘNÍ TYPY Z ANOTACE!\n"
 
     def __init__(self, annotation):
+
         self.annotation = annotation
 
         what_happened = [

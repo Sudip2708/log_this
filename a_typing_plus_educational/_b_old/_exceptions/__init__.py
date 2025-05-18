@@ -3,7 +3,7 @@ from ._internals import VerifyUnexpectedInternalError
 from .isinstance import IsInstanceValueError, IsInstanceExpectedError
 from .issubclass import IsSubclassValueError, IsSubclassExpectedError
 from .hasattr import HasAttributeValueError, HasAttributeExpectedError
-from .iterable import AnnotationGetArgsError, AnnotationDictArgsError
+from .iterable import AnnotationGetArgsError, VerifyArgumentsNotDictionaryError
 from .callable import CallableValueError
 from .literal import LiteralValueError
 from .type import TypeValueError, TypeExpectedError
@@ -31,7 +31,7 @@ __all__ = [
     "HasAttributeExpectedError",
 
     "AnnotationGetArgsError",
-    "AnnotationDictArgsError",
+    "VerifyArgumentsNotDictionaryError",
 
     "CallableValueError",
 

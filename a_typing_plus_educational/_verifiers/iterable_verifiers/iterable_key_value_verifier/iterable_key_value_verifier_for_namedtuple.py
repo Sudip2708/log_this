@@ -1,22 +1,27 @@
-from typing import Any, Tuple, Union
+from typing import Any, Dict, Optional, Tuple, Union
 
-from ..typing_validator import validate_typing
-from .._tools import (
-    reduce_depth_check,
-    get_attr_safe,
-    is_named_tuple
-)
-from ..._exceptions import (
+from ...special_verifiers import duck_typing_verifier
+from ...value_verifiers import is_instance_verifier
+from ...typing_verifiers import typing_verifier
+from ..._exceptions_base import (
     VerifyError,
     VerifyUnexpectedInternalError
 )
+from .._exceptions import VerifyInnerCheckError
+from .._tools import (
+    reduce_depth_check,
+    get_args_safe,
+    get_key_value_safe
+)
 
-
-def iterable_key_value_verifier_for_namedtuple(
+def iterable_key_value_verifier(
     value: Any,
+    expected_type: Union[type, Tuple[type, ...]],
+    duck_typing_instructions: Dict[str, Any],
     annotation: Any = None,
-    depth_check: Union[bool, int] = True,
-    custom_types: dict = None,
+    custom_types: Optional[dict] = None,
+    inner_check: Union[bool, int] = True,
+    duck_typing: bool = False,
     bool_only: bool = False
 ) -> bool:
     """
@@ -28,19 +33,6 @@ def iterable_key_value_verifier_for_namedtuple(
     V případě, že není požadována rekurzivní validace (parametr `depth_check`),
     validace se provádí pouze na základní úroveň.
 
-    Args:
-        value: Hodnota, která bude validována, měla by být instance `NamedTuple`.
-        annotation: Anotace, která obsahuje definice polí pro `NamedTuple`. Typicky třída `NamedTuple` s atributem `__annotations__`.
-        depth_check: Pokud je nastaveno na True (nebo jinou hodnotu větší než 0), provádí se rekurzivní validace vnořených položek.
-        custom_types: Definice vlastních typů pro přizpůsobenou validaci.
-        bool_only: Pokud je True, validace bude ignorovat hodnoty, které nejsou booleovského typu.
-
-    Returns:
-        bool: Pokud je validace úspěšná, vrátí True. Pokud je hodnota neplatná, vyvolá výjimku.
-
-    Raises:
-        VerifyError: Pokud validace selže a vyvolá vlastní výjimku.
-        VerifyUnexpectedInternalError: Pokud dojde k nečekané chybě při validaci.
     """
 
     try:

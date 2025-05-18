@@ -4,11 +4,11 @@ from collections.abc import Iterable
 from ...special_verifiers import duck_typing_verifier
 from ...value_verifiers import is_instance_verifier
 from ...typing_verifiers import typing_verifier
-from .._tools import reduce_depth_check, get_args_safe
 from ..._exceptions_base import (
     VerifyError,
     VerifyUnexpectedInternalError
 )
+from .._tools import reduce_depth_check, get_args_safe
 from .._exceptions import VerifyInnerCheckError
 
 
@@ -71,14 +71,16 @@ def iterable_item_verifier_for_container(
             current_check = reduce_depth_check(current_check)
 
             # Rekurzivní validace hodnoty na základě vnitřního typu
-            typing_verifier(
+            # Pokud je parametr bool_only=True, pak při negativním výsledku ukončení iterace
+            if not typing_verifier(
                 item,
                 inner_args[0],
                 custom_types,
                 current_check,
                 duck_typing,
                 bool_only
-            )
+            ):
+                return False
 
             # Přerušení cyklu, pokud se dosáhne maximální hloubky
             if not current_check:

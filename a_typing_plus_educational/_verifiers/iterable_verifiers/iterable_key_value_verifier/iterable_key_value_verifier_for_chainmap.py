@@ -1,24 +1,30 @@
-from typing import Any, Tuple, Union
+from typing import Any, Dict, Optional, Tuple, Union
 
-from ..end_verifiers import is_instance_verifier
-from ..typing_validator import validate_typing
+from ...special_verifiers import duck_typing_verifier
+from ...value_verifiers import is_instance_verifier
+from ...typing_verifiers import typing_verifier
+from ..._exceptions_base import (
+    VerifyError,
+    VerifyUnexpectedInternalError
+)
+from .._exceptions import (
+    VerifyInnerCheckError,
+    VerifyChainMapInnerValueNotDictError
+)
 from .._tools import (
     reduce_depth_check,
     get_args_safe,
     get_key_value_safe
 )
-from ..._exceptions import (
-    VerifyError,
-    VerifyUnexpectedInternalError
-)
-
 
 def iterable_key_value_verifier_for_chainmap(
     value: Any,
-    expected: Union[type, Tuple[type, ...]],
+    expected_type: Union[type, Tuple[type, ...]],
+    duck_typing_instructions: Dict[str, Any],
     annotation: Any = None,
-    depth_check: Union[bool, int] = True,
-    custom_types: dict = None,
+    custom_types: Optional[dict] = None,
+    inner_check: Union[bool, int] = True,
+    duck_typing: bool = False,
     bool_only: bool = False
 ) -> bool:
     """
@@ -26,39 +32,36 @@ def iterable_key_value_verifier_for_chainmap(
 
     Funkce ověřuje, zda hodnota je instance `ChainMap` (nebo kompatibilního typu), a pokud je aktivní hloubková validace (`depth_check`), zkontroluje typy všech klíčů a hodnot napříč všemi mapami ve stacku. Podporuje i validaci pomocí generické anotace `ChainMap[K, V]`.
 
-    Args:
-        value (Any): Hodnota, která má být validována.
-        expected (Union[type, Tuple[type, ...]]): Očekávaný typ, např. `ChainMap`.
-        annotation (Any, optional): Typová anotace (např. `ChainMap[str, int]`).
-        depth_check (Union[bool, int], optional): Hloubková validace. Pokud je `int`, určuje počet úrovní rekurze.
-        custom_types (Tuple[Any, ...], optional): Vlastní typy považované za validní.
-        bool_only (bool, optional): Pokud `True`, funkce vrací pouze True/False bez vyhazování výjimek.
-
-    Returns:
-        bool: `True`, pokud hodnota odpovídá očekávání. V opačném případě vyhazuje výjimku.
-
-    Raises:
-        VerifyError: Pokud hodnota nebo její vnitřní prvky neodpovídají očekávaným typům.
-        AnnotationDictArgsError: Pokud anotace nemá přesně dva generické argumenty (klíč a hodnota).
-        VerifyUnexpectedInternalError: Pokud dojde k neočekávané interní chybě.
-
-    Example:
-        >>> from collections import ChainMap
-        >>> dictionary_validator_for_chainmap(
-        ...     ChainMap({'a': 1}, {'b': 2}),
-        ...     ChainMap,
-        ...     ChainMap[str, int]
-        ... )
-        True
     """
+
+    # Definice parametru pro ověření typu
+    base_type_result = None
 
     try:
 
-        # Validace základního typu (např. dict)
-        is_instance_verifier(value, expected)
+        # Pokud je požadována kontrola přes duck typing a anotace ji podporuje
+        if duck_typing and duck_typing_instructions:
+            base_type_result  = duck_typing_verifier(
+                value,
+                duck_typing_instructions,
+                bool_only=bool_only
+            )
+
+        # Jinak proveď ověření na základě validace základního typu (např. list, set)
+        else:
+            base_type_result = is_instance_verifier(
+                value,
+                expected_type,
+                bool_only=bool_only
+            )
+
+        # Kontrola zda je výsledek negativní
+        # V tomto bodě, base_type_result musí být buď True nebo False (nebo je vyvolaná výjimka)
+        if not base_type_result:
+            return False
 
         # Pokud není požadována vnitřní validace, návrat
-        if not depth_check:
+        if not inner_check:
             return True
 
         # Ověření a získání vnitřních typových anotací pro klíč a hodnotu
@@ -69,30 +72,56 @@ def iterable_key_value_verifier_for_chainmap(
             return True
 
         # Načtení klíče a hodnoty
-        key_type, value_type = get_key_value_safe(inner_args)
+        key_type, value_type = get_key_value_safe(inner_args, annotation)
+
+        # Vytvoření kopie parametru definující hloubkovou kontrolu
+        current_check = inner_check
 
         # Validujeme každý jednotlivý mapping ve stacku
         for mapping in value.maps:
 
             # Každý mapping by měl být dict-typu (nebo kompatibilní)
-            is_instance_verifier(mapping, dict)
+            if not is_instance_verifier(mapping, dict, bool_only=True):
 
-            # Odpočet zanoření pro další kontrolu
-            depth_check = reduce_depth_check(depth_check)
-            inner_deep_check = depth_check
+                # Pokud je požadavek na bool odpověď, návrat False
+                if bool_only:
+                    return False
+
+                # Jinak vyvolej výjimku s popisem chyby
+                raise VerifyChainMapInnerValueNotDictError(mapping, inner_args, annotation)
+
+            # Snížení hloubky kontroly
+            current_check = reduce_depth_check(current_check)
+
+            # Vytvoření kopie parametru definující hloubkovou kontrolu pro vnitřní kontrolu
+            inner_deep_check = current_check
 
             # Validace každého klíče a hodnoty
             for key, val in mapping.items():
 
-                # Rekurzivní validace klíče
-                validate_typing(
-                    key, key_type, depth_check, custom_types, bool_only
-                )
+                # Rekurzivní validace hodnoty na základě vnitřního typu
+                # Pokud je parametr bool_only=True, pak při negativním výsledku ukončení iterace
+                if not typing_verifier(
+                        key,
+                        key_type,
+                        custom_types,
+                        current_check,
+                        duck_typing,
+                        bool_only
+                ):
+                    return False
 
                 # Rekurzivní validace hodnoty
-                validate_typing(
-                    val, value_type, depth_check, custom_types, bool_only
-                )
+                # Pokud je parametr bool_only=True, pak při negativním výsledku ukončení iterace
+                if not typing_verifier(
+                        val,
+                        value_type,
+                        custom_types,
+                        current_check,
+                        duck_typing,
+                        bool_only
+                ):
+                    return False
 
                 # Odpočet zanoření pro další kontrolu
                 inner_deep_check = reduce_depth_check(inner_deep_check)
@@ -102,14 +131,20 @@ def iterable_key_value_verifier_for_chainmap(
                     break
 
             # Přerušení cyklu, pokud se dosáhne maximální hloubky
-            if not depth_check:
+            if not current_check:
                 break
 
         # Pokud vše proběhne v pořádku a bez chyb
         return True
 
-    # Propagace všech již ošetřených výjimek
-    except VerifyError:
+    # Ošetření vnitřních výjimek
+    except VerifyError as e:
+
+        # Pokud první kontrola typu vrátila True
+        if base_type_result:
+            raise VerifyInnerCheckError(value, annotation, e)
+
+        # Jinak vnitřní výjimky jen propaguj
         raise
 
     # Zachycení všech ostatních neočekávaných výjimek

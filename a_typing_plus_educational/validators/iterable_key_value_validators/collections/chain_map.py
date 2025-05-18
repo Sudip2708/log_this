@@ -72,7 +72,7 @@ class ChainMapValidator(BaseIterableKeyValueValidator):
 
     IS_INSTANCE = ChainMapOrigin
     DUCK_TYPING = {
-        "has_attr": ("__getitem__", "__iter__", "__len__"),
+        "has_attr": ("__getitem__", "__iter__", "__len__", "maps"),
     }
 
     DESCRIPTION = "Sloučené zobrazení více slovníků"
