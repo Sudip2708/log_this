@@ -78,10 +78,10 @@ class DuckTypingVerifier:
             bool: True pokud všechny testy prošly, jinak False (pokud bool_only=True).
 
         Raises:
-            VerifyDuckTypingInstructionNotDictError: Pokud `instruction` není slovník.
-            VerifyDuckTypingInstructionEmptyError: Pokud `instruction` je prázdný.
-            VerifyDuckTypingInstructionInvalidKeyError: Pokud se objeví neznámý klíč.
-            VerifyDuckTypingReturnedFalseError: Pokud validace selže (a bool_only=False).
+            VerifyDuckTypingInstructionNotDictError: Pokud `instruction` není slovník. (VerifyParameterError, TypeError)
+            VerifyDuckTypingInstructionEmptyError: Pokud `instruction` je prázdný. (VerifyParameterError, KeyError)
+            VerifyDuckTypingInstructionInvalidKeyError: Pokud se objeví neznámý klíč. (VerifyParameterError, KeyError)
+            VerifyDuckTypingReturnedFalseError: Pokud validace selže (a bool_only=False). (VerifyValueError)
             VerifyDuckTypingGetExceptionError: Pokud některý test vyhodí ověřovací výjimku.
             VerifyUnexpectedInternalError: Pro neočekávané chyby mimo knihovnu.
         """

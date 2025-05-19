@@ -4,28 +4,25 @@ from ..._exceptions_base import VerifyValueError
 from ._get_lambda_command import get_lambda_command
 
 
-class VerifyLambdaNotReturnBooleanError(VerifyValueError):
+class VerifyLambdaReturnedFalseError(VerifyValueError, ValueError):
     """
-    Výjimka vyvolaná, pokud výsledkem lambda příkazu nebyla boolean hodnota.
+    Výjimka vyvolaná, pokud výsledkem lambda příkazu bylo False.
     """
 
-    title = "\n⚠ OVĚŘOVANÝ LAMBDA PŘÍKAZ NEVRACÍ BOOLEAN HODNOTU\n"
+    title = "\n⚠ OVĚŘOVANÝ LAMBDA PŘÍKAZ NEPROŠEL VALIDACÍ\n"
 
     def __init__(
             self,
             lambda_command: Callable[..., bool],
-            result: Any,
             lambda_arguments: Any,
     ):
         self.lambda_command = get_lambda_command(lambda_command)
-        self.result = result
         self.lambda_arguments = lambda_arguments
 
         what_happened = [
-            "   - Ověření lambda příkazu nevrátilo boolean hodnotu.\n",
+            "   - Ověření lambda příkazu vrátilo hodnotu `False`.\n",
             f"   - Lambda příkaz: {self.lambda_command}\n",
             f"   - Předané parametry: {self._format_items(self.lambda_arguments)}\n",
-            f"   - Navrácená hodnota: {self.result}\n",
         ]
 
         what_to_do = [

@@ -26,11 +26,23 @@ def verify_iterable_items(
     Returns:
         bool: `True`, pokud jsou všechny položky validní. Jinak `False`.
     """
+
+    # Vytvoření kopie parametru definující hloubkovou kontrolu
     current_check = inner_check
 
+
+    # Obalit try except blokem a zachytávat not iterable
+    # Nebo jen zkontrolovat hodnotu že je iterable
+    # Definovat výjimku pro neplatný vstup
+
+    # Validace jednotlivých položek uvnitř struktury
     for item in iterable:
+
+        # Snížení hloubky kontroly
         current_check = reduce_depth_check(current_check)
 
+        # Rekurzivní validace hodnoty na základě vnitřního typu
+        # Pokud je parametr bool_only=True, pak při negativním výsledku ukončení iterace
         if not typing_verifier(
             item,
             item_annotation,
@@ -41,7 +53,9 @@ def verify_iterable_items(
         ):
             return False
 
+        # Přerušení cyklu, pokud se dosáhne maximální hloubky
         if not current_check:
             break
 
+    # Pokud vše projde navrácení úspěšné validace
     return True

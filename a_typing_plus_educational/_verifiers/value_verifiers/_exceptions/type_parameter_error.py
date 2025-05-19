@@ -3,7 +3,7 @@ from typing import Any
 from ..._exceptions_base import VerifyParameterError
 
 
-class VerifyTypeParameterError(VerifyParameterError):
+class VerifyTypeParameterError(VerifyParameterError, TypeError):
     """
     Výjimka vyvolaná při nesprávné specifikaci očekávaného typu v ověřovací funkci.
 

@@ -38,9 +38,8 @@ def verify_base_type(
         )
 
     # Jinak proveď ověření na základě validace základního typu (např. list, set)
-    else:
-        return is_instance_verifier(
-            value,
-            expected_type,
-            bool_only=bool_only
-        )
+    return is_instance_verifier(
+        value,
+        expected_type,
+        bool_only=bool_only
+    )

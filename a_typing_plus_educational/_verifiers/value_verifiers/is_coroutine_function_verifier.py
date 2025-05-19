@@ -9,6 +9,13 @@ def is_coroutine_function_verifier(
         obj: Any,
         bool_only: bool = False
 ) -> bool:
+    """
+    Ověřuje zda je hodnota coroutine funkce.
+
+    Výjimky které může vyvolat is_coroutine_function_verifier funkce:
+        VerifyNotCoroutineFunctionError: Pokud validace selže (a bool_only=False). (VerifyValueError, ValueError)
+        VerifyUnexpectedInternalError: Pro neočekávané chyby mimo knihovnu. (VerifyInternalError, RuntimeError)
+    """
 
     try:
 

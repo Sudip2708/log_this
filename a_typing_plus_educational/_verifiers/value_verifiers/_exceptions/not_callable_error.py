@@ -3,7 +3,7 @@ from typing import Any
 from ..._exceptions_base import VerifyValueError
 
 
-class VerifyNotCallableError(VerifyValueError):
+class VerifyNotCallableError(VerifyValueError, ValueError):
     """
     Výjimka vyvolaná, když ověřovaná hodnota není volatelná.
 

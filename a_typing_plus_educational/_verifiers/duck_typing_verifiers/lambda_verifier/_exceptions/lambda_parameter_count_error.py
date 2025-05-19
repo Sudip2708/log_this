@@ -1,10 +1,10 @@
 from typing import Any, Callable
 
-from ..._exceptions_base import VerifyValueError
+from ...._exceptions_base import VerifyParameterError
 from ._get_lambda_command import get_lambda_command
 
 
-class VerifyLambdaParameterCountError(VerifyValueError, TypeError):
+class VerifyLambdaParameterCountError(VerifyParameterError, TypeError):
     """
     Výjimka vyvolaná, pokud lambda příkaz nemůže být vykonán kvůli špatnému počtu nebo typu parametrů.
     """

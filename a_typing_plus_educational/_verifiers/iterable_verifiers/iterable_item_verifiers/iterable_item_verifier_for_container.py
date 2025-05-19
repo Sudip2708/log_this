@@ -1,4 +1,5 @@
 from typing import Any, Dict, Optional, Tuple, Union
+from collections.abc import Iterable
 
 from ..._exceptions_base import (
     VerifyError,
@@ -7,28 +8,22 @@ from ..._exceptions_base import (
 from .._exceptions import VerifyInnerCheckError
 from .._tools import (
     get_args_safe,
-    get_key_value_safe,
     verify_base_type,
-    verify_key_value_pairs
+    verify_iterable_items
 )
 
-def iterable_key_value_verifier(
-    value: Any,
-    expected_type: Union[type, Tuple[type, ...]],
-    duck_typing_instructions: Dict[str, Any],
-    annotation: Any = None,
-    custom_types: Optional[dict] = None,
-    inner_check: Union[bool, int] = True,
-    duck_typing: bool = False,
-    bool_only: bool = False
-) -> bool:
-    """
-    Validuje, zda hodnota odpovídá slovníku daného typu a případně rekurzivně kontroluje klíče a hodnoty.
 
-    Nejprve ověří, zda hodnota odpovídá typu `dict` (nebo jeho variantám jako `OrderedDict`, pokud jsou uvedeny).
-    Pokud je zapnuta hloubková kontrola (`depth_check`), provede se validace každého klíče a hodnoty
-    podle zadané anotace (např. `dict[str, int]`).
-    """
+def iterable_item_verifier_for_container(
+        value: Any,
+        expected_type: Union[type, Tuple[type, ...]],
+        duck_typing_instructions: Dict[str, Any],
+        annotation: Any = None,
+        custom_types: Optional[dict] = None,
+        inner_check: Union[bool, int] = True,
+        duck_typing: bool = False,
+        bool_only: bool = False
+) -> bool:
+    """Speciální verze iterovatelného validdátoru pro Container[T]"""
 
     # Definice parametru pro ověření typu
     base_type_result = None
@@ -53,20 +48,17 @@ def iterable_key_value_verifier(
         if not inner_check:
             return True
 
-        # Ověření a získání vnitřních typových anotací pro klíč a hodnotu
+        # Ověření a získání vnitřních typových anotací
         inner_args = get_args_safe(annotation)
 
-        # Pokud nemáme specifikované typy pro klíče a hodnoty, vrátíme True
-        if not inner_args:
+        # Pokud nejsou specifikovány vnitřní typy, validace je považována za úspěšnou
+        if not inner_args and not isinstance(value, Iterable):
             return True
 
-        # Načtení klíče a hodnoty
-        key_type, value_type = get_key_value_safe(inner_args, annotation)
-
-        return verify_key_value_pairs(
-            value.items(),
-            key_type,
-            value_type,
+        # Kontrola vnitřních položek
+        return verify_iterable_items(
+            value,
+            inner_args[0],
             custom_types,
             inner_check,
             duck_typing,

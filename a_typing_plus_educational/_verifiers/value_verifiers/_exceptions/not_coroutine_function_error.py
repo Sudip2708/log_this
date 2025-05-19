@@ -3,7 +3,7 @@ from typing import Any
 from ..._exceptions_base import VerifyValueError
 
 
-class VerifyNotCoroutineFunctionError(VerifyValueError):
+class VerifyNotCoroutineFunctionError(VerifyValueError, ValueError):
 
     # Specifický nadpis pro chyby nevolatelných hodnot
     title = "\n⚠ ZACHYCEN OBJEKT KTERÝ NENÍ COROUTINE FUNCTION!\n"

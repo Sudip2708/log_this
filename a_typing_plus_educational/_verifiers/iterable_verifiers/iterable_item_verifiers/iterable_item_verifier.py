@@ -4,8 +4,12 @@ from ..._exceptions_base import (
     VerifyError,
     VerifyUnexpectedInternalError
 )
-from .._tools import get_args_safe, verify_base_type, verify_iterable_items
 from .._exceptions import VerifyInnerCheckError
+from .._tools import (
+    get_args_safe,
+    verify_base_type,
+    verify_iterable_items
+)
 
 
 def iterable_item_verifier(
@@ -92,7 +96,7 @@ def iterable_item_verifier(
         if not inner_args:
             return True
 
-        # Ověření všech položek pomocí pomocné funkce
+        # Kontrola vnitřních položek
         return verify_iterable_items(
             value,
             inner_args[0],
@@ -105,12 +109,10 @@ def iterable_item_verifier(
     # Ošetření vnitřních výjimek
     except VerifyError as e:
 
-        # Pokud první kontrola typu vrátila True
-        if base_type_result:
-            raise VerifyInnerCheckError(value, annotation, e)
+        # Definovat výjimku popisující danou metodu a výjimku která byla zachycena
 
-        # Jinak vnitřní výjimky jen propaguj
-        raise
+
+        raise VerifyInnerCheckError(value, annotation, base_type_result, e)
 
     # Zachycení všech ostatních neočekávaných výjimek
     except Exception as e:

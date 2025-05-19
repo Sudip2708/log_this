@@ -3,7 +3,7 @@ from typing import Any, Tuple, Union
 from ..._exceptions_base import VerifyValueError
 
 
-class VerifyIsInstanceReturnedFalseError(VerifyValueError):
+class VerifyIsInstanceReturnedFalseError(VerifyValueError, ValueError):
     """
     Výjimka vyvolaná při neshodě typu ověřované hodnoty s očekávaným typem.
 
@@ -92,7 +92,7 @@ class VerifyIsInstanceReturnedFalseError(VerifyValueError):
 
         # Vytvoření popisu problému
         what_happened = [
-            f"   - Ověřovaná hodnota neodpovídá požadovanému typu.\n"
+            f"   - Ověřovaná hodnota není instancí očekávaného typu.\n"
             f"   - Ověřovaná hodnota: {repr(self.value)}\n",
             f"   - Typ hodnoty: {type(self.value).__name__}\n",
             f"   - Požadovaný typ/typy: {self._format_items(self.expected)}\n"

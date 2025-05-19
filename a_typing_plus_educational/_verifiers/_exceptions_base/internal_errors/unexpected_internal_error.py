@@ -5,7 +5,7 @@ from ._internal_base import VerifyInternalError
 from ._get_caller_context import get_caller_context
 
 
-class VerifyUnexpectedInternalError(VerifyInternalError):
+class VerifyUnexpectedInternalError(VerifyInternalError, RuntimeError):
     """
     Výjimka vyvolaná při neočekávané interní chybě v knihovně.
 
